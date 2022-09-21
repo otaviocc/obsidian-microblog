@@ -16,8 +16,9 @@ export default class MicroPlugin extends Plugin {
             id: 'microblog-publish-command',
             name: 'Post to Micro.blog',
             editorCallback: (editor, _) => {
-                const viewModel = new PublishViewModel(editor.getValue(), this.settings)
-                new PublishView(viewModel).open()
+                new PublishView(
+                    new PublishViewModel(editor.getValue(), this.settings)
+                ).open()
             }
         })
 
