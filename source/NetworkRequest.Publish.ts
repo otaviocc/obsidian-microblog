@@ -16,4 +16,5 @@ export function makePublishRequest(title: string, content: string, visiblity: st
 export type PublishResponse = {
 	url: string
 	preview: string
+    edit: string
 }

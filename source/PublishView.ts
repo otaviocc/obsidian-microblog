@@ -1,5 +1,6 @@
 import { Modal, Setting } from 'obsidian'
 import { PublishViewModel } from 'source/PublishViewModel'
+import { PublishResponse } from 'source/NetworkRequest.Publish'
 
 export class PublishView extends Modal {
     viewModel: PublishViewModel
@@ -11,8 +12,19 @@ export class PublishView extends Modal {
     }
 
     onOpen() {
+        this.makeReviewView()
+    }
+
+    onClose() {
         const {contentEl} = this
 
+        contentEl.empty()
+    }
+
+    private makeReviewView() {
+        const {contentEl} = this
+
+        contentEl.empty()
         contentEl.createEl('h2', {text: 'Review'})
 
         new Setting(contentEl)
@@ -22,7 +34,6 @@ export class PublishView extends Modal {
                 .setPlaceholder('Title')
                 .onChange(async value => {
                     this.viewModel.title = value
-                    console.log('Post title: ' + value)
                 }))
 
         new Setting(contentEl)
@@ -34,7 +45,6 @@ export class PublishView extends Modal {
                 .setValue(this.viewModel.visibility)
                 .onChange(async value => {
                     this.viewModel.visibility = value
-                    console.log('Post Visibility: '+ value)
                 }))
 
         new Setting(contentEl)
@@ -47,16 +57,36 @@ export class PublishView extends Modal {
                         .removeCta()
                         .setButtonText('Publishing...')
 
-                    await this.viewModel.publishNote()
-                    console.log("Published")
-
-                    this.close()
+                    this.viewModel
+                        .publishNote()
+                        .then(response => {
+                            this.makeConfirmationView(response)
+                        })
+                        .catch(error => {
+                            this.makeErrorView(error)
+                        })
                 }))
     }
 
-    onClose() {
+    private makeConfirmationView(response: PublishResponse) {
         const {contentEl} = this
-
+        
         contentEl.empty()
+
+        contentEl.createEl('h2', {text: 'Published'})
+        contentEl.createEl('a', {text: 'Open post URL', href: response.url})
+        contentEl.createEl('br')
+        contentEl.createEl('a', {text: 'Open post Preview URL', href: response.preview})
+        contentEl.createEl('br')
+        contentEl.createEl('a', {text: 'Open post Edit URL', href: response.edit})
+    }
+
+    private makeErrorView(error: Error) {
+        const {contentEl} = this
+        
+        contentEl.empty()
+
+        contentEl.createEl('h2', {text: 'Oops'})
+        contentEl.createEl('p', {text: 'Error: ' + error.message})
     }
 }

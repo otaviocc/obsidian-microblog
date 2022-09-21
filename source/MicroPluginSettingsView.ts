@@ -23,7 +23,6 @@ export class MicroPluginSettingsView extends PluginSettingTab {
                 .setPlaceholder('Enter app token')
                 .setValue(this.viewModel.appToken())
                 .onChange(async value => {
-                    console.log('App Token: ' + value)
                     await this.viewModel.setAppToken(value)
                 }))
 
@@ -34,7 +33,6 @@ export class MicroPluginSettingsView extends PluginSettingTab {
                 .setPlaceholder('tag1, tag2, tag3')
                 .setValue(this.viewModel.tags())
                 .onChange(async value => {
-                    console.log('Tags: ' + value)
                     await this.viewModel.setTags(value)
                 }))
 
@@ -46,7 +44,6 @@ export class MicroPluginSettingsView extends PluginSettingTab {
                 .addOption('published', 'Public')
                 .setValue(this.viewModel.visibility())
                 .onChange(async value => {
-                    console.log('Post Visibility: '+ value)
                     await this.viewModel.setVisibility(value)
                 }))
     }

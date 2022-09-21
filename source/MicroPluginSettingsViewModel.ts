@@ -13,7 +13,7 @@ export class MicroPluginSettingsViewModel {
 
     async setAppToken(appToken: string) {
         this.plugin.settings.appToken = appToken
-        await this.plugin.saveSettings()
+        this.plugin.saveSettings()
     }
 
     tags(): string {
@@ -22,7 +22,7 @@ export class MicroPluginSettingsViewModel {
 
     async setTags(tags: string) {
         this.plugin.settings.defaultTags = tags
-        await this.plugin.saveSettings()
+        this.plugin.saveSettings()
     }
 
     visibility(): string {
@@ -31,6 +31,6 @@ export class MicroPluginSettingsViewModel {
 
     async setVisibility(visibility: string) {
         this.plugin.settings.postVisibility = visibility
-        await this.plugin.saveSettings()
+        this.plugin.saveSettings()
     }
 }

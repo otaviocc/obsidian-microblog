@@ -15,8 +15,8 @@ export class PublishViewModel {
         this.networkClient = new NetworkClient(settings)
     }
 
-    async publishNote(): Promise<void> {
-        await this.networkClient.run<PublishResponse>(
+    async publishNote(): Promise<PublishResponse> {
+        return this.networkClient.run<PublishResponse>(
             makePublishRequest(this.title, this.content, this.visibility)
         )
     }
