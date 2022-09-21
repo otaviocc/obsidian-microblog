@@ -1,39 +1,36 @@
-import { Editor, MarkdownView, Plugin } from 'obsidian'
-import { ConfirmationModal } from 'source/ConfirmationModal'
-import { NetworkClient } from 'source/NetworkClient'
-import { makePublishRequest, PublishResponse } from 'source/NetworkRequest.Publish'
+import { Plugin } from 'obsidian'
 import { StoredSettings, defaultSettings } from 'source/StoredSettings'
-import { MicroPluginSettingsTab } from 'source/MicroPluginSettingsTab'
+import { MicroPluginSettingsView } from 'source/MicroPluginSettingsView'
+import { MicroPluginSettingsViewModel } from 'source/MicroPluginSettingsViewModel'
+import { PublishView } from 'source/PublishView'
+import { PublishViewModel } from 'source/PublishViewModel'
 
 export default class MicroPlugin extends Plugin {
     settings: StoredSettings
-    networkClient: NetworkClient
 
     async onload() {
         await this.loadSettings()
-        await this.loadNetworkClient()
 
         this.addCommand({
             id: 'microblog-publish-command',
             name: 'Post to Micro.blog',
-            editorCallback: (editor: Editor, view: MarkdownView) => {
-                const request = makePublishRequest(editor.getValue(), this.settings.postVisibility)
-                this.networkClient.run<PublishResponse>(request)
-                new ConfirmationModal(this.app).open();
+            editorCallback: (editor, _) => {
+                const viewModel = new PublishViewModel(editor.getValue(), this.settings)
+                new PublishView(viewModel).open()
             }
         })
 
-        this.addSettingTab(new MicroPluginSettingsTab(this.app, this))
+        this.addSettingTab(
+            new MicroPluginSettingsView(
+                new MicroPluginSettingsViewModel(this)
+            )
+        )
     }
 
     onunload() {}
 
     async loadSettings() {
         this.settings = Object.assign({}, defaultSettings, await this.loadData())
-    }
-
-    async loadNetworkClient() {
-        this.networkClient = new NetworkClient(this.settings)
     }
 
     async saveSettings() {

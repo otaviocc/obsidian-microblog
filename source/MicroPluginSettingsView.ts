@@ -1,13 +1,13 @@
-import { App, PluginSettingTab, Setting } from 'obsidian'
-import MicroPlugin from 'source/MicroPlugin'
+import { PluginSettingTab, Setting } from 'obsidian'
+import { MicroPluginSettingsViewModel } from 'source/MicroPluginSettingsViewModel'
 
-export class MicroPluginSettingsTab extends PluginSettingTab {
-    plugin: MicroPlugin
+export class MicroPluginSettingsView extends PluginSettingTab {
+    viewModel: MicroPluginSettingsViewModel
 
-    constructor(app: App, plugin: MicroPlugin) {
-        super(app, plugin)
+    constructor(viewModel: MicroPluginSettingsViewModel) {
+        super(app, viewModel.plugin)
 
-        this.plugin = plugin
+        this.viewModel = viewModel
     }
 
     display(): void {
@@ -21,11 +21,10 @@ export class MicroPluginSettingsTab extends PluginSettingTab {
             .setDesc('Visit Micro.blog\'s Account page to generate one')
             .addText(text => text
                 .setPlaceholder('Enter app token')
-                .setValue(this.plugin.settings.appToken)
-                .onChange(async (value) => {
+                .setValue(this.viewModel.appToken())
+                .onChange(async value => {
                     console.log('App Token: ' + value)
-                    this.plugin.settings.appToken = value
-                    await this.plugin.saveSettings()
+                    await this.viewModel.setAppToken(value)
                 }))
 
         new Setting(containerEl)
@@ -33,11 +32,10 @@ export class MicroPluginSettingsTab extends PluginSettingTab {
             .setDesc('Default list of tags for new posts')
             .addText(text => text
                 .setPlaceholder('tag1, tag2, tag3')
-                .setValue(this.plugin.settings.defaultTags)
-                .onChange(async (value) => {
+                .setValue(this.viewModel.tags())
+                .onChange(async value => {
                     console.log('Tags: ' + value)
-                    this.plugin.settings.defaultTags = value
-                    await this.plugin.saveSettings()
+                    await this.viewModel.setTags(value)
                 }))
 
         new Setting(containerEl)
@@ -46,11 +44,10 @@ export class MicroPluginSettingsTab extends PluginSettingTab {
             .addDropdown(dropDown => dropDown
                 .addOption('draft', 'Draft')
                 .addOption('published', 'Public')
-                .setValue(this.plugin.settings.postVisibility)
-                .onChange(async (value) => {
+                .setValue(this.viewModel.visibility())
+                .onChange(async value => {
                     console.log('Post Visibility: '+ value)
-                    this.plugin.settings.postVisibility = value
-                    await this.plugin.saveSettings()
+                    await this.viewModel.setVisibility(value)
                 }))
     }
 }

@@ -11,7 +11,7 @@ export class NetworkClient {
     async run<T>(request: NetworkRequest): Promise<string | T> {
         try {
             const encodedParameters = new URLSearchParams(request.parameters)
-            const url = `https://micro.blog${request.path}?${encodedParameters}`
+            const url = "https://micro.blog" + request.path + "?" + encodedParameters
 
             const response = await fetch(url, {
                 method: request.method,
@@ -32,10 +32,10 @@ export class NetworkClient {
             return result
         } catch (error) {
             if (error instanceof Error) {
-                console.log('error message: ', error.message)
+                console.log('error: ', error.message)
                 return error.message
             } else {
-                console.log('unexpected error: ', error)
+                console.log('error: ', error)
                 return 'An unexpected error occurred'
             }
         }
