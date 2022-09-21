@@ -17,12 +17,12 @@ export class NetworkClient {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${this.settings.appToken}`
+                'Authorization': "Bearer " + this.settings.appToken
             }
         })
 
         if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`)
+            throw new Error('Error ' + response.status)
         }
 
         const result = (await response.json()) as T
