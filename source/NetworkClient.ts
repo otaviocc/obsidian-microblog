@@ -3,7 +3,7 @@ import { NetworkRequest } from 'source/NetworkRequest'
 
 export class NetworkClient {
 
-    settings: StoredSettings
+    private settings: StoredSettings
 
     constructor(settings: StoredSettings) {
         this.settings = settings

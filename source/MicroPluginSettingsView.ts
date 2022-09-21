@@ -3,7 +3,7 @@ import { MicroPluginSettingsViewModel } from 'source/MicroPluginSettingsViewMode
 
 export class MicroPluginSettingsView extends PluginSettingTab {
 
-    viewModel: MicroPluginSettingsViewModel
+    private viewModel: MicroPluginSettingsViewModel
 
     constructor(viewModel: MicroPluginSettingsViewModel) {
         super(app, viewModel.plugin)

@@ -4,7 +4,7 @@ import { PublishResponse } from 'source/NetworkRequest.Publish'
 
 export class PublishView extends Modal {
 
-    viewModel: PublishViewModel
+    private viewModel: PublishViewModel
 
     constructor(viewModel: PublishViewModel) {
         super(app)

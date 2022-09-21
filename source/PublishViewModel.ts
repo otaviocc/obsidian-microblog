@@ -7,7 +7,7 @@ export class PublishViewModel {
     title: string
     content: string
     visibility: string
-    networkClient: NetworkClient
+    private networkClient: NetworkClient
 
     constructor(content: string, settings: StoredSettings) {
         this.title = ""
