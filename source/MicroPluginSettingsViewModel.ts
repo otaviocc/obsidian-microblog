@@ -1,6 +1,7 @@
 import MicroPlugin from 'source/MicroPlugin'
 
 export class MicroPluginSettingsViewModel {
+
     plugin: MicroPlugin
 
     constructor(plugin: MicroPlugin) {

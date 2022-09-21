@@ -2,6 +2,7 @@ import { PluginSettingTab, Setting } from 'obsidian'
 import { MicroPluginSettingsViewModel } from 'source/MicroPluginSettingsViewModel'
 
 export class MicroPluginSettingsView extends PluginSettingTab {
+
     viewModel: MicroPluginSettingsViewModel
 
     constructor(viewModel: MicroPluginSettingsViewModel) {

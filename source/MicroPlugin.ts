@@ -6,6 +6,7 @@ import { PublishView } from 'source/PublishView'
 import { PublishViewModel } from 'source/PublishViewModel'
 
 export default class MicroPlugin extends Plugin {
+
     settings: StoredSettings
 
     async onload() {

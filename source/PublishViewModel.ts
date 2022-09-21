@@ -3,6 +3,7 @@ import { makePublishRequest, PublishResponse } from 'source/NetworkRequest.Publi
 import { NetworkClient } from 'source/NetworkClient'
 
 export class PublishViewModel {
+
     title: string
     content: string
     visibility: string

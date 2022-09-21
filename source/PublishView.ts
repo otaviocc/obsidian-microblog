@@ -3,6 +3,7 @@ import { PublishViewModel } from 'source/PublishViewModel'
 import { PublishResponse } from 'source/NetworkRequest.Publish'
 
 export class PublishView extends Modal {
+
     viewModel: PublishViewModel
 
     constructor(viewModel: PublishViewModel) {

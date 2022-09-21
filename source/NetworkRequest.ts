@@ -1,4 +1,5 @@
 export class NetworkRequest {
+
     path: string
     parameters: Record<string, string>
     method: string
