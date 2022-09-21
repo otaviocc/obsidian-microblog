@@ -2,7 +2,7 @@ import MicroPlugin from 'source/MicroPlugin'
 
 export class MicroPluginSettingsViewModel {
 
-    plugin: MicroPlugin
+    readonly plugin: MicroPlugin
 
     constructor(plugin: MicroPlugin) {
         this.plugin = plugin
