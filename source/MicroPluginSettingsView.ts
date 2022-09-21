@@ -22,7 +22,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
             .setDesc('Visit Micro.blog\'s Account page to generate one')
             .addText(text => text
                 .setPlaceholder('Enter app token')
-                .setValue(this.viewModel.appToken())
+                .setValue(this.viewModel.appToken)
                 .onChange(async value => {
                     await this.viewModel.setAppToken(value)
                 }))
@@ -32,7 +32,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
             .setDesc('Default list of tags for new posts')
             .addText(text => text
                 .setPlaceholder('tag1, tag2, tag3')
-                .setValue(this.viewModel.tags())
+                .setValue(this.viewModel.tags)
                 .onChange(async value => {
                     await this.viewModel.setTags(value)
                 }))
@@ -43,7 +43,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
             .addDropdown(dropDown => dropDown
                 .addOption('draft', 'Draft')
                 .addOption('published', 'Public')
-                .setValue(this.viewModel.visibility())
+                .setValue(this.viewModel.visibility)
                 .onChange(async value => {
                     await this.viewModel.setVisibility(value)
                 }))

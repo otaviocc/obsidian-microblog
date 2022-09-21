@@ -8,8 +8,16 @@ export class MicroPluginSettingsViewModel {
         this.plugin = plugin
     }
 
-    appToken(): string {
+    get appToken(): string {
         return this.plugin.settings.appToken
+    }
+
+    get tags(): string {
+        return this.plugin.settings.defaultTags
+    }
+
+    get visibility(): string {
+        return this.plugin.settings.postVisibility
     }
 
     async setAppToken(appToken: string) {
@@ -17,17 +25,9 @@ export class MicroPluginSettingsViewModel {
         this.plugin.saveSettings()
     }
 
-    tags(): string {
-        return this.plugin.settings.defaultTags
-    }
-
     async setTags(tags: string) {
         this.plugin.settings.defaultTags = tags
         this.plugin.saveSettings()
-    }
-
-    visibility(): string {
-        return this.plugin.settings.postVisibility
     }
 
     async setVisibility(visibility: string) {
