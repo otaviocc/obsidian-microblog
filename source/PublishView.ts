@@ -30,9 +30,9 @@ export class PublishView extends Modal {
 
         new Setting(contentEl)
             .setName('Title')
-            .setDesc('Post title is option, but encouraged for long posts')
+            .setDesc('Post title is optional, but encouraged for long posts')
             .addText(text => text
-                .setPlaceholder('Title')
+                .setPlaceholder('Optional title')
                 .onChange(async value => {
                     this.viewModel.title = value
                 }))
