@@ -1,8 +1,8 @@
 import { Plugin } from 'obsidian'
-import { StoredSettings, defaultSettings } from 'source/StoredSettings'
-import { MicroPluginSettingsView } from 'source/MicroPluginSettingsView'
-import { PublishView } from 'source/PublishView'
-import { ViewModelFactoryInterface, ViewModelFactory } from 'source/ViewModelFactory'
+import { StoredSettings, defaultSettings } from './StoredSettings'
+import { MicroPluginSettingsView } from './MicroPluginSettingsView'
+import { PublishView } from './PublishView'
+import { ViewModelFactoryInterface, ViewModelFactory } from './ViewModelFactory'
 
 export default class MicroPlugin extends Plugin {
 

@@ -1,5 +1,5 @@
 import { PluginSettingTab, Setting } from 'obsidian'
-import { MicroPluginSettingsViewModel } from 'source/MicroPluginSettingsViewModel'
+import { MicroPluginSettingsViewModel } from './MicroPluginSettingsViewModel'
 
 export class MicroPluginSettingsView extends PluginSettingTab {
 

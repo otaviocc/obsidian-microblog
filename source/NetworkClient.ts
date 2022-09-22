@@ -1,5 +1,5 @@
-import { StoredSettings } from 'source/StoredSettings'
-import { NetworkRequest } from 'source/NetworkRequest'
+import { StoredSettings } from './StoredSettings'
+import { NetworkRequest } from './NetworkRequest'
 
 export interface NetworkClientInterface {
     run<T>(request: NetworkRequest): Promise<T>

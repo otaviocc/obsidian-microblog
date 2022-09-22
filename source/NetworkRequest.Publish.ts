@@ -1,4 +1,4 @@
-import { NetworkRequest } from 'source/NetworkRequest'
+import { NetworkRequest } from './NetworkRequest'
 
 export type PublishResponse = {
 	url: string
