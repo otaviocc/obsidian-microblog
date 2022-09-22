@@ -1,11 +1,5 @@
 import { NetworkRequest } from './NetworkRequest'
 
-export type PublishResponse = {
-	url: string
-	preview: string
-    edit: string
-}
-
 export interface NetworkRequestFactoryInterface {
     makePublishRequest(
         title: string,

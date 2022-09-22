@@ -1,5 +1,6 @@
-import { NetworkRequestFactoryInterface, PublishResponse } from './NetworkRequestFactory'
+import { NetworkRequestFactoryInterface } from './NetworkRequestFactory'
 import { NetworkClientInterface } from './NetworkClient'
+import { PublishResponse } from './PublishResponse'
 
 export class PublishViewModel {
 
