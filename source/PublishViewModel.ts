@@ -3,10 +3,9 @@ import { NetworkClientInterface } from './NetworkClient'
 
 export class PublishViewModel {
 
-    title: string
-    content: string
-    visibility: string
-
+    private titleWrappedValue: string
+    private contentWrappedValue: string
+    private visibilityWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
 
@@ -16,11 +15,33 @@ export class PublishViewModel {
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
-        this.title = ""
-        this.content = content
-        this.visibility = visibility
+        this.titleWrappedValue = ""
+        this.contentWrappedValue = content
+        this.visibilityWrappedValue = visibility
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
+    }
+
+    get title(): string {
+        return this.titleWrappedValue
+    }
+
+    set title(value: string) {
+        this.titleWrappedValue = value
+        console.log("Title change :" + value)
+    }
+
+    get content(): string {
+        return this.contentWrappedValue
+    }
+
+    get visibility(): string {
+        return this.visibilityWrappedValue
+    }
+
+    set visibility(value: string) {
+        this.visibilityWrappedValue = value
+        console.log("visibility change: " + value)
     }
 
     async publishNote(): Promise<PublishResponse> {
