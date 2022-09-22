@@ -31,6 +31,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         return new PublishViewModel(
             content,
             this.settings.postVisibility,
+            this.settings.appToken.length > 0,
             networkClient,
             new NetworkRequestFactory()
         )

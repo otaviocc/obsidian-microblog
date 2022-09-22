@@ -4,6 +4,7 @@ import { PublishResponse } from './PublishResponse'
 
 export class PublishViewModel {
 
+    readonly hasAppToken: boolean
     private titleWrappedValue: string
     private contentWrappedValue: string
     private visibilityWrappedValue: string
@@ -13,12 +14,14 @@ export class PublishViewModel {
     constructor(
         content: string,
         visibility: string,
+        hasAppToken: boolean,
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.titleWrappedValue = ""
         this.contentWrappedValue = content
         this.visibilityWrappedValue = visibility
+        this.hasAppToken = hasAppToken
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
     }

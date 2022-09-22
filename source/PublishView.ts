@@ -13,7 +13,14 @@ export class PublishView extends Modal {
     }
 
     onOpen() {
-        this.makeReviewView()
+        if (this.viewModel.hasAppToken) {
+            this.makeReviewView()
+        } else {
+            this.makeMessageView(
+                'Oops',
+                'Missing Application Token'
+            )
+        }
     }
 
     onClose() {
@@ -64,7 +71,10 @@ export class PublishView extends Modal {
                             this.makeConfirmationView(response)
                         })
                         .catch(error => {
-                            this.makeErrorView(error)
+                            this.makeMessageView(
+                                'Error',
+                                error.message
+                            )
                         })
                 }))
     }
@@ -82,12 +92,15 @@ export class PublishView extends Modal {
         contentEl.createEl('a', {text: 'Open post Edit URL', href: response.edit})
     }
 
-    private makeErrorView(error: Error) {
+    private makeMessageView(
+        title: string,
+        message: string
+    ) {
         const {contentEl} = this
 
         contentEl.empty()
 
-        contentEl.createEl('h2', {text: 'Oops'})
-        contentEl.createEl('p', {text: 'Error: ' + error.message})
+        contentEl.createEl('h2', {text: title})
+        contentEl.createEl('p', {text: message})
     }
 }
