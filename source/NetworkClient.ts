@@ -1,4 +1,3 @@
-import { StoredSettings } from './StoredSettings'
 import { NetworkRequest } from './NetworkRequest'
 
 export interface NetworkClientInterface {
@@ -7,10 +6,12 @@ export interface NetworkClientInterface {
 
 export class NetworkClient implements NetworkClientInterface {
 
-    private settings: StoredSettings
+    private appToken: () => string
 
-    constructor(settings: StoredSettings) {
-        this.settings = settings
+    constructor(
+        appToken: () => string
+    ) {
+        this.appToken = appToken
     }
 
     async run<T>(request: NetworkRequest): Promise<T> {
@@ -22,7 +23,7 @@ export class NetworkClient implements NetworkClientInterface {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': "Bearer " + this.settings.appToken
+                'Authorization': "Bearer " + this.appToken()
             }
         })
 

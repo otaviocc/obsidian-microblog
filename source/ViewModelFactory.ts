@@ -24,10 +24,14 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     }
 
     makePublishViewModel(content: string): PublishViewModel {
+        const networkClient = new NetworkClient(() => {
+            return this.settings.appToken
+        })
+
         return new PublishViewModel(
             content,
             this.settings.postVisibility,
-            new NetworkClient(this.settings),
+            networkClient,
             new NetworkRequestFactory()
         )
     }
