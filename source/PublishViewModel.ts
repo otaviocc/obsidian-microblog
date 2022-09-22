@@ -28,7 +28,7 @@ export class PublishViewModel {
 
     set title(value: string) {
         this.titleWrappedValue = value
-        console.log("Title change :" + value)
+        console.log("Post title change :" + value)
     }
 
     get content(): string {
@@ -41,7 +41,7 @@ export class PublishViewModel {
 
     set visibility(value: string) {
         this.visibilityWrappedValue = value
-        console.log("visibility change: " + value)
+        console.log("Post visibility change: " + value)
     }
 
     async publishNote(): Promise<PublishResponse> {

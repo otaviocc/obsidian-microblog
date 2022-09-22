@@ -21,7 +21,7 @@ export class MicroPluginSettingsViewModel {
     set appToken(value: string) {
         this.settings.appToken = value
         this.plugin.saveSettings()
-        console.log("token changed: " + value)
+        console.log("Token changed: " + value)
     }
 
     get tags(): string {
@@ -31,7 +31,7 @@ export class MicroPluginSettingsViewModel {
     set tags(value: string) {
         this.settings.defaultTags = value
         this.plugin.saveSettings()
-        console.log("Tags changed: " + value)
+        console.log("Default tags changed: " + value)
     }
 
     get visibility(): string {
@@ -41,6 +41,6 @@ export class MicroPluginSettingsViewModel {
     set visibility(value: string) {
         this.settings.postVisibility = value
         this.plugin.saveSettings()
-        console.log("Visibility changed: " + value)
+        console.log("Default visibility changed: " + value)
     }
 }
