@@ -6,7 +6,7 @@ import { ViewModelFactoryInterface, ViewModelFactory } from 'source/ViewModelFac
 
 export default class MicroPlugin extends Plugin {
 
-    settings: StoredSettings
+    private settings: StoredSettings
     private viewModelFactory: ViewModelFactoryInterface
 
     async onload() {

@@ -1,4 +1,3 @@
-import { StoredSettings } from 'source/StoredSettings'
 import { NetworkRequestFactoryInterface, PublishResponse } from 'source/NetworkRequest.Publish'
 import { NetworkClientInterface } from 'source/NetworkClient'
 
@@ -13,13 +12,13 @@ export class PublishViewModel {
 
     constructor(
         content: string,
-        settings: StoredSettings,
+        visibility: string,
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.title = ""
         this.content = content
-        this.visibility = settings.postVisibility
+        this.visibility = visibility
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
     }

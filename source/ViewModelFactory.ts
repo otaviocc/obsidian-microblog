@@ -1,9 +1,9 @@
+import MicroPlugin from 'source/MicroPlugin'
 import { StoredSettings } from 'source/StoredSettings'
 import { MicroPluginSettingsViewModel } from 'source/MicroPluginSettingsViewModel'
 import { PublishViewModel } from 'source/PublishViewModel'
 import { NetworkRequestFactory } from 'source/NetworkRequest.Publish'
 import { NetworkClient } from  'source/NetworkClient'
-import MicroPlugin from 'source/MicroPlugin'
 
 export interface ViewModelFactoryInterface {
     makePublishViewModel(content: string): PublishViewModel
@@ -26,13 +26,16 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     makePublishViewModel(content: string): PublishViewModel {
         return new PublishViewModel(
             content,
-            this.settings,
+            this.settings.postVisibility,
             new NetworkClient(this.settings),
             new NetworkRequestFactory()
         )
     }
 
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel {
-        return new MicroPluginSettingsViewModel(this.plugin)
+        return new MicroPluginSettingsViewModel(
+            this.plugin,
+            this.settings
+        )
     }
 }
