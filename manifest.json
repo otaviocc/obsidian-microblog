@@ -3,7 +3,7 @@
 	"name": "Micro.blog Publish",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Publish Note to Micro.blog",
+	"description": "Publish notes to Micro.blog",
 	"author": "Otavio Cordeiro",
 	"authorUrl": "https://otavio.cc",
 	"isDesktopOnly": false
