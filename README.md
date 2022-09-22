@@ -26,7 +26,7 @@ Before publishing, it's possible to add a title to the post and override the pos
 
 ![](images/publish.png)
 
-## Development
+## Building from source
 
 Clone this repository inside the Obsidian Vault:
 
@@ -47,20 +47,10 @@ Restart Obsidian and enable the plugin from *Community Plugins* in Preferences.
 
 ## Contributing
 
-Fork this repository and fetch the fork instead of this repository:
-
-```
-$ cd .obsidian/plugins/
-$ git clone forked-repository
-```
-
-Create a branch for the changes:
-
-```
-$ git switch -c feature/feature-name
-```
-
-Commit the changes into the feature branch, and submit a Pull Request.
+1. Fork this repository and follow the steps from the previous section using the forked repository instead
+2. Create a feature branch for the changes
+3. Commit the changes and push them to the forked repository 
+4. Submit a pull request
 
 ## Disclaimer
 
