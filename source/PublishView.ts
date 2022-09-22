@@ -71,7 +71,7 @@ export class PublishView extends Modal {
 
     private makeConfirmationView(response: PublishResponse) {
         const {contentEl} = this
-        
+
         contentEl.empty()
 
         contentEl.createEl('h2', {text: 'Published'})
@@ -84,7 +84,7 @@ export class PublishView extends Modal {
 
     private makeErrorView(error: Error) {
         const {contentEl} = this
-        
+
         contentEl.empty()
 
         contentEl.createEl('h2', {text: 'Oops'})
