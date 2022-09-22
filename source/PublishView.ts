@@ -37,7 +37,7 @@ export class PublishView extends Modal {
 
         new Setting(contentEl)
             .setName('Title')
-            .setDesc('Post title is optional, but encouraged for long posts')
+            .setDesc('Post title is optional, but encouraged for long posts.')
             .addText(text => text
                 .setPlaceholder('Optional title')
                 .onChange(async value => {
@@ -45,8 +45,18 @@ export class PublishView extends Modal {
                 }))
 
         new Setting(contentEl)
+            .setName('Tags')
+            .setDesc('Override the default tags for this post.')
+            .addText(text => text
+                .setPlaceholder('tag1, tag2, tag3')
+                .setValue(this.viewModel.tags)
+                .onChange(async value => {
+                    this.viewModel.tags = value
+                }))
+
+        new Setting(contentEl)
             .setName('Visibility')
-            .setDesc('Override the default post visibility for this post')
+            .setDesc('Override the default post visibility for this post.')
             .addDropdown(dropDown => dropDown
                 .addOption('draft', 'Draft')
                 .addOption('published', 'Public')

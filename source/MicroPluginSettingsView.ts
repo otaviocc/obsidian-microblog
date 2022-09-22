@@ -19,7 +19,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('App Token')
-            .setDesc('Visit Micro.blog\'s Account page to generate one')
+            .setDesc('Visit Micro.blog\'s Account page to generate one.')
             .addText(text => text
                 .setPlaceholder('Enter app token')
                 .setValue(this.viewModel.appToken)
@@ -29,7 +29,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Tags')
-            .setDesc('Default list of tags for new posts')
+            .setDesc('Default list of tags for new posts.')
             .addText(text => text
                 .setPlaceholder('tag1, tag2, tag3')
                 .setValue(this.viewModel.tags)
@@ -39,7 +39,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Post visibility')
-            .setDesc('Default visibility for new posts')
+            .setDesc('Default visibility for new posts.')
             .addDropdown(dropDown => dropDown
                 .addOption('draft', 'Draft')
                 .addOption('published', 'Public')
