@@ -1,7 +1,11 @@
 import { StoredSettings } from 'source/StoredSettings'
 import { NetworkRequest } from 'source/NetworkRequest'
 
-export class NetworkClient {
+export interface NetworkClientInterface {
+    run<T>(request: NetworkRequest): Promise<T>
+}
+
+export class NetworkClient implements NetworkClientInterface {
 
     private settings: StoredSettings
 

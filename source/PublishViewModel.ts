@@ -1,24 +1,36 @@
 import { StoredSettings } from 'source/StoredSettings'
-import { makePublishRequest, PublishResponse } from 'source/NetworkRequest.Publish'
-import { NetworkClient } from 'source/NetworkClient'
+import { NetworkRequestFactoryInterface, PublishResponse } from 'source/NetworkRequest.Publish'
+import { NetworkClientInterface } from 'source/NetworkClient'
 
 export class PublishViewModel {
 
     title: string
     content: string
     visibility: string
-    private networkClient: NetworkClient
 
-    constructor(content: string, settings: StoredSettings) {
+    private networkClient: NetworkClientInterface
+    private networkRequestFactory: NetworkRequestFactoryInterface
+
+    constructor(
+        content: string,
+        settings: StoredSettings,
+        networkClient: NetworkClientInterface,
+        networkRequestFactory: NetworkRequestFactoryInterface
+    ) {
         this.title = ""
         this.content = content
         this.visibility = settings.postVisibility
-        this.networkClient = new NetworkClient(settings)
+        this.networkClient = networkClient
+        this.networkRequestFactory = networkRequestFactory
     }
 
     async publishNote(): Promise<PublishResponse> {
-        return this.networkClient.run<PublishResponse>(
-            makePublishRequest(this.title, this.content, this.visibility)
+        const request = this.networkRequestFactory.makePublishRequest(
+            this.title,
+            this.content,
+            this.visibility
         )
+
+        return this.networkClient.run<PublishResponse>(request)
     }
 }
