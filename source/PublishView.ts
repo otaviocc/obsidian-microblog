@@ -40,7 +40,7 @@ export class PublishView extends Modal {
             .setDesc('Post title is optional, but encouraged for long posts.')
             .addText(text => text
                 .setPlaceholder('Optional title')
-                .onChange(async value => {
+                .onChange(value => {
                     this.viewModel.title = value
                 }))
 
@@ -50,7 +50,7 @@ export class PublishView extends Modal {
             .addText(text => text
                 .setPlaceholder('tag1, tag2, tag3')
                 .setValue(this.viewModel.tags)
-                .onChange(async value => {
+                .onChange(value => {
                     this.viewModel.tags = value
                 }))
 
@@ -61,7 +61,7 @@ export class PublishView extends Modal {
                 .addOption('draft', 'Draft')
                 .addOption('published', 'Public')
                 .setValue(this.viewModel.visibility)
-                .onChange(async value => {
+                .onChange(value => {
                     this.viewModel.visibility = value
                 }))
 
@@ -69,7 +69,7 @@ export class PublishView extends Modal {
             .addButton(button => button
                 .setButtonText('Publish')
                 .setCta()
-                .onClick(async _ => {
+                .onClick(_ => {
                     button
                         .setDisabled(true)
                         .removeCta()

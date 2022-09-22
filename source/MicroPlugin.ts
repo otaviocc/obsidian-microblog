@@ -34,7 +34,11 @@ export default class MicroPlugin extends Plugin {
 
     onunload() {}
 
-    async loadSettings() {
+    async saveSettings() {
+        await this.saveData(this.settings)
+    }
+
+    private async loadSettings() {
         this.settings = Object.assign(
             {},
             defaultSettings,
@@ -42,14 +46,10 @@ export default class MicroPlugin extends Plugin {
         )
     }
 
-    async loadViewModelFactory() {
+    private async loadViewModelFactory() {
         this.viewModelFactory = new ViewModelFactory(
             this.settings,
             this
         )
-    }
-
-    async saveSettings() {
-        await this.saveData(this.settings)
     }
 }

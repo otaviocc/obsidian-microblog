@@ -23,7 +23,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
             .addText(text => text
                 .setPlaceholder('Enter app token')
                 .setValue(this.viewModel.appToken)
-                .onChange(async value => {
+                .onChange(value => {
                     this.viewModel.appToken = value
                 }))
 
@@ -33,7 +33,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
             .addText(text => text
                 .setPlaceholder('tag1, tag2, tag3')
                 .setValue(this.viewModel.tags)
-                .onChange(async value => {
+                .onChange(value => {
                     this.viewModel.tags = value
                 }))
 
@@ -44,7 +44,7 @@ export class MicroPluginSettingsView extends PluginSettingTab {
                 .addOption('draft', 'Draft')
                 .addOption('published', 'Public')
                 .setValue(this.viewModel.visibility)
-                .onChange(async value => {
+                .onChange(value => {
                     this.viewModel.visibility = value
                 }))
     }
