@@ -2,7 +2,7 @@ import MicroPlugin from './MicroPlugin'
 import { StoredSettings } from './StoredSettings'
 import { MicroPluginSettingsViewModel } from './MicroPluginSettingsViewModel'
 import { PublishViewModel } from './PublishViewModel'
-import { NetworkRequestFactory } from './NetworkRequest.Publish'
+import { NetworkRequestFactory } from './NetworkRequestFactory'
 import { NetworkClient } from  'source/NetworkClient'
 
 export interface ViewModelFactoryInterface {

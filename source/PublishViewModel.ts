@@ -1,4 +1,4 @@
-import { NetworkRequestFactoryInterface, PublishResponse } from './NetworkRequest.Publish'
+import { NetworkRequestFactoryInterface, PublishResponse } from './NetworkRequestFactory'
 import { NetworkClientInterface } from './NetworkClient'
 
 export class PublishViewModel {
