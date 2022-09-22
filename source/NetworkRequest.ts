@@ -1,13 +1,13 @@
 export class NetworkRequest {
 
     readonly path: string
-    readonly parameters: Record<string, string>
+    readonly parameters: URLSearchParams
     readonly method: string
     readonly body?: string
     
     constructor(
         path: string,
-        parameters: Record<string, string>,
+        parameters: URLSearchParams,
         method: string,
         body?: string
     ) {

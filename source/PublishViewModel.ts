@@ -8,11 +8,13 @@ export class PublishViewModel {
     private titleWrappedValue: string
     private contentWrappedValue: string
     private visibilityWrappedValue: string
+    private tagsWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
 
     constructor(
         content: string,
+        tags: string,
         visibility: string,
         hasAppToken: boolean,
         networkClient: NetworkClientInterface,
@@ -20,6 +22,7 @@ export class PublishViewModel {
     ) {
         this.titleWrappedValue = ""
         this.contentWrappedValue = content
+        this.tagsWrappedValue = tags
         this.visibilityWrappedValue = visibility
         this.hasAppToken = hasAppToken
         this.networkClient = networkClient
@@ -39,6 +42,10 @@ export class PublishViewModel {
         return this.contentWrappedValue
     }
 
+    get tags(): string {
+        return this.tagsWrappedValue
+    }
+
     get visibility(): string {
         return this.visibilityWrappedValue
     }
@@ -52,6 +59,7 @@ export class PublishViewModel {
         const request = this.networkRequestFactory.makePublishRequest(
             this.title,
             this.content,
+            this.tags,
             this.visibility
         )
 

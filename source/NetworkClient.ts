@@ -15,8 +15,7 @@ export class NetworkClient implements NetworkClientInterface {
     }
 
     async run<T>(request: NetworkRequest): Promise<T> {
-        const encodedParameters = new URLSearchParams(request.parameters)
-        const url = "https://micro.blog" + request.path + "?" + encodedParameters
+        const url = "https://micro.blog" + request.path + "?" + request.parameters
 
         const response = await fetch(url, {
             method: request.method,
