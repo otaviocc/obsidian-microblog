@@ -30,9 +30,6 @@ export class NetworkClient implements NetworkClientInterface {
             throw new Error('Error ' + response.status)
         }
 
-        const result = (await response.json()) as T
-        console.log('result is: ', JSON.stringify(result, null, 4))
-
-        return result
+        return await response.json() as T
     }
 }
