@@ -7,6 +7,8 @@ export interface NetworkRequestFactoryInterface {
         tags: string,
         visiblity: string
     ): NetworkRequest
+
+    makeConfigRequest(): NetworkRequest
 }
 
 export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
@@ -34,6 +36,16 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
             "/micropub",
             parameters,
             "POST"
+        )
+    }
+
+    makeConfigRequest(): NetworkRequest {
+        return new NetworkRequest(
+            "/micropub",
+            new URLSearchParams([
+                ['q', 'config']
+            ]),
+            "GET"           
         )
     }
 }
