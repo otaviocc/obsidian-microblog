@@ -3,7 +3,7 @@ import { StoredSettings } from '@stores/StoredSettings'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishViewModel } from '@views/PublishViewModel'
 import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
-import { NetworkClient } from '@networking/NetworkClient'
+import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
 
 export interface ViewModelFactoryInterface {
     makePublishViewModel(content: string): PublishViewModel
@@ -14,6 +14,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     private settings: StoredSettings
     private plugin: MicroPlugin
+    private networkClient: NetworkClientInterface
 
     constructor(
         settings: StoredSettings,
@@ -21,19 +22,18 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     ) {
         this.settings = settings
         this.plugin = plugin
+        this.networkClient = new NetworkClient(() => {
+            return this.settings.appToken
+        })
     }
 
     makePublishViewModel(content: string): PublishViewModel {
-        const networkClient = new NetworkClient(() => {
-            return this.settings.appToken
-        })
-
         return new PublishViewModel(
             content,
             this.settings.defaultTags,
             this.settings.postVisibility,
             this.settings.appToken.length > 0,
-            networkClient,
+            this.networkClient,
             new NetworkRequestFactory()
         )
     }
