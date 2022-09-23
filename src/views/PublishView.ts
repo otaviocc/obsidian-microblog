@@ -1,6 +1,6 @@
 import { Modal, Setting } from 'obsidian'
-import { PublishViewModel } from './PublishViewModel'
-import { PublishResponse } from './PublishResponse'
+import { PublishViewModel } from '@views/PublishViewModel'
+import { PublishResponse } from '@networking/PublishResponse'
 
 export class PublishView extends Modal {
 

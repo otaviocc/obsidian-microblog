@@ -15,7 +15,7 @@ esbuild.build({
 	banner: {
 		js: banner,
 	},
-	entryPoints: ['source/MicroPlugin.ts'],
+	entryPoints: ['src/MicroPlugin.ts'],
 	bundle: true,
 	external: [
 		'obsidian',

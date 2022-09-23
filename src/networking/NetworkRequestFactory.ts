@@ -1,4 +1,4 @@
-import { NetworkRequest } from './NetworkRequest'
+import { NetworkRequest } from '@networking/NetworkRequest'
 
 export interface NetworkRequestFactoryInterface {
     makePublishRequest(

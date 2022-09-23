@@ -1,9 +1,9 @@
-import MicroPlugin from './MicroPlugin'
-import { StoredSettings } from './StoredSettings'
-import { MicroPluginSettingsViewModel } from './MicroPluginSettingsViewModel'
-import { PublishViewModel } from './PublishViewModel'
-import { NetworkRequestFactory } from './NetworkRequestFactory'
-import { NetworkClient } from  'source/NetworkClient'
+import MicroPlugin from '@base/MicroPlugin'
+import { StoredSettings } from '@stores/StoredSettings'
+import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
+import { PublishViewModel } from '@views/PublishViewModel'
+import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
+import { NetworkClient } from '@networking/NetworkClient'
 
 export interface ViewModelFactoryInterface {
     makePublishViewModel(content: string): PublishViewModel

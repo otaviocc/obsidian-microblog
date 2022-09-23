@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
     "inlineSourceMap": true,
     "inlineSources": true,
     "module": "ESNext",
@@ -16,7 +16,14 @@
       "ES5",
       "ES6",
       "ES7"
-    ]
+    ],
+    "paths": {
+      "@base/*": ["./*"],
+      "@networking/*": ["networking/*"],
+      "@views/*": ["views/*"],
+      "@factories/*": ["factories/*"],
+      "@stores/*": ["stores/*"],
+    }
   },
   "include": [
     "**/*.ts"

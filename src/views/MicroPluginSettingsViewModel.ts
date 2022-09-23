@@ -1,5 +1,5 @@
-import MicroPlugin from './MicroPlugin'
-import { StoredSettings } from './StoredSettings'
+import MicroPlugin from '@base/MicroPlugin'
+import { StoredSettings } from '@stores/StoredSettings'
 
 export class MicroPluginSettingsViewModel {
 
