@@ -1,5 +1,6 @@
 import { PluginSettingTab, Setting } from 'obsidian'
-import { MicroPluginSettingsViewModel, MicroPluginSettingsEvent, MicroPluginSettingsDelegate} from '@views/MicroPluginSettingsViewModel'
+import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate} from '@views/MicroPluginSettingsViewModel'
+import { ConfigResponse } from '@networking/ConfigResponse'
 
 export class MicroPluginSettingsView extends PluginSettingTab implements MicroPluginSettingsDelegate {
 
@@ -28,10 +29,16 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
     // MicroPluginSettingsDelegate
 
-    public handle(event: MicroPluginSettingsEvent) {
-        switch (event) {
-            default: this.display()
-        }
+    public loginDidSucceed(response: ConfigResponse) {
+        this.display()
+    }
+
+    public loginDidfail(error: Error) {
+        this.display()
+    }
+
+    public logoutDidSucceed() {
+        this.display()   
     }
 
     // Private

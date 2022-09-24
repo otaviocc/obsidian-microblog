@@ -4,14 +4,10 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
-export enum MicroPluginSettingsEvent {
-    loginError,
-    loginSuccess,
-    logout
-}
-
 export interface MicroPluginSettingsDelegate {
-    handle(event: MicroPluginSettingsEvent): void
+    loginDidfail(error: Error): void
+    loginDidSucceed(response: ConfigResponse): void
+    logoutDidSucceed(): void
 }
 
 export class MicroPluginSettingsViewModel {
@@ -80,19 +76,19 @@ export class MicroPluginSettingsViewModel {
                 this.networkRequestFactory.makeConfigRequest()
             )
             .then(value => {
-                this.delegate?.handle(MicroPluginSettingsEvent.loginSuccess)
+                this.delegate?.loginDidSucceed(value)
                 console.log("Login successful")
             })
             .catch(error => {
                 this.appToken = ""
-                this.delegate?.handle(MicroPluginSettingsEvent.loginError)
+                this.delegate?.loginDidfail(error)
                 console.log("Login error: " + error)
             })
     }
 
     public logout() {
         this.appToken = ""
+        this.delegate?.logoutDidSucceed()
         console.log("Logout successful")
-        this.delegate?.handle(MicroPluginSettingsEvent.logout)
     }
 }
