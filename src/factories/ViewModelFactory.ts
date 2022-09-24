@@ -41,7 +41,9 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel {
         return new MicroPluginSettingsViewModel(
             this.plugin,
-            this.settings
+            this.settings,
+            this.networkClient,
+            new NetworkRequestFactory()
         )
     }
 }
