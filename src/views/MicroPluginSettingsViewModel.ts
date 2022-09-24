@@ -5,7 +5,7 @@ import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
 export interface MicroPluginSettingsDelegate {
-    loginDidfail(error: Error): void
+    loginDidFail(error: Error): void
     loginDidSucceed(response: ConfigResponse): void
     logoutDidSucceed(): void
 }
@@ -81,7 +81,7 @@ export class MicroPluginSettingsViewModel {
             })
             .catch(error => {
                 this.appToken = ""
-                this.delegate?.loginDidfail(error)
+                this.delegate?.loginDidFail(error)
                 console.log("Login error: " + error)
             })
     }

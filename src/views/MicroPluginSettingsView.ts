@@ -33,7 +33,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         this.display()
     }
 
-    public loginDidfail(error: Error) {
+    public loginDidFail(error: Error) {
         this.display()
     }
 

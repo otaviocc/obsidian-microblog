@@ -77,11 +77,11 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     // PublishViewModelDelegate
 
-    public didPublish(response: PublishResponse) {
+    public publishDidSucceed(response: PublishResponse) {
         this.makeConfirmationView(response)
     }
 
-    public didFailPublishing(error: Error) {
+    public publishDidFail(error: Error) {
         this.makeMessageView('Error', error.message)
     }
 

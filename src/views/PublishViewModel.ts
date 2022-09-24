@@ -3,8 +3,8 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
 
 export interface PublishViewModelDelegate {
-    didPublish(response: PublishResponse): void
-    didFailPublishing(error: Error): void
+    publishDidSucceed(response: PublishResponse): void
+    publishDidFail(error: Error): void
 }
 
 export class PublishViewModel {
@@ -80,10 +80,10 @@ export class PublishViewModel {
         await this.networkClient
             .run<PublishResponse>(request)
             .then(response => {
-                this.delegate?.didPublish(response)
+                this.delegate?.publishDidSucceed(response)
             })
             .catch(error => {
-                this.delegate?.didFailPublishing(error)
+                this.delegate?.publishDidFail(error)
             })
     }
 }
