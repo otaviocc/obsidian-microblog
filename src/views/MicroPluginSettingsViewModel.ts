@@ -16,12 +16,15 @@ export interface MicroPluginSettingsDelegate {
 
 export class MicroPluginSettingsViewModel {
 
-    public delegate?: MicroPluginSettingsDelegate
+    // Properties
 
+    public delegate?: MicroPluginSettingsDelegate
     private settings: StoredSettings
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactory
     readonly plugin: MicroPlugin
+
+    // Life cycle
 
     constructor(
         plugin: MicroPlugin,
@@ -34,6 +37,8 @@ export class MicroPluginSettingsViewModel {
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
     }
+
+    // Public
 
     public get hasAppToken(): boolean {
         return this.settings.appToken.length > 0

@@ -1,35 +1,25 @@
 import { Modal, Setting } from 'obsidian'
-import { PublishViewModel } from '@views/PublishViewModel'
+import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
 
-export class PublishView extends Modal {
+export class PublishView extends Modal implements PublishViewModelDelegate {
+
+    // Properties
 
     private viewModel: PublishViewModel
+
+    // Life cycle
 
     constructor(viewModel: PublishViewModel) {
         super(app)
 
         this.viewModel = viewModel
+        this.viewModel.delegate = this
     }
+
+    // Public
 
     public onOpen() {
-        if (this.viewModel.hasAppToken) {
-            this.makeReviewView()
-        } else {
-            this.makeMessageView(
-                'Oops',
-                'Missing Application Token'
-            )
-        }
-    }
-
-    public onClose() {
-        const {contentEl} = this
-
-        contentEl.empty()
-    }
-
-    private makeReviewView() {
         const {contentEl} = this
 
         contentEl.empty()
@@ -69,25 +59,33 @@ export class PublishView extends Modal {
             .addButton(button => button
                 .setButtonText('Publish')
                 .setCta()
-                .onClick(_ => {
+                .onClick(async _ => {
                     button
                         .setDisabled(true)
                         .removeCta()
                         .setButtonText('Publishing...')
 
-                    this.viewModel
-                        .publishNote()
-                        .then(response => {
-                            this.makeConfirmationView(response)
-                        })
-                        .catch(error => {
-                            this.makeMessageView(
-                                'Error',
-                                error.message
-                            )
-                        })
+                    await this.viewModel.publishNote()
                 }))
     }
+
+    public onClose() {
+        const {contentEl} = this
+
+        contentEl.empty()
+    }
+
+    // PublishViewModelDelegate
+
+    public didPublish(response: PublishResponse) {
+        this.makeConfirmationView(response)
+    }
+
+    public didFailPublishing(error: Error) {
+        this.makeMessageView('Error', error.message)
+    }
+
+    // Private
 
     private makeConfirmationView(response: PublishResponse) {
         const {contentEl} = this

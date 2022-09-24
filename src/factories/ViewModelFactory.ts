@@ -12,9 +12,13 @@ export interface ViewModelFactoryInterface {
 
 export class ViewModelFactory implements ViewModelFactoryInterface {
 
+    // Properties
+
     private settings: StoredSettings
     private plugin: MicroPlugin
     private networkClient: NetworkClientInterface
+
+    // Life cycle
 
     constructor(
         settings: StoredSettings,
@@ -27,12 +31,13 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         })
     }
 
+    // Public
+
     public makePublishViewModel(content: string): PublishViewModel {
         return new PublishViewModel(
             content,
             this.settings.defaultTags,
             this.settings.postVisibility,
-            this.settings.appToken.length > 0,
             this.networkClient,
             new NetworkRequestFactory()
         )

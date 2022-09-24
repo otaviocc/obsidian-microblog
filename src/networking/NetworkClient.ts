@@ -6,13 +6,19 @@ export interface NetworkClientInterface {
 
 export class NetworkClient implements NetworkClientInterface {
 
+    // Properties
+
     private appToken: () => string
+
+    // Life cycle
 
     constructor(
         appToken: () => string
     ) {
         this.appToken = appToken
     }
+
+    // Public
 
     public async run<T>(request: NetworkRequest): Promise<T> {
         const url = "https://micro.blog" + request.path + "?" + request.parameters

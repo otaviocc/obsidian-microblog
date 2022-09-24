@@ -13,6 +13,8 @@ export interface NetworkRequestFactoryInterface {
 
 export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
 
+    // Public
+
     public makePublishRequest(
         title: string,
         content: string,

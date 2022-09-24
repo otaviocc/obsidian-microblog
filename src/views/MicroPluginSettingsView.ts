@@ -3,7 +3,11 @@ import { MicroPluginSettingsViewModel, MicroPluginSettingsEvent, MicroPluginSett
 
 export class MicroPluginSettingsView extends PluginSettingTab implements MicroPluginSettingsDelegate {
 
+    // Properties
+
     private viewModel: MicroPluginSettingsViewModel
+
+    // Life cycle
 
     constructor(viewModel: MicroPluginSettingsViewModel) {
         super(app, viewModel.plugin)
@@ -12,6 +16,8 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         this.viewModel.delegate = this
     }
 
+    // Public
+
     public display(): void {
         if (!this.viewModel.hasAppToken) {
             this.makeLoginView()
@@ -19,6 +25,16 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
             this.makeSettingsView()
         }
     }
+
+    // MicroPluginSettingsDelegate
+
+    public handle(event: MicroPluginSettingsEvent) {
+        switch (event) {
+            default: this.display()
+        }
+    }
+
+    // Private
 
     private makeLoginView() {
         const {containerEl} = this
@@ -84,11 +100,5 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .onClick(_ => {
                     this.viewModel.logout()
                 }))
-    }
-
-    public handle(event: MicroPluginSettingsEvent) {
-        switch (event) {
-            default: this.display()
-        }
     }
 }

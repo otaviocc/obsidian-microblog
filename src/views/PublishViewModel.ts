@@ -2,9 +2,16 @@ import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactor
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
 
+export interface PublishViewModelDelegate {
+    didPublish(response: PublishResponse): void
+    didFailPublishing(error: Error): void
+}
+
 export class PublishViewModel {
 
-    readonly hasAppToken: boolean
+    // Properties
+
+    public delegate?: PublishViewModelDelegate
     private titleWrappedValue: string
     private contentWrappedValue: string
     private visibilityWrappedValue: string
@@ -12,11 +19,12 @@ export class PublishViewModel {
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
 
+    // Life cycle
+
     constructor(
         content: string,
         tags: string,
         visibility: string,
-        hasAppToken: boolean,
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
@@ -24,10 +32,11 @@ export class PublishViewModel {
         this.contentWrappedValue = content
         this.tagsWrappedValue = tags
         this.visibilityWrappedValue = visibility
-        this.hasAppToken = hasAppToken
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
     }
+
+    // Public
 
     public get title(): string {
         return this.titleWrappedValue
@@ -60,7 +69,7 @@ export class PublishViewModel {
         console.log("Post visibility change: " + value)
     }
 
-    public async publishNote(): Promise<PublishResponse> {
+    public async publishNote() {
         const request = this.networkRequestFactory.makePublishRequest(
             this.title,
             this.content,
@@ -68,6 +77,13 @@ export class PublishViewModel {
             this.visibility
         )
 
-        return this.networkClient.run<PublishResponse>(request)
+        await this.networkClient
+            .run<PublishResponse>(request)
+            .then(response => {
+                this.delegate?.didPublish(response)
+            })
+            .catch(error => {
+                this.delegate?.didFailPublishing(error)
+            })
     }
 }
