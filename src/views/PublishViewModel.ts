@@ -29,38 +29,38 @@ export class PublishViewModel {
         this.networkRequestFactory = networkRequestFactory
     }
 
-    get title(): string {
+    public get title(): string {
         return this.titleWrappedValue
     }
 
-    set title(value: string) {
+    public set title(value: string) {
         this.titleWrappedValue = value
         console.log("Post title change :" + value)
     }
 
-    get content(): string {
+    public get content(): string {
         return this.contentWrappedValue
     }
 
-    get tags(): string {
+    public get tags(): string {
         return this.tagsWrappedValue
     }
 
-    set tags(value: string) {
+    public set tags(value: string) {
         this.tagsWrappedValue = value
         console.log("Post tags changed: " + value)
     }
 
-    get visibility(): string {
+    public get visibility(): string {
         return this.visibilityWrappedValue
     }
 
-    set visibility(value: string) {
+    public set visibility(value: string) {
         this.visibilityWrappedValue = value
         console.log("Post visibility change: " + value)
     }
 
-    async publishNote(): Promise<PublishResponse> {
+    public async publishNote(): Promise<PublishResponse> {
         const request = this.networkRequestFactory.makePublishRequest(
             this.title,
             this.content,

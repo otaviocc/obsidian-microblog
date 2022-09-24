@@ -12,7 +12,7 @@ export class PublishView extends Modal {
         this.viewModel = viewModel
     }
 
-    onOpen() {
+    public onOpen() {
         if (this.viewModel.hasAppToken) {
             this.makeReviewView()
         } else {
@@ -23,7 +23,7 @@ export class PublishView extends Modal {
         }
     }
 
-    onClose() {
+    public onClose() {
         const {contentEl} = this
 
         contentEl.empty()

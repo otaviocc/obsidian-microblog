@@ -13,7 +13,7 @@ export interface NetworkRequestFactoryInterface {
 
 export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
 
-    makePublishRequest(
+    public makePublishRequest(
         title: string,
         content: string,
         tags: string,
@@ -39,7 +39,7 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         )
     }
 
-    makeConfigRequest(): NetworkRequest {
+    public makeConfigRequest(): NetworkRequest {
         return new NetworkRequest(
             "/micropub",
             new URLSearchParams([

@@ -9,7 +9,7 @@ export default class MicroPlugin extends Plugin {
     private settings: StoredSettings
     private viewModelFactory: ViewModelFactoryInterface
 
-    async onload() {
+    public async onload() {
         await this.loadSettings()
         await this.loadViewModelFactory()
 
@@ -32,9 +32,9 @@ export default class MicroPlugin extends Plugin {
         )
     }
 
-    onunload() {}
+    public onunload() {}
 
-    async saveSettings() {
+    public async saveSettings() {
         await this.saveData(this.settings)
     }
 

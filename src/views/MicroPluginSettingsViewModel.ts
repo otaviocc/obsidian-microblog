@@ -4,12 +4,24 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
+export enum MicroPluginSettingsEvent {
+    loginError,
+    loginSuccess,
+    logout
+}
+
+export interface MicroPluginSettingsDelegate {
+    handle(event: MicroPluginSettingsEvent): void
+}
+
 export class MicroPluginSettingsViewModel {
 
-    readonly plugin: MicroPlugin
+    public delegate?: MicroPluginSettingsDelegate
+
     private settings: StoredSettings
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactory
+    readonly plugin: MicroPlugin
 
     constructor(
         plugin: MicroPlugin,
@@ -23,43 +35,59 @@ export class MicroPluginSettingsViewModel {
         this.networkRequestFactory = networkRequestFactory
     }
 
-    get hasAppToken(): boolean {
+    public get hasAppToken(): boolean {
         return this.settings.appToken.length > 0
     }
 
-    get appToken(): string {
+    public get appToken(): string {
         return this.settings.appToken
     }
 
-    set appToken(value: string) {
+    public set appToken(value: string) {
         this.settings.appToken = value
         this.plugin.saveSettings()
         console.log("Token changed: " + value)
     }
 
-    get tags(): string {
+    public get tags(): string {
         return this.settings.defaultTags
     }
 
-    set tags(value: string) {
+    public set tags(value: string) {
         this.settings.defaultTags = value
         this.plugin.saveSettings()
         console.log("Default tags changed: " + value)
     }
 
-    get visibility(): string {
+    public get visibility(): string {
         return this.settings.postVisibility
     }
 
-    set visibility(value: string) {
+    public set visibility(value: string) {
         this.settings.postVisibility = value
         this.plugin.saveSettings()
         console.log("Default visibility changed: " + value)
     }
 
-    async validate(): Promise<ConfigResponse> {
-        return this.networkClient.run<ConfigResponse>(
-            this.networkRequestFactory.makeConfigRequest()
-        )
+    public async validate() {
+        await this.networkClient
+            .run<ConfigResponse>(
+                this.networkRequestFactory.makeConfigRequest()
+            )
+            .then(value => {
+                this.delegate?.handle(MicroPluginSettingsEvent.loginSuccess)
+                console.log("Login successful")
+            })
+            .catch(error => {
+                this.appToken = ""
+                this.delegate?.handle(MicroPluginSettingsEvent.loginError)
+                console.log("Login error: " + error)
+            })
+    }
+
+    public logout() {
+        this.appToken = ""
+        console.log("Logout successful")
+        this.delegate?.handle(MicroPluginSettingsEvent.logout)
     }
 }

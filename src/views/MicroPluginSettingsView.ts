@@ -1,7 +1,7 @@
 import { PluginSettingTab, Setting } from 'obsidian'
-import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
+import { MicroPluginSettingsViewModel, MicroPluginSettingsEvent, MicroPluginSettingsDelegate} from '@views/MicroPluginSettingsViewModel'
 
-export class MicroPluginSettingsView extends PluginSettingTab {
+export class MicroPluginSettingsView extends PluginSettingTab implements MicroPluginSettingsDelegate {
 
     private viewModel: MicroPluginSettingsViewModel
 
@@ -9,9 +9,10 @@ export class MicroPluginSettingsView extends PluginSettingTab {
         super(app, viewModel.plugin)
 
         this.viewModel = viewModel
+        this.viewModel.delegate = this
     }
 
-    display(): void {
+    public display(): void {
         if (!this.viewModel.hasAppToken) {
             this.makeLoginView()
         } else {
@@ -39,22 +40,13 @@ export class MicroPluginSettingsView extends PluginSettingTab {
             .addButton(button => button
                 .setButtonText('Log in')
                 .setCta()
-                .onClick(_ => {
+                .onClick(async _ => {
                     button
                         .setDisabled(true)
                         .removeCta()
                         .setButtonText('Logging in...')
 
-                    this.viewModel
-                        .validate()
-                        .then(response => {
-                            this.display()
-                        })
-                        .catch(error => {
-                            console.log("error: " + error)
-                            this.viewModel.appToken = ""
-                            this.display()
-                        })
+                    await this.viewModel.validate()
                 }))
     }
 
@@ -90,8 +82,13 @@ export class MicroPluginSettingsView extends PluginSettingTab {
                 .setButtonText('Log out')
                 .setCta()
                 .onClick(_ => {
-                    this.viewModel.appToken = ""
-                    this.display()
+                    this.viewModel.logout()
                 }))
+    }
+
+    public handle(event: MicroPluginSettingsEvent) {
+        switch (event) {
+            default: this.display()
+        }
     }
 }

@@ -27,7 +27,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         })
     }
 
-    makePublishViewModel(content: string): PublishViewModel {
+    public makePublishViewModel(content: string): PublishViewModel {
         return new PublishViewModel(
             content,
             this.settings.defaultTags,
@@ -38,7 +38,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         )
     }
 
-    makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel {
+    public makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel {
         return new MicroPluginSettingsViewModel(
             this.plugin,
             this.settings,
