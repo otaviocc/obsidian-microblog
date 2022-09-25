@@ -72,7 +72,7 @@ export class PublishViewModel {
     }
 
     public get hasMultipleBlogs(): boolean {
-        return Object.keys(this.blogs).length > 1
+        return Object.keys(this.blogs).length > 2
     }
 
     public get selectedBlogID(): string {
