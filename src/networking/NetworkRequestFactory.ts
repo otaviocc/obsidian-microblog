@@ -33,7 +33,7 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
             parameters.append('name', title)
         }
 
-        if (blogID.length > 0) {
+        if (blogID.length > 0 && blogID != 'default') {
             parameters.append('mp-destination', blogID)
         }
 
