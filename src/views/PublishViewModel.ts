@@ -30,7 +30,7 @@ export class PublishViewModel {
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
-        this.titleWrappedValue = ""
+        this.titleWrappedValue = ''
         this.contentWrappedValue = content
         this.tagsWrappedValue = tags
         this.visibilityWrappedValue = visibility
@@ -47,7 +47,7 @@ export class PublishViewModel {
 
     public set title(value: string) {
         this.titleWrappedValue = value
-        console.log("Post title change :" + value)
+        console.log('Post title changed: ' + value)
     }
 
     public get content(): string {
@@ -60,7 +60,7 @@ export class PublishViewModel {
 
     public set tags(value: string) {
         this.tagsWrappedValue = value
-        console.log("Post tags changed: " + value)
+        console.log('Post tags changed: ' + value)
     }
 
     public get visibility(): string {
@@ -69,7 +69,7 @@ export class PublishViewModel {
 
     public set visibility(value: string) {
         this.visibilityWrappedValue = value
-        console.log("Post visibility change: " + value)
+        console.log('Post visibility changed: ' + value)
     }
 
     public get selectedBlogID(): string {

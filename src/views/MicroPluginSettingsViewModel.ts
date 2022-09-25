@@ -47,7 +47,7 @@ export class MicroPluginSettingsViewModel {
     public set appToken(value: string) {
         this.settings.appToken = value
         this.plugin.saveSettings()
-        console.log("Token changed: " + value)
+        console.log('Token changed: ' + value)
     }
 
     public get tags(): string {
@@ -57,7 +57,7 @@ export class MicroPluginSettingsViewModel {
     public set tags(value: string) {
         this.settings.defaultTags = value
         this.plugin.saveSettings()
-        console.log("Default tags changed: " + value)
+        console.log('Default tags changed: ' + value)
     }
 
     public get visibility(): string {
@@ -67,7 +67,7 @@ export class MicroPluginSettingsViewModel {
     public set visibility(value: string) {
         this.settings.postVisibility = value
         this.plugin.saveSettings()
-        console.log("Default visibility changed: " + value)
+        console.log('Default visibility changed: ' + value)
     }
 
     public get blogs(): Record<string, string> {
@@ -77,7 +77,7 @@ export class MicroPluginSettingsViewModel {
     public set blogs(value: Record<string, string>) {
         this.settings.blogs = value
         this.plugin.saveSettings()
-        console.log("Blogs changed: " + this.blogs)
+        console.log('Blogs changed: ' + this.blogs)
     }
 
     public get hasMultipleBlogs(): boolean {
@@ -103,12 +103,12 @@ export class MicroPluginSettingsViewModel {
                 this.blogs = this.makeBlogSettings(value)
                 this.selectedBlogID = 'default'
                 this.delegate?.loginDidSucceed(value)
-                console.log("Login successful")
+                console.log('Login successful')
             })
             .catch(error => {
                 this.appToken = ''
                 this.delegate?.loginDidFail(error)
-                console.log("Login error: " + error)
+                console.log('Login error: ' + error)
             })
     }
 
@@ -118,7 +118,7 @@ export class MicroPluginSettingsViewModel {
         this.tags = ''
         this.selectedBlogID = ''
         this.delegate?.logoutDidSucceed()
-        console.log("Logout successful")
+        console.log('Logout successful')
     }
 
     // Private
