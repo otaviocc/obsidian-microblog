@@ -127,7 +127,7 @@ export class MicroPluginSettingsViewModel {
         response: ConfigResponse
     ): { [uid: string]: string } {
         const blogs: { [uid: string]: string } = {}
-    
+
         blogs['default'] = 'Default'
 
         response.destination?.forEach(blog => {

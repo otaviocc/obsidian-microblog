@@ -38,7 +38,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
     }
 
     public logoutDidSucceed() {
-        this.display()   
+        this.display()
     }
 
     // Private
@@ -88,7 +88,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                     .setValue(this.viewModel.selectedBlogID)
                     .onChange(value => {
                         this.viewModel.selectedBlogID = value
-                    }))            
+                    }))
         }
 
         new Setting(containerEl)

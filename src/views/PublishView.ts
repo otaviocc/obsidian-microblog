@@ -43,7 +43,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                     .setValue(this.viewModel.selectedBlogID)
                     .onChange(value => {
                         this.viewModel.selectedBlogID = value
-                    }))            
+                    }))
         }
 
         new Setting(contentEl)

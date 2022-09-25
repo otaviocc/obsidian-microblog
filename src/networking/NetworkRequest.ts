@@ -6,7 +6,7 @@ export class NetworkRequest {
     readonly parameters: URLSearchParams
     readonly method: string
     readonly body?: string
-    
+
     // Life cycle
 
     constructor(
