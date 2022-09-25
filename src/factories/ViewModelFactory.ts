@@ -6,7 +6,7 @@ import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
 import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
 
 export interface ViewModelFactoryInterface {
-    makePublishViewModel(content: string): PublishViewModel
+    makePublishViewModel(title: string, content: string): PublishViewModel
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel
 }
 
@@ -33,8 +33,12 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     // Public
 
-    public makePublishViewModel(content: string): PublishViewModel {
+    public makePublishViewModel(
+        title: string,
+        content: string
+    ): PublishViewModel {
         return new PublishViewModel(
+            title,
             content,
             this.settings.defaultTags,
             this.settings.postVisibility,

@@ -16,9 +16,10 @@ export default class MicroPlugin extends Plugin {
         this.addCommand({
             id: 'microblog-publish-command',
             name: 'Post to Micro.blog',
-            editorCallback: (editor, _) => {
+            editorCallback: (editor, markdownView) => {
                 new PublishView(
                     this.viewModelFactory.makePublishViewModel(
+                        markdownView.file.basename,
                         editor.getValue()
                     )
                 ).open()

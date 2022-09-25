@@ -12,7 +12,6 @@ export class PublishViewModel {
     // Properties
 
     public delegate?: PublishViewModelDelegate
-    public blogs: Record<string, string>
     private titleWrappedValue: string
     private content: string
     private visibilityWrappedValue: string
@@ -20,10 +19,12 @@ export class PublishViewModel {
     private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
+    readonly blogs: Record<string, string>
 
     // Life cycle
 
     constructor(
+        title: string,
         content: string,
         tags: string,
         visibility: string,
@@ -32,7 +33,7 @@ export class PublishViewModel {
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
-        this.titleWrappedValue = ''
+        this.titleWrappedValue = title
         this.content = content
         this.tagsWrappedValue = tags
         this.visibilityWrappedValue = visibility

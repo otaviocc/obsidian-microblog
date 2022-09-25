@@ -30,6 +30,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
             .setDesc('Post title is optional, but encouraged for long posts.')
             .addText(text => text
                 .setPlaceholder('Optional title')
+                .setValue(this.viewModel.title)
                 .onChange(value => {
                     this.viewModel.title = value
                 }))
