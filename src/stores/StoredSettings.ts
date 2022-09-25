@@ -11,5 +11,5 @@ export const defaultSettings: StoredSettings = {
     defaultTags: '',
     postVisibility: 'draft',
     blogs: {},
-    selectedBlogID: ''
+    selectedBlogID: 'default'
 }
