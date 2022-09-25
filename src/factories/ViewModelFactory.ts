@@ -38,6 +38,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             content,
             this.settings.defaultTags,
             this.settings.postVisibility,
+            this.settings.selectedBlogID,
             this.networkClient,
             new NetworkRequestFactory()
         )

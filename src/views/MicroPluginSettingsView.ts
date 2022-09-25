@@ -79,6 +79,18 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         containerEl.empty()
         containerEl.createEl('h2', {text: 'Micro.blog Publish'})
 
+        if (this.viewModel.hasMultipleBlogs) {
+            new Setting(containerEl)
+                .setName('Blog')
+                .setDesc('Default blog for new posts.')
+                .addDropdown(dropDown => dropDown
+                    .addOptions(this.viewModel.blogs)
+                    .setValue(this.viewModel.selectedBlogID)
+                    .onChange(value => {
+                        this.viewModel.selectedBlogID = value
+                    }))            
+        }
+
         new Setting(containerEl)
             .setName('Tags')
             .setDesc('Default list of tags for new posts.')

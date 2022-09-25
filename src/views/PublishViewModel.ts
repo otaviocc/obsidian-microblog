@@ -16,6 +16,7 @@ export class PublishViewModel {
     private contentWrappedValue: string
     private visibilityWrappedValue: string
     private tagsWrappedValue: string
+    private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
 
@@ -25,6 +26,7 @@ export class PublishViewModel {
         content: string,
         tags: string,
         visibility: string,
+        selectedBlogID: string,
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
@@ -32,6 +34,7 @@ export class PublishViewModel {
         this.contentWrappedValue = content
         this.tagsWrappedValue = tags
         this.visibilityWrappedValue = visibility
+        this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
     }
@@ -69,12 +72,17 @@ export class PublishViewModel {
         console.log("Post visibility change: " + value)
     }
 
+    public get selectedBlogID(): string {
+        return this.selectedBlogIDWrappedValue
+    }
+
     public async publishNote() {
         const request = this.networkRequestFactory.makePublishRequest(
             this.title,
             this.content,
             this.tags,
-            this.visibility
+            this.visibility,
+            this.selectedBlogID
         )
 
         await this.networkClient

@@ -5,7 +5,8 @@ export interface NetworkRequestFactoryInterface {
         title: string,
         content: string,
         tags: string,
-        visiblity: string
+        visiblity: string,
+        blogID: string
     ): NetworkRequest
 
     makeConfigRequest(): NetworkRequest
@@ -19,13 +20,15 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         title: string,
         content: string,
         tags: string,
-        visiblity: string
+        visiblity: string,
+        blogID: string
     ): NetworkRequest {
         const parameters = new URLSearchParams([
             ['h', 'entry'],
             ['name', title],
             ['content', content],
-            ['post-status', visiblity]
+            ['post-status', visiblity],
+            ['mp-destination', blogID]
         ])
 
         tags
