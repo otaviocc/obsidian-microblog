@@ -102,7 +102,7 @@ export class MicroPluginSettingsViewModel {
                 this.networkRequestFactory.makeConfigRequest()
             )
             .then(value => {
-                this.blogs = this.makeBlogSettings(value)
+                this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(value)
                 this.selectedBlogID = 'default'
                 this.delegate?.loginDidSucceed(value)
                 console.log('Login successful')
@@ -130,7 +130,7 @@ export class MicroPluginSettingsViewModel {
                 this.networkRequestFactory.makeConfigRequest()
             )
             .then(value => {
-                this.blogs = this.makeBlogSettings(value)
+                this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(value)
                 this.delegate?.refreshDidSucceed(value)
                 console.log('Refresh successful')
             })
@@ -142,7 +142,7 @@ export class MicroPluginSettingsViewModel {
 
     // Private
 
-    private makeBlogSettings(
+    private static makeBlogSettings(
         response: ConfigResponse
     ): { [uid: string]: string } {
         const blogs: { [uid: string]: string } = {}
