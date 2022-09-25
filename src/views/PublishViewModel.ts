@@ -12,8 +12,9 @@ export class PublishViewModel {
     // Properties
 
     public delegate?: PublishViewModelDelegate
+    public blogs: Record<string, string>
     private titleWrappedValue: string
-    private contentWrappedValue: string
+    private content: string
     private visibilityWrappedValue: string
     private tagsWrappedValue: string
     private selectedBlogIDWrappedValue: string
@@ -26,14 +27,16 @@ export class PublishViewModel {
         content: string,
         tags: string,
         visibility: string,
+        blogs: Record<string, string>,
         selectedBlogID: string,
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.titleWrappedValue = ''
-        this.contentWrappedValue = content
+        this.content = content
         this.tagsWrappedValue = tags
         this.visibilityWrappedValue = visibility
+        this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
@@ -48,10 +51,6 @@ export class PublishViewModel {
     public set title(value: string) {
         this.titleWrappedValue = value
         console.log('Post title changed: ' + value)
-    }
-
-    public get content(): string {
-        return this.contentWrappedValue
     }
 
     public get tags(): string {
@@ -72,8 +71,17 @@ export class PublishViewModel {
         console.log('Post visibility changed: ' + value)
     }
 
+    public get hasMultipleBlogs(): boolean {
+        return Object.keys(this.blogs).length > 1
+    }
+
     public get selectedBlogID(): string {
         return this.selectedBlogIDWrappedValue
+    }
+
+    public set selectedBlogID(value: string) {
+        this.selectedBlogIDWrappedValue = value
+        console.log('Selected blog changed: ' + value)
     }
 
     public async publishNote() {

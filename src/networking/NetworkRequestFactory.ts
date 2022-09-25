@@ -5,7 +5,7 @@ export interface NetworkRequestFactoryInterface {
         title: string,
         content: string,
         tags: string,
-        visiblity: string,
+        visibility: string,
         blogID: string
     ): NetworkRequest
 
@@ -20,37 +20,43 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         title: string,
         content: string,
         tags: string,
-        visiblity: string,
+        visibility: string,
         blogID: string
     ): NetworkRequest {
         const parameters = new URLSearchParams([
             ['h', 'entry'],
-            ['name', title],
             ['content', content],
-            ['post-status', visiblity],
-            ['mp-destination', blogID]
+            ['post-status', visibility]
         ])
+
+        if (title.length > 0) {
+            parameters.append('name', title)
+        }
+
+        if (blogID.length > 0) {
+            parameters.append('mp-destination', blogID)
+        }
 
         tags
             .split(",")
             .forEach(value => {
-                parameters.append("category[]", value.trim())
+                parameters.append('category[]', value.trim())
             })
 
         return new NetworkRequest(
-            "/micropub",
+            '/micropub',
             parameters,
-            "POST"
+            'POST'
         )
     }
 
     public makeConfigRequest(): NetworkRequest {
         return new NetworkRequest(
-            "/micropub",
+            '/micropub',
             new URLSearchParams([
                 ['q', 'config']
             ]),
-            "GET"           
+            'GET'
         )
     }
 }
