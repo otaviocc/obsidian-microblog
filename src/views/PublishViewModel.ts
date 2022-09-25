@@ -3,6 +3,7 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
 
 export interface PublishViewModelDelegate {
+    didClearTitle(): void
     publishDidSucceed(response: PublishResponse): void
     publishDidFail(error: Error): void
 }
@@ -102,5 +103,10 @@ export class PublishViewModel {
             .catch(error => {
                 this.delegate?.publishDidFail(error)
             })
+    }
+
+    public clearTitle() {
+        this.title = ''
+        this.delegate?.didClearTitle()
     }
 }

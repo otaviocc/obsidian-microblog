@@ -99,6 +99,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                     }))
                 .addExtraButton(button => button
                     .setIcon('sync')
+                    .setTooltip('Refresh blogs')
                     .onClick(async () => {
                         button
                             .setDisabled(true)

@@ -34,6 +34,13 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                 .onChange(value => {
                     this.viewModel.title = value
                 }))
+            .addExtraButton(button => button
+                .setIcon('cross')
+                .setTooltip('Remove title')
+                .onClick(() => {
+                    this.viewModel.clearTitle()
+                })
+            )
 
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(contentEl)
@@ -89,6 +96,10 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
     }
 
     // PublishViewModelDelegate
+
+    public didClearTitle() {
+        this.onOpen()
+    }
 
     public publishDidSucceed(response: PublishResponse) {
         this.makeConfirmationView(response)
