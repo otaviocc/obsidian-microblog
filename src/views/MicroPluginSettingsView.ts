@@ -41,6 +41,14 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         this.display()
     }
 
+    public refreshDidFail(error: Error) {
+        this.display()
+    }
+
+    public refreshDidSucceed(response: ConfigResponse) {
+        this.display()
+    }
+
     // Private
 
     private makeLoginView() {
@@ -89,6 +97,15 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                     .onChange(value => {
                         this.viewModel.selectedBlogID = value
                     }))
+                .addExtraButton(button => button
+                    .setIcon('sync')
+                    .onClick(async () => {
+                        button
+                            .setDisabled(true)
+
+                        await this.viewModel.refreshBlogs()
+                    })
+                )
         }
 
         new Setting(containerEl)

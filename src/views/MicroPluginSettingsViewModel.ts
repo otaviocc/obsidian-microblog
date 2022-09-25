@@ -8,6 +8,8 @@ export interface MicroPluginSettingsDelegate {
     loginDidFail(error: Error): void
     loginDidSucceed(response: ConfigResponse): void
     logoutDidSucceed(): void
+    refreshDidFail(error: Error): void
+    refreshDidSucceed(response: ConfigResponse): void
 }
 
 export class MicroPluginSettingsViewModel {
@@ -77,7 +79,7 @@ export class MicroPluginSettingsViewModel {
     public set blogs(value: Record<string, string>) {
         this.settings.blogs = value
         this.plugin.saveSettings()
-        console.log('Blogs changed: ' + this.blogs)
+        console.log('Default blogs changed: ' + JSON.stringify(this.blogs))
     }
 
     public get hasMultipleBlogs(): boolean {
@@ -91,7 +93,7 @@ export class MicroPluginSettingsViewModel {
     public set selectedBlogID(value: string) {
         this.settings.selectedBlogID = value
         this.plugin.saveSettings()
-        console.log('Selected blog ID changed: ' + value)
+        console.log('Default selected blog ID changed: ' + value)
     }
 
     public async validate() {
@@ -106,7 +108,7 @@ export class MicroPluginSettingsViewModel {
                 console.log('Login successful')
             })
             .catch(error => {
-                this.appToken = ''
+                this.logout()
                 this.delegate?.loginDidFail(error)
                 console.log('Login error: ' + error)
             })
@@ -120,6 +122,22 @@ export class MicroPluginSettingsViewModel {
         this.visibility = 'draft'
         this.delegate?.logoutDidSucceed()
         console.log('Logout successful')
+    }
+
+    public async refreshBlogs() {
+        await this.networkClient
+            .run<ConfigResponse>(
+                this.networkRequestFactory.makeConfigRequest()
+            )
+            .then(value => {
+                this.blogs = this.makeBlogSettings(value)
+                this.delegate?.refreshDidSucceed(value)
+                console.log('Refresh successful')
+            })
+            .catch(error => {
+                this.delegate?.refreshDidFail(error)
+                console.log('Refresh failed: ' + error)
+            })
     }
 
     // Private
