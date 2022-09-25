@@ -37,7 +37,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(contentEl)
                 .setName('Blog')
-                .setDesc('Override the Default blog for this post.')
+                .setDesc('Override the default blog for this post.')
                 .addDropdown(dropDown => dropDown
                     .addOptions(this.viewModel.blogs)
                     .setValue(this.viewModel.selectedBlogID)
