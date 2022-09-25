@@ -116,7 +116,8 @@ export class MicroPluginSettingsViewModel {
         this.appToken = ''
         this.blogs = {}
         this.tags = ''
-        this.selectedBlogID = ''
+        this.selectedBlogID = 'default'
+        this.visibility = 'draft'
         this.delegate?.logoutDidSucceed()
         console.log('Logout successful')
     }
