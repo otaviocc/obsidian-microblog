@@ -87,27 +87,25 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         containerEl.empty()
         containerEl.createEl('h2', {text: 'Micro.publish'})
 
-        if (this.viewModel.hasMultipleBlogs) {
-            new Setting(containerEl)
-                .setName('Blog')
-                .setDesc('Default blog for new posts.')
-                .addDropdown(dropDown => dropDown
-                    .addOptions(this.viewModel.blogs)
-                    .setValue(this.viewModel.selectedBlogID)
-                    .onChange(value => {
-                        this.viewModel.selectedBlogID = value
-                    }))
-                .addExtraButton(button => button
-                    .setIcon('sync')
-                    .setTooltip('Refresh blogs')
-                    .onClick(async () => {
-                        button
-                            .setDisabled(true)
+        new Setting(containerEl)
+            .setName('Blog')
+            .setDesc('Default blog for new posts.')
+            .addDropdown(dropDown => dropDown
+                .addOptions(this.viewModel.blogs)
+                .setValue(this.viewModel.selectedBlogID)
+                .onChange(value => {
+                    this.viewModel.selectedBlogID = value
+                }))
+            .addExtraButton(button => button
+                .setIcon('sync')
+                .setTooltip('Refresh blogs')
+                .onClick(async () => {
+                    button
+                        .setDisabled(true)
 
-                        await this.viewModel.refreshBlogs()
-                    })
-                )
-        }
+                    await this.viewModel.refreshBlogs()
+                })
+            )
 
         new Setting(containerEl)
             .setName('Tags')
