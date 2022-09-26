@@ -1,6 +1,6 @@
-# Micro.blog Publish for Obsidian
+# Micro.publish
 
-Micro.blog Publish for [Obsidian](https://obsidian.md/) is a community maintained plugin to publish notes to a [Micro.blog](https://micro.blog/) blog.
+Micro.publish is a community maintained plugin for [Obsidian](https://obsidian.md/) to publish notes to a [Micro.blog](https://micro.blog/) blog.
 
 ## Installing
 
@@ -20,7 +20,7 @@ Once logged in, the plugin allows to set default values for tags, post visibilit
 
 ### Command
 
-Micro.blog Publish is triggered using Obsidian's command palette.
+Micro.publish is triggered using Obsidian's command palette.
 
 ![](images/03-command.png)
 

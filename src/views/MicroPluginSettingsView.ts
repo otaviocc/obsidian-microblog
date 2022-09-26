@@ -55,7 +55,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         const {containerEl} = this
 
         containerEl.empty()
-        containerEl.createEl('h2', {text: 'Micro.blog Publish'})
+        containerEl.createEl('h2', {text: 'Micro.publish'})
 
         new Setting(containerEl)
             .setName('App Token')
@@ -85,7 +85,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         const {containerEl} = this
 
         containerEl.empty()
-        containerEl.createEl('h2', {text: 'Micro.blog Publish'})
+        containerEl.createEl('h2', {text: 'Micro.publish'})
 
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(containerEl)
