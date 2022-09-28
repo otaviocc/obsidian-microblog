@@ -4,14 +4,32 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
+/*
+ * Plugin Settings View Delegate Interface, implemented by
+ * the object which needs to observe events from the view model.
+ */
 export interface MicroPluginSettingsDelegate {
+
+    // Triggered when login fails.
     loginDidFail(error: Error): void
+
+    // Triggered when the login succeeds.
     loginDidSucceed(response: ConfigResponse): void
+
+    // Triggered logout succeeds.
     logoutDidSucceed(): void
+
+    // Triggered when refreshing list of blogs fails.
     refreshDidFail(error: Error): void
+
+    // Triggered when refreshing list of blogs succeeds.
     refreshDidSucceed(response: ConfigResponse): void
 }
 
+/*
+ * This view model drives the content and interactions with the
+ * plugin settings view.
+ */
 export class MicroPluginSettingsViewModel {
 
     // Properties

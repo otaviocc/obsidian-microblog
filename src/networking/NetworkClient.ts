@@ -1,9 +1,20 @@
 import { NetworkRequest } from '@networking/NetworkRequest'
 
 export interface NetworkClientInterface {
+
+    // Performs the network request. It takes a network request
+    // and returns a Promise. `T` specifies the return type and is used
+    // by the network client to decode the network payload.
     run<T>(request: NetworkRequest): Promise<T>
 }
 
+/*
+ * Network Client used to perform all the network requests
+ * in the plugin.
+ *
+ * The network client takes a closure which returns the application
+ * token. This allows the app token to be resolved only when it's needed,
+ */
 export class NetworkClient implements NetworkClientInterface {
 
     // Properties

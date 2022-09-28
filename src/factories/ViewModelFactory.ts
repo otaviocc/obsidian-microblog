@@ -6,10 +6,21 @@ import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
 import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
 
 export interface ViewModelFactoryInterface {
+
+    // Builds the Publish View Model, used when Publishing a note
+    // to Micro.blog via the Commands Palette.
     makePublishViewModel(title: string, content: string): PublishViewModel
+
+    // Builds the Plugin Settings View Model, used by the plugin
+    // Settings.
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel
 }
 
+/*
+ * View Model Factory builds all the View Models in the plugin.
+ * It simplifies building View Models since all the resolved dependencies
+ * are already available via the factory.
+ */
 export class ViewModelFactory implements ViewModelFactoryInterface {
 
     // Properties

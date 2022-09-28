@@ -1,3 +1,6 @@
+/*
+ * Plugin settings.
+ */
 export interface StoredSettings {
     appToken: string
     defaultTags: string
@@ -6,6 +9,7 @@ export interface StoredSettings {
     selectedBlogID: string
 }
 
+// Default values for the plugin.
 export const defaultSettings: StoredSettings = {
     appToken: '',
     defaultTags: '',

@@ -1,6 +1,9 @@
 import { NetworkRequest } from '@networking/NetworkRequest'
 
 export interface NetworkRequestFactoryInterface {
+
+    // Builds the publish request, network request used to publish a new
+    // post to Micro.blog.
     makePublishRequest(
         title: string,
         content: string,
@@ -9,9 +12,17 @@ export interface NetworkRequestFactoryInterface {
         blogID: string
     ): NetworkRequest
 
+    // Builds the configuration request, network request used to "log in"
+    // the user. The config network request returns the list of blogs the
+    // user can post to.
     makeConfigRequest(): NetworkRequest
 }
 
+/*
+ * Network Request Factory builds all the network requests in the plugin.
+ * It hides all the complexity, data transformation, etc... of building
+ * network requests.
+ */
 export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
 
     // Public

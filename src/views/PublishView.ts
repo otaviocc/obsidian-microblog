@@ -2,6 +2,15 @@ import { Modal, Setting } from 'obsidian'
 import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
 
+/*
+ * Publish View subclasses Modal, and is presented via Obsidian's
+ * Command Palette.
+ *
+ * The data used to populate this view and all the interaction with the
+ * view is handled by the view's view model. All this view does is to call
+ * methods on the view model and observe (via delegate) changes so it
+ * can react properly.
+ */
 export class PublishView extends Modal implements PublishViewModelDelegate {
 
     // Properties

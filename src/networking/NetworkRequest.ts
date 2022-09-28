@@ -1,3 +1,8 @@
+/*
+ * Definition of a network request. It specifies
+ * the endpoint, url parameters, method used and
+ * body sent.
+ */
 export class NetworkRequest {
 
     // Properties

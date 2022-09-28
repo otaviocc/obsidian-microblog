@@ -2,12 +2,27 @@ import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactor
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
 
+/*
+ * Publish View Delegate Interface, implemented by
+ * the object which needs to observe events from the view model.
+ */
 export interface PublishViewModelDelegate {
+
+    // Triggered when user clicks the delete button when the
+    // title property is reset.
     didClearTitle(): void
+
+    // Triggered when publishing a new post succeeds.
     publishDidSucceed(response: PublishResponse): void
+
+    // Triggered when publishing a new post fails.
     publishDidFail(error: Error): void
 }
 
+/*
+ * This view model drives the content and interactions with the
+ * publish view.
+ */
 export class PublishViewModel {
 
     // Properties

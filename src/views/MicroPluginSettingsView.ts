@@ -2,6 +2,15 @@ import { PluginSettingTab, Setting } from 'obsidian'
 import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate} from '@views/MicroPluginSettingsViewModel'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
+/*
+ * Plugin Settings View subclasses PluginSettingTab, and is presented via
+ * Obsidian's Settings Window.
+ *
+ * The data used to populate this view and all the interaction with the
+ * view is handled by the view's view model. All this view does is to call
+ * methods on the view model and observe (via delegate) changes so it
+ * can react properly.
+ */
 export class MicroPluginSettingsView extends PluginSettingTab implements MicroPluginSettingsDelegate {
 
     // Properties
