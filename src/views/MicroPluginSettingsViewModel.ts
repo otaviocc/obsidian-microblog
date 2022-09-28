@@ -3,6 +3,7 @@ import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
+import { ViewModelFactoryInterface } from '@factories/ViewModelFactory'
 
 /*
  * Plugin Settings View Delegate Interface, implemented by
@@ -38,6 +39,7 @@ export class MicroPluginSettingsViewModel {
     private settings: StoredSettings
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactory
+    readonly viewModelFactory: ViewModelFactoryInterface
     readonly plugin: MicroPlugin
 
     // Life cycle
@@ -46,12 +48,14 @@ export class MicroPluginSettingsViewModel {
         plugin: MicroPlugin,
         settings: StoredSettings,
         networkClient: NetworkClientInterface,
-        networkRequestFactory: NetworkRequestFactory
+        networkRequestFactory: NetworkRequestFactory,
+        viewModelFactory: ViewModelFactoryInterface
     ) {
         this.plugin = plugin
         this.settings = settings
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
+        this.viewModelFactory = viewModelFactory
     }
 
     // Public
@@ -77,7 +81,7 @@ export class MicroPluginSettingsViewModel {
     public set tags(value: string) {
         this.settings.defaultTags = value
         this.plugin.saveSettings()
-        console.log('Default tags changed: ' + value)
+        console.log('Default categories changed: ' + value)
     }
 
     public get visibility(): string {

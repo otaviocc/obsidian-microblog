@@ -1,6 +1,7 @@
 import { PluginSettingTab, Setting } from 'obsidian'
 import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate} from '@views/MicroPluginSettingsViewModel'
 import { ConfigResponse } from '@networking/ConfigResponse'
+import { TagSuggestionView } from '@views/TagSuggestionView'
 
 /*
  * Plugin Settings View subclasses PluginSettingTab, and is presented via
@@ -123,10 +124,10 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
             )
 
         new Setting(containerEl)
-            .setName('Tags')
-            .setDesc('Default list of tags for new posts.')
+            .setName('Categories')
+            .setDesc('Default list of categories for new posts.')
             .addText(text => text
-                .setPlaceholder('tag1, tag2, tag3')
+                .setPlaceholder('category1, category2, category3')
                 .setValue(this.viewModel.tags)
                 .onChange(value => {
                     this.viewModel.tags = value
@@ -149,6 +150,16 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .setCta()
                 .onClick(_ => {
                     this.viewModel.logout()
+                }))
+
+        new Setting(containerEl)
+            .addButton(button => button
+                .setButtonText('Suggestions')
+                .setCta()
+                .onClick(_ => {
+                    new TagSuggestionView(
+                        this.viewModel.viewModelFactory.makeTagSuggestionViewModel()
+                    ).open()
                 }))
     }
 }

@@ -76,7 +76,7 @@ export class PublishViewModel {
 
     public set tags(value: string) {
         this.tagsWrappedValue = value
-        console.log('Post tags changed: ' + value)
+        console.log('Post categories changed: ' + value)
     }
 
     public get visibility(): string {

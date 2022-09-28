@@ -16,6 +16,8 @@ export interface NetworkRequestFactoryInterface {
     // the user. The config network request returns the list of blogs the
     // user can post to.
     makeConfigRequest(): NetworkRequest
+
+    makeCategoriesRequest(): NetworkRequest
 }
 
 /*
@@ -69,5 +71,15 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
             ]),
             method: 'GET'
         }
+    }
+
+    public makeCategoriesRequest(): NetworkRequest {
+        return new NetworkRequest(
+            '/micropub',
+            new URLSearchParams([
+                ['q', 'category']
+            ]),
+            'GET'
+        )
     }
 }

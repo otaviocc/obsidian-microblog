@@ -64,10 +64,10 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
         }
 
         new Setting(contentEl)
-            .setName('Tags')
-            .setDesc('Override the default tags for this post.')
+            .setName('Categories')
+            .setDesc('Override the default categories for this post.')
             .addText(text => text
-                .setPlaceholder('tag1, tag2, tag3')
+                .setPlaceholder('category1, category2, category3')
                 .setValue(this.viewModel.tags)
                 .onChange(value => {
                     this.viewModel.tags = value
