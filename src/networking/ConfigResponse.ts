@@ -2,7 +2,7 @@
  * Response of the `/micropub?q=config` network request.
  */
 export type ConfigResponse = {
-	destination?: [ConfigDestinationResponse]
+	destination?: ConfigDestinationResponse[]
 }
 
 export type ConfigDestinationResponse = {
