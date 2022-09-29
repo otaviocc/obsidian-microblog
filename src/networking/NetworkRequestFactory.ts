@@ -54,20 +54,20 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
                 parameters.append('category[]', value.trim())
             })
 
-        return new NetworkRequest(
-            '/micropub',
-            parameters,
-            'POST'
-        )
+        return {
+            path: '/micropub',
+            parameters: parameters,
+            method: 'POST'
+        }
     }
 
     public makeConfigRequest(): NetworkRequest {
-        return new NetworkRequest(
-            '/micropub',
-            new URLSearchParams([
+        return {
+            path: '/micropub',
+            parameters: new URLSearchParams([
                 ['q', 'config']
             ]),
-            'GET'
-        )
+            method: 'GET'
+        }
     }
 }
