@@ -102,22 +102,22 @@ export class PublishViewModel {
     }
 
     public async publishNote() {
-        const request = this.networkRequestFactory.makePublishRequest(
-            this.title,
-            this.content,
-            this.tags,
-            this.visibility,
-            this.selectedBlogID
-        )
+        try {
+            const request = this.networkRequestFactory.makePublishRequest(
+                this.title,
+                this.content,
+                this.tags,
+                this.visibility,
+                this.selectedBlogID
+            )
 
-        await this.networkClient
-            .run<PublishResponse>(request)
-            .then(response => {
-                this.delegate?.publishDidSucceed(response)
-            })
-            .catch(error => {
-                this.delegate?.publishDidFail(error)
-            })
+            const result = await this.networkClient
+                .run<PublishResponse>(request)
+
+            this.delegate?.publishDidSucceed(result)
+        } catch (error) {
+            this.delegate?.publishDidFail(error)
+        }
     }
 
     public clearTitle() {

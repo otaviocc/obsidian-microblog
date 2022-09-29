@@ -115,21 +115,23 @@ export class MicroPluginSettingsViewModel {
     }
 
     public async validate() {
-        await this.networkClient
-            .run<ConfigResponse>(
-                this.networkRequestFactory.makeConfigRequest()
-            )
-            .then(value => {
-                this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(value)
-                this.selectedBlogID = 'default'
-                this.delegate?.loginDidSucceed(value)
-                console.log('Login successful')
-            })
-            .catch(error => {
-                this.logout()
-                this.delegate?.loginDidFail(error)
-                console.log('Login error: ' + error)
-            })
+        console.log('Login in')
+
+        try {
+            const result = await this.networkClient
+                .run<ConfigResponse>(
+                    this.networkRequestFactory.makeConfigRequest()
+                )
+
+            this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(result)
+            this.selectedBlogID = 'default'
+            this.delegate?.loginDidSucceed(result)
+            console.log('Login successful')
+        } catch (error) {
+            this.logout()
+            this.delegate?.loginDidFail(error)
+            console.log('Login error: ' + error)
+        }
     }
 
     public logout() {
@@ -143,19 +145,21 @@ export class MicroPluginSettingsViewModel {
     }
 
     public async refreshBlogs() {
-        await this.networkClient
-            .run<ConfigResponse>(
-                this.networkRequestFactory.makeConfigRequest()
-            )
-            .then(value => {
-                this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(value)
-                this.delegate?.refreshDidSucceed(value)
-                console.log('Refresh successful')
-            })
-            .catch(error => {
-                this.delegate?.refreshDidFail(error)
-                console.log('Refresh failed: ' + error)
-            })
+        console.log('Refreshing blogs')
+
+        try {
+            const result = await this.networkClient
+                .run<ConfigResponse>(
+                    this.networkRequestFactory.makeConfigRequest()
+                )
+
+            this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(result)
+            this.delegate?.refreshDidSucceed(result)
+            console.log('Refresh successful')
+        } catch (error) {
+            this.delegate?.refreshDidFail(error)
+            console.log('Refresh failed: ' + error)
+        }
     }
 
     // Private
