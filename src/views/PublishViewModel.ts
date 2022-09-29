@@ -103,7 +103,7 @@ export class PublishViewModel {
 
     public async publishNote() {
         try {
-            const request = this.networkRequestFactory.makePublishRequest(
+            const response = this.networkRequestFactory.makePublishRequest(
                 this.title,
                 this.content,
                 this.tags,
@@ -112,7 +112,7 @@ export class PublishViewModel {
             )
 
             const result = await this.networkClient
-                .run<PublishResponse>(request)
+                .run<PublishResponse>(response)
 
             this.delegate?.publishDidSucceed(result)
         } catch (error) {

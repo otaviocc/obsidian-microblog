@@ -118,14 +118,14 @@ export class MicroPluginSettingsViewModel {
         console.log('Login in')
 
         try {
-            const result = await this.networkClient
+            const response = await this.networkClient
                 .run<ConfigResponse>(
                     this.networkRequestFactory.makeConfigRequest()
                 )
 
-            this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(result)
+            this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(response)
             this.selectedBlogID = 'default'
-            this.delegate?.loginDidSucceed(result)
+            this.delegate?.loginDidSucceed(response)
             console.log('Login successful')
         } catch (error) {
             this.logout()
@@ -148,13 +148,13 @@ export class MicroPluginSettingsViewModel {
         console.log('Refreshing blogs')
 
         try {
-            const result = await this.networkClient
+            const response = await this.networkClient
                 .run<ConfigResponse>(
                     this.networkRequestFactory.makeConfigRequest()
                 )
 
-            this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(result)
-            this.delegate?.refreshDidSucceed(result)
+            this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(response)
+            this.delegate?.refreshDidSucceed(response)
             console.log('Refresh successful')
         } catch (error) {
             this.delegate?.refreshDidFail(error)
