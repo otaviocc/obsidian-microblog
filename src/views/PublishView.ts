@@ -99,9 +99,12 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
     }
 
     public onClose() {
-        const {contentEl} = this
+        super.onClose()
 
+        const {contentEl} = this
         contentEl.empty()
+
+        this.viewModel.delegate = undefined
     }
 
     // PublishViewModelDelegate
