@@ -111,8 +111,9 @@ export class PublishViewModel {
                 this.selectedBlogID
             )
 
-            const result = await this.networkClient
-                .run<PublishResponse>(response)
+            const result = await this.networkClient.run<PublishResponse>(
+                response
+            )
 
             this.delegate?.publishDidSucceed(result)
         } catch (error) {
