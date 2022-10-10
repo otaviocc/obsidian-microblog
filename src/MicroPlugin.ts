@@ -26,6 +26,12 @@ export default class MicroPlugin extends Plugin {
             }
         })
 
+        this.addCommand({
+            id: 'microblog-categories-sync-command',
+            name: 'Synchronize Categories',
+            callback: () => {}
+        })
+
         this.addSettingTab(
             new MicroPluginSettingsView(
                 this.viewModelFactory.makeMicroPluginSettingsViewModel()
