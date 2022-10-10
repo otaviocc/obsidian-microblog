@@ -4,7 +4,7 @@ import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewMode
 import { PublishViewModel } from '@views/PublishViewModel'
 import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
 import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
-import { TagSuggestionViewModel } from '@views/TagSuggestionView'
+import { TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 export interface ViewModelFactoryInterface {
 
@@ -15,6 +15,8 @@ export interface ViewModelFactoryInterface {
     // Builds the Plugin Settings View Model, used by the plugin
     // Settings.
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel
+
+    // Builds the Tags Suggestion View Mode.
     makeTagSuggestionViewModel(): TagSuggestionViewModel
 }
 
