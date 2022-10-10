@@ -17,6 +17,8 @@ export interface NetworkRequestFactoryInterface {
     // user can post to.
     makeConfigRequest(): NetworkRequest
 
+    // Builds the categories request, network request used to fetch
+    // categories (a..k.a. tags) used in previous posts.
     makeCategoriesRequest(): NetworkRequest
 }
 
@@ -74,12 +76,12 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
     }
 
     public makeCategoriesRequest(): NetworkRequest {
-        return new NetworkRequest(
-            '/micropub',
-            new URLSearchParams([
+        return {
+            path: '/micropub',
+            parameters: new URLSearchParams([
                 ['q', 'category']
             ]),
-            'GET'
-        )
+            method: 'GET'
+        }
     }
 }
