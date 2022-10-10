@@ -15,17 +15,12 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
         super(app)
 
         this.viewModel = viewModel
-        this.viewModel.delegate = this
     }
 
     // Public
 
-    public async onOpen() {
-        await this.viewModel.fetchCategories()
-    }
-
     public getItems(): string[] {
-        return this.viewModel.categories
+        return this.viewModel.tags
     }
 
     public getItemText(value: string): string {
@@ -33,18 +28,6 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
     }
 
     public onChooseItem(item: string, evt: MouseEvent | KeyboardEvent) {
-        console.log('onChooseSuggestion: ' + item)
-    }
-
-    // TagSuggestionDelegate
-
-    public fetchCategoriesDidSucceed() {
-        this.onOpen()
-        console.log('fetchCategoriesDidSucceed')
-    }
-
-    public fetchCategoriesDidFail(error: Error) {
-        this.onOpen()
-        console.log('fetchCategoriesDidFail: ' + error.message)
+        this.viewModel.chooseCategory(item)
     }
 }

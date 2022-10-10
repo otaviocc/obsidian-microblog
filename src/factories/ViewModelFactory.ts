@@ -76,8 +76,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     public makeTagSuggestionViewModel(): TagSuggestionViewModel {
         return new TagSuggestionViewModel(
-            this.networkClient,
-            new NetworkRequestFactory()
+            this.settings.tags
         )
     }
 }
