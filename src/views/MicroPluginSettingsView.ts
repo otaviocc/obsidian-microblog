@@ -1,7 +1,6 @@
 import { PluginSettingTab, Setting } from 'obsidian'
 import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate} from '@views/MicroPluginSettingsViewModel'
 import { ConfigResponse } from '@networking/ConfigResponse'
-import { TagSuggestionView } from '@views/TagSuggestionView'
 
 /*
  * Plugin Settings View subclasses PluginSettingTab, and is presented via
@@ -150,16 +149,6 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .setCta()
                 .onClick(_ => {
                     this.viewModel.logout()
-                }))
-
-        new Setting(containerEl)
-            .addButton(button => button
-                .setButtonText('Suggestions')
-                .setCta()
-                .onClick(_ => {
-                    new TagSuggestionView(
-                        this.viewModel.viewModelFactory.makeTagSuggestionViewModel()
-                    ).open()
                 }))
     }
 }
