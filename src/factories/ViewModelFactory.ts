@@ -82,9 +82,12 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     public makeTagSuggestionViewModel(
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel {
-        return new TagSuggestionViewModel(
+        const viewModel =  new TagSuggestionViewModel(
             this.settings.tags,
-            delegate
         )
+
+        viewModel.delegate = delegate
+
+        return viewModel
     }
 }
