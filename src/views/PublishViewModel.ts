@@ -1,6 +1,8 @@
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
+import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
+import { ViewModelFactoryInterface } from '@base/factories/ViewModelFactory'
 
 /*
  * Publish View Delegate Interface, implemented by
@@ -23,7 +25,7 @@ export interface PublishViewModelDelegate {
  * This view model drives the content and interactions with the
  * publish view.
  */
-export class PublishViewModel {
+export class PublishViewModel implements TagSuggestionDelegate {
 
     // Properties
 
@@ -35,6 +37,7 @@ export class PublishViewModel {
     private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
+    private viewModelFactory: ViewModelFactoryInterface
     readonly blogs: Record<string, string>
 
     // Life cycle
@@ -47,7 +50,8 @@ export class PublishViewModel {
         blogs: Record<string, string>,
         selectedBlogID: string,
         networkClient: NetworkClientInterface,
-        networkRequestFactory: NetworkRequestFactoryInterface
+        networkRequestFactory: NetworkRequestFactoryInterface,
+        viewModelFactory: ViewModelFactoryInterface
     ) {
         this.titleWrappedValue = title
         this.content = content
@@ -57,6 +61,7 @@ export class PublishViewModel {
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
+        this.viewModelFactory = viewModelFactory
     }
 
     // Public
@@ -124,5 +129,15 @@ export class PublishViewModel {
     public clearTitle() {
         this.title = ''
         this.delegate?.didClearTitle()
+    }
+
+    public suggestionsViewModel(): TagSuggestionViewModel {
+        return this.viewModelFactory.makeTagSuggestionViewModel(this)
+    }
+
+    // TagSuggestionDelegate
+
+    public didSelectCategory(category: string): void {
+        console.log('category: ' + category)
     }
 }

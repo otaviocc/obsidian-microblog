@@ -19,7 +19,7 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
 
     // Public
 
-    public getItems(): string[] {
+    public getItems(): Array<string> {
         return this.viewModel.tags
     }
 
@@ -27,7 +27,10 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
         return value
     }
 
-    public onChooseItem(item: string, evt: MouseEvent | KeyboardEvent) {
+    public onChooseItem(
+        item: string,
+        evt: MouseEvent | KeyboardEvent
+    ) {
         this.viewModel.chooseCategory(item)
     }
 }

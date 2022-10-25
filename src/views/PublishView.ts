@@ -1,6 +1,8 @@
 import { Modal, Setting } from 'obsidian'
 import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
+import { TagSuggestionView } from '@views/TagSuggestionView'
+import { TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
  * Publish View subclasses Modal, and is presented via Obsidian's
@@ -19,7 +21,9 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     // Life cycle
 
-    constructor(viewModel: PublishViewModel) {
+    constructor(
+        viewModel: PublishViewModel
+    ) {
         super(app)
 
         this.viewModel = viewModel
@@ -72,6 +76,17 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                 .onChange(value => {
                     this.viewModel.tags = value
                 }))
+            .addExtraButton(button => button
+                .setIcon('plus')
+                .setTooltip('Add categories')
+                .onClick(() => {
+                    const view = new TagSuggestionView(
+                        this.viewModel.suggestionsViewModel()
+                    )
+
+                    view.open()
+                })
+            )
 
         new Setting(contentEl)
             .setName('Visibility')

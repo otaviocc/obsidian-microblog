@@ -4,20 +4,25 @@ import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewMode
 import { PublishViewModel } from '@views/PublishViewModel'
 import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
 import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
-import { TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
+import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggestionViewModel'
 
 export interface ViewModelFactoryInterface {
 
     // Builds the Publish View Model, used when Publishing a note
     // to Micro.blog via the Commands Palette.
-    makePublishViewModel(title: string, content: string): PublishViewModel
+    makePublishViewModel(
+        title: string,
+        content: string
+    ): PublishViewModel
 
     // Builds the Plugin Settings View Model, used by the plugin
     // Settings.
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel
 
     // Builds the Tags Suggestion View Mode.
-    makeTagSuggestionViewModel(): TagSuggestionViewModel
+    makeTagSuggestionViewModel(
+        delegate?: TagSuggestionDelegate
+    ): TagSuggestionViewModel
 }
 
 /*
@@ -60,7 +65,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.settings.blogs,
             this.settings.selectedBlogID,
             this.networkClient,
-            new NetworkRequestFactory()
+            new NetworkRequestFactory(),
+            this
         )
     }
 
@@ -70,13 +76,15 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.settings,
             this.networkClient,
             new NetworkRequestFactory(),
-            this
         )
     }
 
-    public makeTagSuggestionViewModel(): TagSuggestionViewModel {
+    public makeTagSuggestionViewModel(
+        delegate?: TagSuggestionDelegate
+    ): TagSuggestionViewModel {
         return new TagSuggestionViewModel(
-            this.settings.tags
+            this.settings.tags,
+            delegate
         )
     }
 }
