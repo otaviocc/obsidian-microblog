@@ -2,7 +2,7 @@ import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactor
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
-import { ViewModelFactoryInterface } from '@base/factories/ViewModelFactory'
+import { ViewModelFactoryInterface } from '@factories/ViewModelFactory'
 
 /*
  * Publish View Delegate Interface, implemented by
