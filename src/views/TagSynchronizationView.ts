@@ -1,6 +1,15 @@
 import { Modal } from 'obsidian'
 import { TagSynchronizationDelegate, TagSynchronizationViewModel } from '@views/TagSynchronizationViewModel'
 
+/*
+ * Tag Synchronization View subclasses Modal, and is presented via Obsidian's
+ * Command Palette.
+ *
+ * The data used to populate this view and all the interaction with the
+ * view is handled by the view's view model. All this view does is to call
+ * methods on the view model and observe (via delegate) changes so it
+ * can react properly.
+ */
 export class TagSynchronizationView extends Modal implements TagSynchronizationDelegate {
 
     // Properties
