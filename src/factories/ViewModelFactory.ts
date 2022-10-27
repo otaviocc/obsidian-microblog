@@ -65,7 +65,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         return new PublishViewModel(
             title,
             content,
-            this.settings.defaultTags,
+            this.settings.tags,
             this.settings.postVisibility,
             this.settings.blogs,
             this.settings.selectedBlogID,
@@ -88,7 +88,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         excluding: Array<string>,
         delegate?: TagSuggestionDelegate,
     ): TagSuggestionViewModel {
-        const tags = this.settings.tags
+        const tags = this.settings.tagSuggestions
             .filter(element =>
                 !excluding.includes(element)
             )

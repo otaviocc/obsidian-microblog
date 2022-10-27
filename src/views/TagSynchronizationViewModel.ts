@@ -53,7 +53,7 @@ export class TagSynchronizationViewModel {
                 this.networkRequestFactory.makeCategoriesRequest()
             )
 
-            this.settings.tags = response.categories
+            this.settings.tagSuggestions = response.categories
             this.plugin.saveSettings()
 
             this.delegate?.tagSynchronizationDidSucceed(response.categories.length)

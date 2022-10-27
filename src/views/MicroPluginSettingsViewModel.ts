@@ -70,22 +70,22 @@ export class MicroPluginSettingsViewModel {
         console.log('Token changed: ' + value)
     }
 
-    public get defaultTags(): string {
-        return this.settings.defaultTags
+    public get tags(): string {
+        return this.settings.tags
     }
 
-    public set defaultTags(value: string) {
-        this.settings.defaultTags = value
+    public set tags(value: string) {
+        this.settings.tags = value
         this.plugin.saveSettings()
         console.log('Default categories changed: ' + value)
     }
 
-    public get tags(): Array<string> {
-        return this.settings.tags
+    public get tagSuggestions(): Array<string> {
+        return this.settings.tagSuggestions
     }
 
-    public set tags(value: Array<string>) {
-        this.settings.tags = value
+    public set tagSuggestions(value: Array<string>) {
+        this.settings.tagSuggestions = value
         this.plugin.saveSettings()
         console.log('Categories changed: ' + value)
     }
@@ -146,10 +146,10 @@ export class MicroPluginSettingsViewModel {
     public logout() {
         this.appToken = ''
         this.blogs = {}
-        this.defaultTags = ''
+        this.tags = ''
         this.selectedBlogID = 'default'
         this.visibility = 'draft'
-        this.tags = []
+        this.tagSuggestions = []
         this.delegate?.logoutDidSucceed()
         console.log('Logout successful')
     }
