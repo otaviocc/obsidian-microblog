@@ -11,13 +11,13 @@ export interface StoredSettings {
 
     // Default post visibility (set in Settings)
     // that applies to all new posts.
-    postVisibility: string,
+    postVisibility: string
 
     // List of blogs available for the given app token.
-    blogs: Record<string, string>,
+    blogs: Record<string, string>
 
     // Default blog used for new posts.
-    selectedBlogID: string,
+    selectedBlogID: string
 
     // List of tag suggestions for new posts,
     // retrieved from Micro.blog for the selected blog.
