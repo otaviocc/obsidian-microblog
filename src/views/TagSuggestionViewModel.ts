@@ -5,7 +5,7 @@
 export interface TagSuggestionDelegate {
 
     // Triggered when a category is selected.
-    didSelectCategory(category: string): void
+    tagSuggestionDidSelectTag(tag: string): void
 }
 
 export class TagSuggestionViewModel {
@@ -25,8 +25,8 @@ export class TagSuggestionViewModel {
 
     // Public
 
-    public chooseCategory(category: string) {
-        this.delegate?.didSelectCategory(category)
-        console.log('Category selected: ' + category)
+    public chooseCategory(tag: string) {
+        this.delegate?.tagSuggestionDidSelectTag(tag)
+        console.log('Category selected: ' + tag)
     }
 }

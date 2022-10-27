@@ -12,7 +12,7 @@ export interface PublishViewModelDelegate {
 
     // Triggered when user clicks the delete button when the
     // title property is reset.
-    didClearTitle(): void
+    publishDidClearTitle(): void
 
     // Triggered when publishing a new post succeeds.
     publishDidSucceed(response: PublishResponse): void
@@ -21,7 +21,7 @@ export interface PublishViewModelDelegate {
     publishDidFail(error: Error): void
 
     // Triggered when selecting a tag from the picker.
-    didSelectCategory(): void
+    publishDidSelectTag(): void
 }
 
 /*
@@ -131,7 +131,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     public clearTitle() {
         this.title = ''
-        this.delegate?.didClearTitle()
+        this.delegate?.publishDidClearTitle()
     }
 
     public suggestionsViewModel(): TagSuggestionViewModel {
@@ -148,7 +148,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     // TagSuggestionDelegate
 
-    public didSelectCategory(category: string) {
+    public tagSuggestionDidSelectTag(category: string) {
         const tags = this.tags
             .split(',')
             .filter(value => value.length > 0)
@@ -161,6 +161,6 @@ export class PublishViewModel implements TagSuggestionDelegate {
             .join()
 
         this.tags = formattedTags
-        this.delegate?.didSelectCategory()
+        this.delegate?.publishDidSelectTag()
     }
 }

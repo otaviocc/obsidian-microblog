@@ -121,7 +121,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     // PublishViewModelDelegate
 
-    public didClearTitle() {
+    public publishDidClearTitle() {
         this.onOpen()
     }
 
@@ -133,7 +133,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
         this.makeMessageView('Error', error.message)
     }
 
-    public didSelectCategory() {
+    public publishDidSelectTag() {
         this.onOpen()
     }
 
