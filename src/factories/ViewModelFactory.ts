@@ -94,7 +94,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             )
 
         const viewModel =  new TagSuggestionViewModel(
-            tags,
+            tags
         )
 
         viewModel.delegate = delegate
