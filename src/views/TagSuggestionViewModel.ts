@@ -29,6 +29,15 @@ export class TagSuggestionViewModel {
 
     // Public
 
+    public get placeholderText(): string {
+        return 'Select a category...'
+    }
+
+    public get instructionsText(): string {
+        const action = this.tags.length == 0 ? 'fetch' : 'synchronize'
+        return 'Use command palette to ' + action + ' categories'
+    }
+
     public chooseCategory(tag: string) {
         this.delegate?.tagSuggestionDidSelectTag(tag)
         console.log('Category selected: ' + tag)

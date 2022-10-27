@@ -26,6 +26,18 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
 
     // Public
 
+    public onOpen() {
+        super.onOpen()
+
+        this.setPlaceholder(
+            this.viewModel.placeholderText
+        )
+
+        this.setInstructions([
+            { command: '', purpose: this.viewModel.instructionsText }
+        ])
+    }
+
     public getItems(): Array<string> {
         return this.viewModel.tags
     }
