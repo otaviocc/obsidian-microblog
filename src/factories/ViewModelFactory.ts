@@ -88,13 +88,13 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         excluding: Array<string>,
         delegate?: TagSuggestionDelegate,
     ): TagSuggestionViewModel {
-        const tags = this.settings.tagSuggestions
+        const suggestions = this.settings.tagSuggestions
             .filter(element =>
                 !excluding.includes(element)
             )
 
         const viewModel =  new TagSuggestionViewModel(
-            tags
+            suggestions
         )
 
         viewModel.delegate = delegate
