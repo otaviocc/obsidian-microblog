@@ -65,7 +65,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         return new PublishViewModel(
             title,
             content,
-            this.settings.tags,
+            this.settings.defaultTags,
             this.settings.postVisibility,
             this.settings.blogs,
             this.settings.selectedBlogID,

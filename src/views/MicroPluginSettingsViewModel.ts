@@ -71,11 +71,11 @@ export class MicroPluginSettingsViewModel {
     }
 
     public get tags(): string {
-        return this.settings.tags
+        return this.settings.defaultTags
     }
 
     public set tags(value: string) {
-        this.settings.tags = value
+        this.settings.defaultTags = value
         this.plugin.saveSettings()
         console.log('Default categories changed: ' + value)
     }

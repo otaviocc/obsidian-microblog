@@ -7,7 +7,7 @@ export interface StoredSettings {
 
     // Default tags (set in Settings) that applies
     // to all new posts.
-    tags: string
+    defaultTags: string
 
     // Default post visibility (set in Settings)
     // that applies to all new posts.
@@ -27,7 +27,7 @@ export interface StoredSettings {
 // Default values for the plugin.
 export const defaultSettings: StoredSettings = {
     appToken: '',
-    tags: '',
+    defaultTags: '',
     postVisibility: 'draft',
     blogs: {},
     selectedBlogID: 'default',
