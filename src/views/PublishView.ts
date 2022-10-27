@@ -2,7 +2,6 @@ import { Modal, Setting } from 'obsidian'
 import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
 import { TagSuggestionView } from '@views/TagSuggestionView'
-import { TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
  * Publish View subclasses Modal, and is presented via Obsidian's
@@ -80,11 +79,9 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                 .setIcon('plus')
                 .setTooltip('Add categories')
                 .onClick(() => {
-                    const view = new TagSuggestionView(
+                    new TagSuggestionView(
                         this.viewModel.suggestionsViewModel()
-                    )
-
-                    view.open()
+                    ).open()
                 })
             )
 
@@ -134,6 +131,10 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     public publishDidFail(error: Error) {
         this.makeMessageView('Error', error.message)
+    }
+
+    public didSelectCategory() {
+        this.onOpen()
     }
 
     // Private

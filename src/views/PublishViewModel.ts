@@ -19,6 +19,9 @@ export interface PublishViewModelDelegate {
 
     // Triggered when publishing a new post fails.
     publishDidFail(error: Error): void
+
+    // Triggered when selecting a tag from the picker.
+    didSelectCategory(): void
 }
 
 /*
@@ -132,12 +135,32 @@ export class PublishViewModel implements TagSuggestionDelegate {
     }
 
     public suggestionsViewModel(): TagSuggestionViewModel {
-        return this.viewModelFactory.makeTagSuggestionViewModel(this)
+        const excluding = this.tags
+            .split(',')
+            .filter(value => value.length > 0)
+            .map(tag => tag.trim())
+
+        return this.viewModelFactory.makeTagSuggestionViewModel(
+            excluding,
+            this
+        )
     }
 
     // TagSuggestionDelegate
 
-    public didSelectCategory(category: string): void {
-        console.log('category: ' + category)
+    public didSelectCategory(category: string) {
+        const tags = this.tags
+            .split(',')
+            .filter(value => value.length > 0)
+            .map(tag => tag.trim())
+
+        tags.push(category)
+
+        const formattedTags = tags
+            .filter((tag, index) => index === tags.indexOf(tag))
+            .join()
+
+        this.tags = formattedTags
+        this.delegate?.didSelectCategory()
     }
 }

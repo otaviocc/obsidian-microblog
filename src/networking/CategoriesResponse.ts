@@ -1,3 +1,3 @@
 export type CategoriesResponse = {
-	categories: [string]
+	categories: Array<string>
 }

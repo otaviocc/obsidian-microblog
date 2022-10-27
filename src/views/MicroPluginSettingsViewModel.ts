@@ -1,5 +1,5 @@
 import MicroPlugin from '@base/MicroPlugin'
-import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
+import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
@@ -37,7 +37,7 @@ export class MicroPluginSettingsViewModel {
     public delegate?: MicroPluginSettingsDelegate
     private settings: StoredSettings
     private networkClient: NetworkClientInterface
-    private networkRequestFactory: NetworkRequestFactory
+    private networkRequestFactory: NetworkRequestFactoryInterface
     readonly plugin: MicroPlugin
 
     // Life cycle
@@ -46,7 +46,7 @@ export class MicroPluginSettingsViewModel {
         plugin: MicroPlugin,
         settings: StoredSettings,
         networkClient: NetworkClientInterface,
-        networkRequestFactory: NetworkRequestFactory
+        networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.plugin = plugin
         this.settings = settings
@@ -70,14 +70,24 @@ export class MicroPluginSettingsViewModel {
         console.log('Token changed: ' + value)
     }
 
-    public get tags(): string {
+    public get defaultTags(): string {
         return this.settings.defaultTags
     }
 
-    public set tags(value: string) {
+    public set defaultTags(value: string) {
         this.settings.defaultTags = value
         this.plugin.saveSettings()
         console.log('Default categories changed: ' + value)
+    }
+
+    public get tags(): Array<string> {
+        return this.settings.tags
+    }
+
+    public set tags(value: Array<string>) {
+        this.settings.tags = value
+        this.plugin.saveSettings()
+        console.log('Categories changed: ' + value)
     }
 
     public get visibility(): string {
@@ -136,9 +146,10 @@ export class MicroPluginSettingsViewModel {
     public logout() {
         this.appToken = ''
         this.blogs = {}
-        this.tags = ''
+        this.defaultTags = ''
         this.selectedBlogID = 'default'
         this.visibility = 'draft'
+        this.tags = []
         this.delegate?.logoutDidSucceed()
         console.log('Logout successful')
     }

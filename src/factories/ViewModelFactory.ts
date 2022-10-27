@@ -5,6 +5,7 @@ import { PublishViewModel } from '@views/PublishViewModel'
 import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
 import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
 import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggestionViewModel'
+import { TagSynchronizationViewModel } from '@views/TagSynchronizationViewModel'
 
 export interface ViewModelFactoryInterface {
 
@@ -19,10 +20,14 @@ export interface ViewModelFactoryInterface {
     // Settings.
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel
 
-    // Builds the Tags Suggestion View Mode.
+    // Builds the Tags Suggestion View Model.
     makeTagSuggestionViewModel(
+        excluding: Array<string>,
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
+
+    // Builds the Tag Synchronization View Model.
+    makeTagSynchronizationViewModel(): TagSynchronizationViewModel
 }
 
 /*
@@ -80,14 +85,29 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     }
 
     public makeTagSuggestionViewModel(
-        delegate?: TagSuggestionDelegate
+        excluding: Array<string>,
+        delegate?: TagSuggestionDelegate,
     ): TagSuggestionViewModel {
+        const tags = this.settings.tags
+            .filter(element =>
+                !excluding.includes(element)
+            )
+
         const viewModel =  new TagSuggestionViewModel(
-            this.settings.tags,
+            tags,
         )
 
         viewModel.delegate = delegate
 
         return viewModel
+    }
+
+    public makeTagSynchronizationViewModel(): TagSynchronizationViewModel {
+        return new TagSynchronizationViewModel(
+            this.plugin,
+            this.settings,
+            this.networkClient,
+            new NetworkRequestFactory()
+        )
     }
 }

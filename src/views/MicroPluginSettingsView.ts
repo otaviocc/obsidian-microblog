@@ -127,9 +127,9 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
             .setDesc('Default list of categories for new posts.')
             .addText(text => text
                 .setPlaceholder('category1, category2, category3')
-                .setValue(this.viewModel.tags)
+                .setValue(this.viewModel.defaultTags)
                 .onChange(value => {
-                    this.viewModel.tags = value
+                    this.viewModel.defaultTags = value
                 }))
 
         new Setting(containerEl)
