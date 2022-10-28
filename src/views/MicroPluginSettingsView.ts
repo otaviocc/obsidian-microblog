@@ -23,12 +23,13 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         super(app, viewModel.plugin)
 
         this.viewModel = viewModel
-        this.viewModel.delegate = this
     }
 
     // Public
 
     public display() {
+        this.viewModel.delegate = this
+
         if (!this.viewModel.hasAppToken) {
             this.makeLoginView()
         } else {
