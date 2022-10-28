@@ -32,6 +32,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
     // Public
 
     public onOpen() {
+        super.onOpen()
+
         const {contentEl} = this
 
         contentEl.empty()

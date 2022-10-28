@@ -30,6 +30,8 @@ export class TagSynchronizationView extends Modal implements TagSynchronizationD
     // Public
 
     public onOpen() {
+        super.onOpen()
+
         this.makeMessageView(
             'Categories',
             'Synchronizing...'
