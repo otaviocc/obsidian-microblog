@@ -125,7 +125,7 @@ export class MicroPluginSettingsViewModel {
     }
 
     public async validate() {
-        console.log('Login in')
+        console.log('Logging in')
 
         try {
             const response = await this.networkClient.run<ConfigResponse>(
