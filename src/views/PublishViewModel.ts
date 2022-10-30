@@ -1,6 +1,8 @@
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
+import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
+import { ViewModelFactoryInterface } from '@factories/ViewModelFactory'
 
 /*
  * Publish View Delegate Interface, implemented by
@@ -10,20 +12,23 @@ export interface PublishViewModelDelegate {
 
     // Triggered when user clicks the delete button when the
     // title property is reset.
-    didClearTitle(): void
+    publishDidClearTitle(): void
 
     // Triggered when publishing a new post succeeds.
     publishDidSucceed(response: PublishResponse): void
 
     // Triggered when publishing a new post fails.
     publishDidFail(error: Error): void
+
+    // Triggered when selecting a tag from the picker.
+    publishDidSelectTag(): void
 }
 
 /*
  * This view model drives the content and interactions with the
  * publish view.
  */
-export class PublishViewModel {
+export class PublishViewModel implements TagSuggestionDelegate {
 
     // Properties
 
@@ -35,6 +40,7 @@ export class PublishViewModel {
     private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
+    private viewModelFactory: ViewModelFactoryInterface
     readonly blogs: Record<string, string>
 
     // Life cycle
@@ -47,7 +53,8 @@ export class PublishViewModel {
         blogs: Record<string, string>,
         selectedBlogID: string,
         networkClient: NetworkClientInterface,
-        networkRequestFactory: NetworkRequestFactoryInterface
+        networkRequestFactory: NetworkRequestFactoryInterface,
+        viewModelFactory: ViewModelFactoryInterface
     ) {
         this.titleWrappedValue = title
         this.content = content
@@ -57,6 +64,7 @@ export class PublishViewModel {
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
+        this.viewModelFactory = viewModelFactory
     }
 
     // Public
@@ -76,7 +84,7 @@ export class PublishViewModel {
 
     public set tags(value: string) {
         this.tagsWrappedValue = value
-        console.log('Post tags changed: ' + value)
+        console.log('Post categories changed: ' + value)
     }
 
     public get visibility(): string {
@@ -123,6 +131,36 @@ export class PublishViewModel {
 
     public clearTitle() {
         this.title = ''
-        this.delegate?.didClearTitle()
+        this.delegate?.publishDidClearTitle()
+    }
+
+    public suggestionsViewModel(): TagSuggestionViewModel {
+        const excluding = this.tags
+            .split(',')
+            .filter(value => value.length > 0)
+            .map(tag => tag.trim())
+
+        return this.viewModelFactory.makeTagSuggestionViewModel(
+            excluding,
+            this
+        )
+    }
+
+    // TagSuggestionDelegate
+
+    public tagSuggestionDidSelectTag(category: string) {
+        const tags = this.tags
+            .split(',')
+            .filter(value => value.length > 0)
+            .map(tag => tag.trim())
+
+        tags.push(category)
+
+        const formattedTags = tags
+            .filter((tag, index) => index === tags.indexOf(tag))
+            .join()
+
+        this.tags = formattedTags
+        this.delegate?.publishDidSelectTag()
     }
 }

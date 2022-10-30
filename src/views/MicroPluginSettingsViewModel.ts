@@ -1,5 +1,5 @@
 import MicroPlugin from '@base/MicroPlugin'
-import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
+import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
@@ -37,7 +37,7 @@ export class MicroPluginSettingsViewModel {
     public delegate?: MicroPluginSettingsDelegate
     private settings: StoredSettings
     private networkClient: NetworkClientInterface
-    private networkRequestFactory: NetworkRequestFactory
+    private networkRequestFactory: NetworkRequestFactoryInterface
     readonly plugin: MicroPlugin
 
     // Life cycle
@@ -46,7 +46,7 @@ export class MicroPluginSettingsViewModel {
         plugin: MicroPlugin,
         settings: StoredSettings,
         networkClient: NetworkClientInterface,
-        networkRequestFactory: NetworkRequestFactory
+        networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.plugin = plugin
         this.settings = settings
@@ -77,7 +77,17 @@ export class MicroPluginSettingsViewModel {
     public set tags(value: string) {
         this.settings.defaultTags = value
         this.plugin.saveSettings()
-        console.log('Default tags changed: ' + value)
+        console.log('Default categories changed: ' + value)
+    }
+
+    public get tagSuggestions(): Array<string> {
+        return this.settings.tagSuggestions
+    }
+
+    public set tagSuggestions(value: Array<string>) {
+        this.settings.tagSuggestions = value
+        this.plugin.saveSettings()
+        console.log('Categories changed: ' + value)
     }
 
     public get visibility(): string {
@@ -115,7 +125,7 @@ export class MicroPluginSettingsViewModel {
     }
 
     public async validate() {
-        console.log('Login in')
+        console.log('Logging in')
 
         try {
             const response = await this.networkClient.run<ConfigResponse>(
@@ -139,6 +149,7 @@ export class MicroPluginSettingsViewModel {
         this.tags = ''
         this.selectedBlogID = 'default'
         this.visibility = 'draft'
+        this.tagSuggestions = []
         this.delegate?.logoutDidSucceed()
         console.log('Logout successful')
     }

@@ -3,11 +3,16 @@ import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
 import { ViewModelFactoryInterface, ViewModelFactory } from '@factories/ViewModelFactory'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishView } from '@views/PublishView'
+import { TagSynchronizationView } from '@views/TagSynchronizationView'
 
 export default class MicroPlugin extends Plugin {
 
+    // Properties
+
     private settings: StoredSettings
     private viewModelFactory: ViewModelFactoryInterface
+
+    // Public
 
     public async onload() {
         await this.loadSettings()
@@ -26,6 +31,16 @@ export default class MicroPlugin extends Plugin {
             }
         })
 
+        this.addCommand({
+            id: 'microblog-categories-sync-command',
+            name: 'Synchronize Categories',
+            callback: () => {
+                new TagSynchronizationView(
+                    this.viewModelFactory.makeTagSynchronizationViewModel()
+                ).open()
+            }
+        })
+
         this.addSettingTab(
             new MicroPluginSettingsView(
                 this.viewModelFactory.makeMicroPluginSettingsViewModel()
@@ -38,6 +53,8 @@ export default class MicroPlugin extends Plugin {
     public async saveSettings() {
         await this.saveData(this.settings)
     }
+
+    // Private
 
     private async loadSettings() {
         this.settings = Object.assign(

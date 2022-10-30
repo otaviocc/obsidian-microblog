@@ -23,12 +23,13 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         super(app, viewModel.plugin)
 
         this.viewModel = viewModel
-        this.viewModel.delegate = this
     }
 
     // Public
 
     public display() {
+        this.viewModel.delegate = this
+
         if (!this.viewModel.hasAppToken) {
             this.makeLoginView()
         } else {
@@ -123,10 +124,10 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
             )
 
         new Setting(containerEl)
-            .setName('Tags')
-            .setDesc('Default list of tags for new posts.')
+            .setName('Categories')
+            .setDesc('Default list of categories for new posts.')
             .addText(text => text
-                .setPlaceholder('tag1, tag2, tag3')
+                .setPlaceholder('category1, category2, category3')
                 .setValue(this.viewModel.tags)
                 .onChange(value => {
                     this.viewModel.tags = value

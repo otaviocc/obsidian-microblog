@@ -1,6 +1,7 @@
 import { Modal, Setting } from 'obsidian'
 import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
+import { TagSuggestionView } from '@views/TagSuggestionView'
 
 /*
  * Publish View subclasses Modal, and is presented via Obsidian's
@@ -19,7 +20,9 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     // Life cycle
 
-    constructor(viewModel: PublishViewModel) {
+    constructor(
+        viewModel: PublishViewModel
+    ) {
         super(app)
 
         this.viewModel = viewModel
@@ -29,6 +32,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
     // Public
 
     public onOpen() {
+        super.onOpen()
+
         const {contentEl} = this
 
         contentEl.empty()
@@ -64,14 +69,23 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
         }
 
         new Setting(contentEl)
-            .setName('Tags')
-            .setDesc('Override the default tags for this post.')
+            .setName('Categories')
+            .setDesc('Override the default categories for this post.')
             .addText(text => text
-                .setPlaceholder('tag1, tag2, tag3')
+                .setPlaceholder('category1, category2, category3')
                 .setValue(this.viewModel.tags)
                 .onChange(value => {
                     this.viewModel.tags = value
                 }))
+            .addExtraButton(button => button
+                .setIcon('plus')
+                .setTooltip('Add categories')
+                .onClick(() => {
+                    new TagSuggestionView(
+                        this.viewModel.suggestionsViewModel()
+                    ).open()
+                })
+            )
 
         new Setting(contentEl)
             .setName('Visibility')
@@ -109,7 +123,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     // PublishViewModelDelegate
 
-    public didClearTitle() {
+    public publishDidClearTitle() {
         this.onOpen()
     }
 
@@ -119,6 +133,10 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     public publishDidFail(error: Error) {
         this.makeMessageView('Error', error.message)
+    }
+
+    public publishDidSelectTag() {
+        this.onOpen()
     }
 
     // Private
