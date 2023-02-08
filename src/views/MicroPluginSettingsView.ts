@@ -146,7 +146,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
         new Setting(this.containerEl)
             .setName('Sponsor')
-            .setDesc('Did this plugin improve your workflow? Say thanks with a coffee.')
+            .setDesc('Like this plugin? Say thanks with a coffee :-)')
             .addButton(button =>
                 button.buttonEl.outerHTML = '<a href="https://www.buymeacoffee.com/otaviocc" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px !important;" ></a>'
             )

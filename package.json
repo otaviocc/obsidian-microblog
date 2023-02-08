@@ -1,6 +1,6 @@
 {
 	"name": "microblog-publish-plugin",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "Publish Note to Micro.blog",
 	"main": "main.js",
 	"scripts": {
