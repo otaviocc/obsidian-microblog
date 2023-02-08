@@ -2,6 +2,10 @@
 
 Micro.publish is a community maintained plugin for [Obsidian](https://obsidian.md/) to publish notes to a [Micro.blog](https://micro.blog/) blog.
 
+Does this plugin improve your workflow? Say thanks with a coffee.
+
+<a href="https://www.buymeacoffee.com/otaviocc" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;" ></a>
+
 ## Installing
 
 This plugin will be available via *Community Plugins* soon.
