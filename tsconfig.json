@@ -23,6 +23,7 @@
       "@views/*": ["views/*"],
       "@factories/*": ["factories/*"],
       "@stores/*": ["stores/*"],
+      "@services/*": ["services/*"],
     }
   },
   "include": [
