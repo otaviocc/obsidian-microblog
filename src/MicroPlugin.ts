@@ -15,7 +15,6 @@ export default class MicroPlugin extends Plugin {
     private container: MicroPluginContainerInterface
     private viewModelFactory: ViewModelFactoryInterface
     private serviceFactory: ServiceFactoryInterface
-
     private synchronizationService: TagSynchronizationServiceInterface
 
     // Public
