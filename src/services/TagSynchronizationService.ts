@@ -1,6 +1,5 @@
 import MicroPlugin from '@base/MicroPlugin'
 import { CategoriesResponse } from '@networking/CategoriesResponse'
-import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { StoredSettings } from '@stores/StoredSettings'
@@ -32,7 +31,6 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
     // Properties
 
     private delegate?: TagSynchronizationServiceDelegate
-    private container: MicroPluginContainerInterface
 
     // Life cycle
 
