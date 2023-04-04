@@ -7,11 +7,19 @@ import {
 
 export interface ServiceFactoryInterface {
 
+    // Builds the synchronization service, used by the client
+    // to synchronize categories when the plugin is loaded
+    // and when synchronization is triggered via command.
     makeTagSynchronizationService(
         delegate?:TagSynchronizationServiceDelegate
     ): TagSynchronizationServiceInterface
 }
 
+/*
+ * Service Factory builds all the Services in the plugin.
+ * It simplifies building View Models since all the resolved dependencies
+ * are already available via the factory.
+ */
 export class ServiceFactory implements ServiceFactoryInterface {
 
     // Properties
@@ -27,6 +35,7 @@ export class ServiceFactory implements ServiceFactoryInterface {
     }
 
     // Public
+
     public makeTagSynchronizationService(
         delegate?:TagSynchronizationServiceDelegate
     ): TagSynchronizationServiceInterface {
