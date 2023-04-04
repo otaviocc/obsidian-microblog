@@ -1,11 +1,7 @@
-import MicroPlugin from '@base/MicroPlugin'
-import { StoredSettings } from '@stores/StoredSettings'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishViewModel } from '@views/PublishViewModel'
-import { NetworkRequestFactory } from '@networking/NetworkRequestFactory'
-import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
 import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggestionViewModel'
-import { TagSynchronizationViewModel } from '@views/TagSynchronizationViewModel'
+import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 
 export interface ViewModelFactoryInterface {
 
@@ -25,9 +21,6 @@ export interface ViewModelFactoryInterface {
         excluding: Array<string>,
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
-
-    // Builds the Tag Synchronization View Model.
-    makeTagSynchronizationViewModel(): TagSynchronizationViewModel
 }
 
 /*
@@ -39,21 +32,14 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     // Properties
 
-    private settings: StoredSettings
-    private plugin: MicroPlugin
-    private networkClient: NetworkClientInterface
+    private container: MicroPluginContainerInterface
 
     // Life cycle
 
     constructor(
-        settings: StoredSettings,
-        plugin: MicroPlugin
+        container: MicroPluginContainerInterface
     ) {
-        this.settings = settings
-        this.plugin = plugin
-        this.networkClient = new NetworkClient(() => {
-            return this.settings.appToken
-        })
+        this.container = container
     }
 
     // Public
@@ -65,22 +51,22 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         return new PublishViewModel(
             title,
             content,
-            this.settings.defaultTags,
-            this.settings.postVisibility,
-            this.settings.blogs,
-            this.settings.selectedBlogID,
-            this.networkClient,
-            new NetworkRequestFactory(),
+            this.container.settings.defaultTags,
+            this.container.settings.postVisibility,
+            this.container.settings.blogs,
+            this.container.settings.selectedBlogID,
+            this.container.networkClient,
+            this.container.networkRequestFactory,
             this
         )
     }
 
     public makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel {
         return new MicroPluginSettingsViewModel(
-            this.plugin,
-            this.settings,
-            this.networkClient,
-            new NetworkRequestFactory(),
+            this.container.plugin,
+            this.container.settings,
+            this.container.networkClient,
+            this.container.networkRequestFactory
         )
     }
 
@@ -88,7 +74,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         excluding: Array<string>,
         delegate?: TagSuggestionDelegate,
     ): TagSuggestionViewModel {
-        const suggestions = this.settings.tagSuggestions
+        const suggestions = this.container.settings.tagSuggestions
             .filter(element =>
                 !excluding.includes(element)
             )
@@ -100,14 +86,5 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         viewModel.delegate = delegate
 
         return viewModel
-    }
-
-    public makeTagSynchronizationViewModel(): TagSynchronizationViewModel {
-        return new TagSynchronizationViewModel(
-            this.plugin,
-            this.settings,
-            this.networkClient,
-            new NetworkRequestFactory()
-        )
     }
 }

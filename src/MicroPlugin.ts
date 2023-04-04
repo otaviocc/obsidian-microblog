@@ -1,22 +1,29 @@
-import { Plugin } from 'obsidian'
+import { Notice, Plugin } from 'obsidian'
 import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
 import { ViewModelFactoryInterface, ViewModelFactory } from '@factories/ViewModelFactory'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishView } from '@views/PublishView'
-import { TagSynchronizationView } from '@views/TagSynchronizationView'
+import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
+import { TagSynchronizationService, TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
 
 export default class MicroPlugin extends Plugin {
 
     // Properties
 
     private settings: StoredSettings
+    private container: MicroPluginContainerInterface
     private viewModelFactory: ViewModelFactoryInterface
+    private synchronizationService: TagSynchronizationServiceInterface
 
     // Public
 
     public async onload() {
         await this.loadSettings()
+        await this.loadDependencies()
         await this.loadViewModelFactory()
+        await this.loadServiceFactory()
+
+        this.synchronizationService.fetchTags()
 
         this.addCommand({
             id: 'microblog-publish-command',
@@ -35,9 +42,7 @@ export default class MicroPlugin extends Plugin {
             id: 'microblog-categories-sync-command',
             name: 'Synchronize Categories',
             callback: () => {
-                new TagSynchronizationView(
-                    this.viewModelFactory.makeTagSynchronizationViewModel()
-                ).open()
+                this.synchronizationService.fetchTags()
             }
         })
 
@@ -48,7 +53,7 @@ export default class MicroPlugin extends Plugin {
         )
     }
 
-    public onunload() {}
+    public onunload() { }
 
     public async saveSettings() {
         await this.saveData(this.settings)
@@ -64,10 +69,41 @@ export default class MicroPlugin extends Plugin {
         )
     }
 
-    private async loadViewModelFactory() {
-        this.viewModelFactory = new ViewModelFactory(
+    private async loadDependencies() {
+        this.container = new MicroPluginContainer(
             this.settings,
             this
+        )
+    }
+
+    private async loadViewModelFactory() {
+        this.viewModelFactory = new ViewModelFactory(
+            this.container
+        )
+    }
+
+    private async loadServiceFactory() {
+        this.synchronizationService = new TagSynchronizationService(
+            this.container
+        )
+        this.synchronizationService.delegate = this
+    }
+
+    // TagSynchronizationServiceDelegate
+
+    public tagSynchronizationDidSucceed(
+        count: number
+    ) {
+        new Notice(
+            'Categories synchronized. Found ' + count + ' categories'
+        )
+    }
+
+    public tagSynchronizationDidFail(
+        error: Error
+    ) {
+        new Notice(
+            'Error synchronizing categories'
         )
     }
 }

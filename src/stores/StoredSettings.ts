@@ -2,6 +2,7 @@
  * Plugin settings.
  */
 export interface StoredSettings {
+
     // Application token used to access Micro.blog.
     appToken: string
 
