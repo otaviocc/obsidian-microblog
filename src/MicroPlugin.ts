@@ -1,10 +1,11 @@
 import { Notice, Plugin } from 'obsidian'
-import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
-import { ViewModelFactoryInterface, ViewModelFactory } from '@factories/ViewModelFactory'
+import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishView } from '@views/PublishView'
-import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
-import { TagSynchronizationService, TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
+import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
+import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
+import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
+import { ViewModelFactoryInterface, ViewModelFactory } from '@factories/ViewModelFactory'
 
 export default class MicroPlugin extends Plugin {
 
@@ -13,6 +14,8 @@ export default class MicroPlugin extends Plugin {
     private settings: StoredSettings
     private container: MicroPluginContainerInterface
     private viewModelFactory: ViewModelFactoryInterface
+    private serviceFactory: ServiceFactoryInterface
+
     private synchronizationService: TagSynchronizationServiceInterface
 
     // Public
@@ -22,6 +25,7 @@ export default class MicroPlugin extends Plugin {
         await this.loadDependencies()
         await this.loadViewModelFactory()
         await this.loadServiceFactory()
+        await this.registerSynchronizationService()
 
         this.synchronizationService.fetchTags()
 
@@ -83,10 +87,16 @@ export default class MicroPlugin extends Plugin {
     }
 
     private async loadServiceFactory() {
-        this.synchronizationService = new TagSynchronizationService(
+        this.serviceFactory = new ServiceFactory(
             this.container
         )
-        this.synchronizationService.delegate = this
+    }
+
+    private async registerSynchronizationService() {
+        this.synchronizationService = this.serviceFactory
+            .makeTagSynchronizationService(
+                this
+            )
     }
 
     // TagSynchronizationServiceDelegate
