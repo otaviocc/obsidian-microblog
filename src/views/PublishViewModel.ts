@@ -90,7 +90,6 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     public set title(value: string) {
         this.titleWrappedValue = value
-        console.log('Post title changed: ' + value)
     }
 
     public get tags(): string {
@@ -99,7 +98,6 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     public set tags(value: string) {
         this.tagsWrappedValue = value
-        console.log('Post categories changed: ' + value)
     }
 
     public get visibility(): string {
@@ -108,7 +106,6 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     public set visibility(value: string) {
         this.visibilityWrappedValue = value
-        console.log('Post visibility changed: ' + value)
     }
 
     public get hasMultipleBlogs(): boolean {
@@ -121,7 +118,6 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     public set selectedBlogID(value: string) {
         this.selectedBlogIDWrappedValue = value
-        console.log('Selected blog changed: ' + value)
     }
 
     public get scheduledDate(): string {
@@ -130,7 +126,6 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     public set scheduledDate(value: string) {
         this.scheduledDateWrappedValue = value
-        console.log('Scheduled date changed: ' + value)
     }
 
     public get showPublishingButton(): boolean {
@@ -142,9 +137,16 @@ export class PublishViewModel implements TagSuggestionDelegate {
     }
 
     public async publishNote() {
-        if (!this.validateDateAndContinue()) {
+        if (!this.isValidScheduledDate()) {
+            this.isValidDate = false
+            this.isSubmitting = false
+            this.delegate?.publishDidValidateDate()
             return
         }
+
+        this.isValidDate = true
+        this.isSubmitting = true
+        this.delegate?.publishDidValidateDate()
 
         try {
             const response = this.networkRequestFactory.makePublishRequest(
@@ -153,7 +155,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
                 this.tags,
                 this.visibility,
                 this.selectedBlogID,
-                this.formattedScheduledDate().trim()
+                this.formattedScheduledDate()
             )
 
             const result = await this.networkClient.run<PublishResponse>(
@@ -191,27 +193,19 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     // Private
 
-    private validateDateAndContinue(): boolean {
+    private isValidScheduledDate(): boolean {
         const scheduledDate = new Date(this.scheduledDateWrappedValue)
         const isInvalidDate = isNaN(scheduledDate.getTime())
 
         if (this.scheduledDateWrappedValue.length > 0 && isInvalidDate) {
-            this.isValidDate = false
-            this.isSubmitting = false
-            this.delegate?.publishDidValidateDate()
-
             return false
         }
-
-        this.isValidDate = true
-        this.isSubmitting = true
-        this.delegate?.publishDidValidateDate()
 
         return true
     }
 
     private formattedScheduledDate(): string {
-        const scheduledDate = new Date(this.scheduledDateWrappedValue)
+        const scheduledDate = new Date(this.scheduledDateWrappedValue.trim())
         const isInvalidDate = isNaN(scheduledDate.getTime())
 
         if (isInvalidDate) {
