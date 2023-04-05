@@ -71,7 +71,7 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
             this.plugin.saveSettings()
 
             this.delegate?.tagSynchronizationDidSucceed(response.categories.length)
-            console.log('Categories synchronized: ' + response.categories)
+            console.log('Categories synchronized')
         } catch (error) {
             this.delegate?.tagSynchronizationDidFail(error)
             console.log('Categories synchronization error: ' + error)
