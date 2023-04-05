@@ -79,7 +79,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
                 !excluding.includes(element)
             )
 
-        const viewModel =  new TagSuggestionViewModel(
+        const viewModel = new TagSuggestionViewModel(
             suggestions
         )
 

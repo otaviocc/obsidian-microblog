@@ -1,5 +1,5 @@
 import { PluginSettingTab, Setting } from 'obsidian'
-import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate} from '@views/MicroPluginSettingsViewModel'
+import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate } from '@views/MicroPluginSettingsViewModel'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
 /*
@@ -68,10 +68,10 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
     // Private
 
     private makeLoginView() {
-        const {containerEl} = this
+        const { containerEl } = this
 
         containerEl.empty()
-        containerEl.createEl('h2', {text: 'Micro.publish'})
+        containerEl.createEl('h2', { text: 'Micro.publish' })
 
         new Setting(containerEl)
             .setName('App Token')
@@ -98,10 +98,10 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
     }
 
     private makeSettingsView() {
-        const {containerEl} = this
+        const { containerEl } = this
 
         containerEl.empty()
-        containerEl.createEl('h2', {text: 'Micro.publish'})
+        containerEl.createEl('h2', { text: 'Micro.publish' })
 
         new Setting(containerEl)
             .setName('Blog')
