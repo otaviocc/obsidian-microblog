@@ -11,7 +11,7 @@ export interface ServiceFactoryInterface {
     // to synchronize categories when the plugin is loaded
     // and when synchronization is triggered via command.
     makeTagSynchronizationService(
-        delegate?:TagSynchronizationServiceDelegate
+        delegate?: TagSynchronizationServiceDelegate
     ): TagSynchronizationServiceInterface
 }
 
@@ -37,7 +37,7 @@ export class ServiceFactory implements ServiceFactoryInterface {
     // Public
 
     public makeTagSynchronizationService(
-        delegate?:TagSynchronizationServiceDelegate
+        delegate?: TagSynchronizationServiceDelegate
     ): TagSynchronizationServiceInterface {
         return new TagSynchronizationService(
             this.container.plugin,
