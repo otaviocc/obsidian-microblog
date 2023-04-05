@@ -67,7 +67,6 @@ export class MicroPluginSettingsViewModel {
     public set appToken(value: string) {
         this.settings.appToken = value
         this.plugin.saveSettings()
-        console.log('Token changed: ' + value)
     }
 
     public get tags(): string {
@@ -77,7 +76,6 @@ export class MicroPluginSettingsViewModel {
     public set tags(value: string) {
         this.settings.defaultTags = value
         this.plugin.saveSettings()
-        console.log('Default categories changed: ' + value)
     }
 
     public get tagSuggestions(): Array<string> {
@@ -87,7 +85,6 @@ export class MicroPluginSettingsViewModel {
     public set tagSuggestions(value: Array<string>) {
         this.settings.tagSuggestions = value
         this.plugin.saveSettings()
-        console.log('Categories changed: ' + value)
     }
 
     public get visibility(): string {
@@ -97,7 +94,6 @@ export class MicroPluginSettingsViewModel {
     public set visibility(value: string) {
         this.settings.postVisibility = value
         this.plugin.saveSettings()
-        console.log('Default visibility changed: ' + value)
     }
 
     public get blogs(): Record<string, string> {
@@ -107,7 +103,6 @@ export class MicroPluginSettingsViewModel {
     public set blogs(value: Record<string, string>) {
         this.settings.blogs = value
         this.plugin.saveSettings()
-        console.log('Default blogs changed: ' + JSON.stringify(this.blogs))
     }
 
     public get hasMultipleBlogs(): boolean {
@@ -121,7 +116,6 @@ export class MicroPluginSettingsViewModel {
     public set selectedBlogID(value: string) {
         this.settings.selectedBlogID = value
         this.plugin.saveSettings()
-        console.log('Default selected blog ID changed: ' + value)
     }
 
     public async validate() {
