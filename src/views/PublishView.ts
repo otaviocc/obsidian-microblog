@@ -65,7 +65,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                     .setValue(this.viewModel.selectedBlogID)
                     .onChange(value => {
                         this.viewModel.selectedBlogID = value
-                    }))
+                    })
+                )
         }
 
         new Setting(contentEl)
@@ -96,7 +97,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                 .setValue(this.viewModel.visibility)
                 .onChange(value => {
                     this.viewModel.visibility = value
-                }))
+                })
+            )
 
         new Setting(contentEl)
             .addButton(button => button
@@ -109,7 +111,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                         .setButtonText('Publishing...')
 
                     await this.viewModel.publishNote()
-                }))
+                })
+            )
     }
 
     public onClose() {
