@@ -152,7 +152,8 @@ export class PublishViewModel implements TagSuggestionDelegate {
                 this.content,
                 this.tags,
                 this.visibility,
-                this.selectedBlogID
+                this.selectedBlogID,
+                this.formattedScheduledDate().trim()
             )
 
             const result = await this.networkClient.run<PublishResponse>(
@@ -207,6 +208,17 @@ export class PublishViewModel implements TagSuggestionDelegate {
         this.delegate?.publishDidValidateDate()
 
         return true
+    }
+
+    private formattedScheduledDate(): string {
+        const scheduledDate = new Date(this.scheduledDateWrappedValue)
+        const isInvalidDate = isNaN(scheduledDate.getTime())
+
+        if (isInvalidDate) {
+            return ''
+        }
+
+        return scheduledDate.toISOString()
     }
 
     // TagSuggestionDelegate

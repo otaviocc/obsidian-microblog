@@ -9,7 +9,8 @@ export interface NetworkRequestFactoryInterface {
         content: string,
         tags: string,
         visibility: string,
-        blogID: string
+        blogID: string,
+        scheduledDate: string
     ): NetworkRequest
 
     // Builds the configuration request, network request used to "log in"
@@ -36,7 +37,8 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         content: string,
         tags: string,
         visibility: string,
-        blogID: string
+        blogID: string,
+        scheduledDate: string
     ): NetworkRequest {
         const parameters = new URLSearchParams([
             ['h', 'entry'],
@@ -50,6 +52,10 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
 
         if (blogID.length > 0 && blogID != 'default') {
             parameters.append('mp-destination', blogID)
+        }
+
+        if (scheduledDate.length > 0) {
+            parameters.append('published', scheduledDate)
         }
 
         tags
