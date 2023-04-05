@@ -40,6 +40,5 @@ export class TagSuggestionViewModel {
 
     public chooseCategory(tag: string) {
         this.delegate?.tagSuggestionDidSelectTag(tag)
-        console.log('Category selected: ' + tag)
     }
 }
