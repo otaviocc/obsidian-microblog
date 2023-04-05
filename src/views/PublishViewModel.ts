@@ -14,6 +14,10 @@ export interface PublishViewModelDelegate {
     // title property is reset.
     publishDidClearTitle(): void
 
+    // triggered when user clicks the clear button when the
+    // date property is reset.
+    publishDidClearDate(): void
+
     // Triggered when publishing a new post succeeds.
     publishDidSucceed(response: PublishResponse): void
 
@@ -22,6 +26,11 @@ export interface PublishViewModelDelegate {
 
     // Triggered when selecting a tag from the picker.
     publishDidSelectTag(): void
+
+    // Triggered after checking whether the scheduled date
+    // is valid or not. It returns `true` for no date or for
+    // valid date, and false for invalid dates.
+    publishDidValidateDate(): void
 }
 
 /*
@@ -33,11 +42,14 @@ export class PublishViewModel implements TagSuggestionDelegate {
     // Properties
 
     public delegate?: PublishViewModelDelegate
+    private isValidDate: boolean
+    private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string
     private visibilityWrappedValue: string
     private tagsWrappedValue: string
     private selectedBlogIDWrappedValue: string
+    private scheduledDateWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
     private viewModelFactory: ViewModelFactoryInterface
@@ -62,6 +74,9 @@ export class PublishViewModel implements TagSuggestionDelegate {
         this.visibilityWrappedValue = visibility
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
+        this.scheduledDateWrappedValue = ''
+        this.isValidDate = true
+        this.isSubmitting = false
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
         this.viewModelFactory = viewModelFactory
@@ -109,7 +124,28 @@ export class PublishViewModel implements TagSuggestionDelegate {
         console.log('Selected blog changed: ' + value)
     }
 
+    public get scheduledDate(): string {
+        return this.scheduledDateWrappedValue
+    }
+
+    public set scheduledDate(value: string) {
+        this.scheduledDateWrappedValue = value
+        console.log('Scheduled date changed: ' + value)
+    }
+
+    public get showPublishingButton(): boolean {
+        return this.isValidDate && this.isSubmitting
+    }
+
+    public get showInvalidDateMessage(): boolean {
+        return !this.isValidDate
+    }
+
     public async publishNote() {
+        if (!this.validateDateAndContinue()) {
+            return
+        }
+
         try {
             const response = this.networkRequestFactory.makePublishRequest(
                 this.title,
@@ -144,6 +180,33 @@ export class PublishViewModel implements TagSuggestionDelegate {
             excluding,
             this
         )
+    }
+
+    public clearDate() {
+        this.scheduledDateWrappedValue = ''
+        this.isValidDate = true
+        this.delegate?.publishDidClearDate()
+    }
+
+    // Private
+
+    private validateDateAndContinue(): boolean {
+        const scheduledDate = new Date(this.scheduledDateWrappedValue)
+        const isInvalidDate = isNaN(scheduledDate.getTime())
+
+        if (this.scheduledDateWrappedValue.length > 0 && isInvalidDate) {
+            this.isValidDate = false
+            this.isSubmitting = false
+            this.delegate?.publishDidValidateDate()
+
+            return false
+        }
+
+        this.isValidDate = true
+        this.isSubmitting = true
+        this.delegate?.publishDidValidateDate()
+
+        return true
     }
 
     // TagSuggestionDelegate

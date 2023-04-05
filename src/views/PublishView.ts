@@ -34,10 +34,10 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
     public onOpen() {
         super.onOpen()
 
-        const {contentEl} = this
+        const { contentEl } = this
 
         contentEl.empty()
-        contentEl.createEl('h2', {text: 'Review'})
+        contentEl.createEl('h2', { text: 'Review' })
 
         new Setting(contentEl)
             .setName('Title')
@@ -47,7 +47,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                 .setValue(this.viewModel.title)
                 .onChange(value => {
                     this.viewModel.title = value
-                }))
+                })
+            )
             .addExtraButton(button => button
                 .setIcon('cross')
                 .setTooltip('Remove title')
@@ -77,7 +78,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                 .setValue(this.viewModel.tags)
                 .onChange(value => {
                     this.viewModel.tags = value
-                }))
+                })
+            )
             .addExtraButton(button => button
                 .setIcon('plus')
                 .setTooltip('Add categories')
@@ -101,24 +103,46 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
             )
 
         new Setting(contentEl)
+            .setName('Scheduled date')
+            .setDesc('Scheduled date is optional and used to schedule posts to be published in the future. If empty it will use the current date and time.')
+            .addText(text => text
+                .setPlaceholder('YYYY-MM-DD HH:MM')
+                .setValue(this.viewModel.scheduledDate)
+                .onChange(value => {
+                    this.viewModel.scheduledDate = value
+                })
+            )
+            .addExtraButton(button => button
+                .setIcon('cross')
+                .setTooltip('Clear date')
+                .onClick(() => {
+                    this.viewModel.clearDate()
+                })
+            )
+
+        new Setting(contentEl)
             .addButton(button => button
                 .setButtonText('Publish')
                 .setCta()
                 .onClick(async _ => {
-                    button
-                        .setDisabled(true)
-                        .removeCta()
-                        .setButtonText('Publishing...')
-
                     await this.viewModel.publishNote()
                 })
+                .then(_ => {
+                    if (this.viewModel.showPublishingButton) {
+                        button
+                            .setDisabled(true)
+                            .removeCta()
+                            .setButtonText('Publishing...')
+                    }
+                })
             )
+            .setDesc(this.viewModel.showInvalidDateMessage ? "Invalid date format" : "")
     }
 
     public onClose() {
         super.onClose()
 
-        const {contentEl} = this
+        const { contentEl } = this
         contentEl.empty()
 
         this.viewModel.delegate = undefined
@@ -127,6 +151,10 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
     // PublishViewModelDelegate
 
     public publishDidClearTitle() {
+        this.onOpen()
+    }
+
+    public publishDidClearDate() {
         this.onOpen()
     }
 
@@ -142,30 +170,34 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
         this.onOpen()
     }
 
+    public publishDidValidateDate() {
+        this.onOpen()
+    }
+
     // Private
 
     private makeConfirmationView(response: PublishResponse) {
-        const {contentEl} = this
+        const { contentEl } = this
 
         contentEl.empty()
 
-        contentEl.createEl('h2', {text: 'Published'})
-        contentEl.createEl('a', {text: 'Open post URL', href: response.url})
+        contentEl.createEl('h2', { text: 'Published' })
+        contentEl.createEl('a', { text: 'Open post URL', href: response.url })
         contentEl.createEl('br')
-        contentEl.createEl('a', {text: 'Open post Preview URL', href: response.preview})
+        contentEl.createEl('a', { text: 'Open post Preview URL', href: response.preview })
         contentEl.createEl('br')
-        contentEl.createEl('a', {text: 'Open post Edit URL', href: response.edit})
+        contentEl.createEl('a', { text: 'Open post Edit URL', href: response.edit })
     }
 
     private makeMessageView(
         title: string,
         message: string
     ) {
-        const {contentEl} = this
+        const { contentEl } = this
 
         contentEl.empty()
 
-        contentEl.createEl('h2', {text: title})
-        contentEl.createEl('p', {text: message})
+        contentEl.createEl('h2', { text: title })
+        contentEl.createEl('p', { text: message })
     }
 }
