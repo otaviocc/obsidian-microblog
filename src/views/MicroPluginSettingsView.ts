@@ -81,7 +81,8 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .setValue(this.viewModel.appToken)
                 .onChange(value => {
                     this.viewModel.appToken = value
-                }))
+                })
+            )
 
         new Setting(containerEl)
             .addButton(button => button
@@ -94,7 +95,8 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                         .setButtonText('Logging in...')
 
                     await this.viewModel.validate()
-                }))
+                })
+            )
     }
 
     private makeSettingsView() {
@@ -111,7 +113,8 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .setValue(this.viewModel.selectedBlogID)
                 .onChange(value => {
                     this.viewModel.selectedBlogID = value
-                }))
+                })
+            )
             .addExtraButton(button => button
                 .setIcon('sync')
                 .setTooltip('Refresh blogs')
@@ -131,7 +134,8 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .setValue(this.viewModel.tags)
                 .onChange(value => {
                     this.viewModel.tags = value
-                }))
+                })
+            )
 
         new Setting(containerEl)
             .setName('Post visibility')
@@ -142,7 +146,8 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .setValue(this.viewModel.visibility)
                 .onChange(value => {
                     this.viewModel.visibility = value
-                }))
+                })
+            )
 
         new Setting(this.containerEl)
             .setName('Sponsor')
@@ -157,6 +162,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 .setCta()
                 .onClick(_ => {
                     this.viewModel.logout()
-                }))
+                })
+            )
     }
 }
