@@ -136,7 +136,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                     }
                 })
             )
-            .setDesc(this.viewModel.showInvalidDateMessage ? "Invalid date format" : "")
+            .setDesc(this.viewModel.invalidDateText)
     }
 
     public onClose() {
