@@ -132,8 +132,8 @@ export class PublishViewModel implements TagSuggestionDelegate {
         return this.isValidDate && this.isSubmitting
     }
 
-    public get showInvalidDateMessage(): boolean {
-        return !this.isValidDate
+    public get invalidDateText(): string {
+        return this.isValidDate ? "" : "Invalid date format"
     }
 
     public async publishNote() {
