@@ -1,4 +1,4 @@
-import { PluginSettingTab, Setting } from 'obsidian'
+import { Notice, PluginSettingTab, Setting } from 'obsidian'
 import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate } from '@views/MicroPluginSettingsViewModel'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
@@ -47,10 +47,18 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
     public loginDidSucceed(response: ConfigResponse) {
         this.display()
+
+        new Notice(
+            'Micro.blog login succeeded'
+        )
     }
 
     public loginDidFail(error: Error) {
         this.display()
+
+        new Notice(
+            'Micro.blog login failed'
+        )
     }
 
     public logoutDidSucceed() {
@@ -59,10 +67,18 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
     public refreshDidFail(error: Error) {
         this.display()
+
+        new Notice(
+            'Blogs refresh failed'
+        )
     }
 
     public refreshDidSucceed(response: ConfigResponse) {
         this.display()
+
+        new Notice(
+            'Blog(s) refreshed'
+        )
     }
 
     // Private
