@@ -4,7 +4,7 @@ Micro.publish is a community maintained plugin for [Obsidian](https://obsidian.m
 
 Does this plugin improve your workflow? Say thanks with a coffee.
 
-<a href="https://www.buymeacoffee.com/otaviocc" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;" ></a>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z0C9KPT)
 
 ## Installing
 
