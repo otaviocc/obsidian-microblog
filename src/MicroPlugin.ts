@@ -1,3 +1,4 @@
+import { ErrorView } from '@views/ErrorView'
 import { Notice, Plugin } from 'obsidian'
 import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
@@ -32,12 +33,18 @@ export default class MicroPlugin extends Plugin {
             id: 'microblog-publish-command',
             name: 'Post to Micro.blog',
             editorCallback: (editor, markdownView) => {
-                new PublishView(
-                    this.viewModelFactory.makePublishViewModel(
-                        markdownView.file.basename,
-                        editor.getValue()
-                    )
-                ).open()
+                if (editor.getValue().trim().length == 0) {
+                    new ErrorView(
+                        this.viewModelFactory.makeEmptyPostErrorViewModel()
+                    ).open()
+                } else {
+                    new PublishView(
+                        this.viewModelFactory.makePublishViewModel(
+                            markdownView.file.basename,
+                            editor.getValue()
+                        )
+                    ).open()
+                }
             }
         })
 

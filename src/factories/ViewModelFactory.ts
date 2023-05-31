@@ -1,6 +1,7 @@
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishViewModel } from '@views/PublishViewModel'
 import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggestionViewModel'
+import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 
 export interface ViewModelFactoryInterface {
@@ -21,6 +22,9 @@ export interface ViewModelFactoryInterface {
         excluding: Array<string>,
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
+
+    // Builds the Empty Post Error View Model.
+    makeEmptyPostErrorViewModel(): ErrorViewModel
 }
 
 /*
@@ -86,5 +90,12 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         viewModel.delegate = delegate
 
         return viewModel
+    }
+
+    public makeEmptyPostErrorViewModel(): ErrorViewModel {
+        return new ErrorViewModel(
+            "Oops",
+            "Micro.blog doesn't support blank posts. Write something first and try again."
+        )
     }
 }
