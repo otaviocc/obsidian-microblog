@@ -169,7 +169,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
             .setName('Sponsor')
             .setDesc('Like this plugin? Say thanks with a coffee :-)')
             .addButton(button =>
-                button.buttonEl.outerHTML = '<a href="https://www.buymeacoffee.com/otaviocc" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px !important;" ></a>'
+                button.buttonEl.outerHTML = '<a href="https://ko-fi.com/Z8Z0C9KPT" target="_blank"><img height="36" style="border:0px;height:36px;" src="https://storage.ko-fi.com/cdn/kofi3.png?v=3" border="0" alt="Buy Me a Coffee at ko-fi.com" /></a>'
             )
 
         new Setting(containerEl)
