@@ -24,6 +24,8 @@
       "@factories/*": ["factories/*"],
       "@stores/*": ["stores/*"],
       "@services/*": ["services/*"],
+      "@models/*": ["models/*"],
+      "@extensions/*": ["extensions/*"]
     }
   },
   "include": [
