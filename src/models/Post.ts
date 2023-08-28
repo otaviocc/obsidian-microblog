@@ -1,4 +1,5 @@
-import { MarkdownView } from 'obsidian'
+import { FrontMatterCache, MarkdownView } from 'obsidian'
+import { parseFrontMatterEntry, parseFrontMatterStringArray } from 'obsidian'
 import '@extensions/String'
 
 export interface PostInterface {
@@ -16,7 +17,7 @@ export interface PostInterface {
     // Tags.
     // Returns a string with the tags in the frontmatter,
     // if applicable.
-    tags: string | undefined
+    tags: string | null | undefined
 }
 
 /*
@@ -27,6 +28,7 @@ export class Post implements PostInterface {
     // Properties
 
     private markdownView: MarkdownView
+    private frontmatter: FrontMatterCache | undefined
 
     // Life cycle
 
@@ -34,16 +36,21 @@ export class Post implements PostInterface {
         markdownView: MarkdownView
     ) {
         this.markdownView = markdownView
+        this.frontmatter = app.metadataCache.getFileCache(
+            this.markdownView.file
+        )?.frontmatter
     }
 
     // Public
 
     public get title(): string {
-        const file = this.markdownView.file
-        const fileCache = app.metadataCache.getFileCache(file)
-        const frontmatter = fileCache?.frontmatter
+        const filename = this.markdownView.file.basename
+        const frontmatterTitle = parseFrontMatterEntry(
+            this.frontmatter,
+            'title'
+        )
 
-        return (frontmatter && frontmatter.title) || file.basename
+        return frontmatterTitle || filename
     }
 
     public get content(): string {
@@ -52,13 +59,12 @@ export class Post implements PostInterface {
             .removeFrontmatter()
     }
 
-    public get tags(): string | undefined {
-        const file = this.markdownView.file
-        const fileCache = app.metadataCache.getFileCache(file)
+    public get tags(): string | null | undefined {
+        const tags = parseFrontMatterStringArray(
+            this.frontmatter,
+            'tags'
+        )
 
-        return fileCache
-            ?.frontmatter
-            ?.tags
-            ?.join(',')
+        return tags?.join(',')
     }
 }
