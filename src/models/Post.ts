@@ -1,6 +1,10 @@
-import { FrontMatterCache, MarkdownView } from 'obsidian'
-import { parseFrontMatterEntry, parseFrontMatterStringArray } from 'obsidian'
 import '@extensions/String'
+import {
+    FrontMatterCache,
+    MarkdownView,
+    parseFrontMatterEntry,
+    parseFrontMatterStringArray
+} from 'obsidian'
 
 export interface PostInterface {
 
