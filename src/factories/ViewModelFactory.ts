@@ -1,17 +1,16 @@
-import { MarkdownView } from 'obsidian'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishViewModel } from '@views/PublishViewModel'
 import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggestionViewModel'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
-import { Post } from '@models/Post'
+import { PostInterface } from '@models/Post'
 
 export interface ViewModelFactoryInterface {
 
     // Builds the Publish View Model, used when Publishing a note
     // to Micro.blog via the Commands Palette.
     makePublishViewModel(
-        post: Post
+        post: PostInterface
     ): PublishViewModel
 
     // Builds the Plugin Settings View Model, used by the plugin
@@ -50,12 +49,14 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     // Public
 
     public makePublishViewModel(
-        post: Post
+        post: PostInterface
     ): PublishViewModel {
+        const tags = post.tags || this.container.settings.defaultTags
+
         return new PublishViewModel(
             post.title,
             post.content,
-            this.container.settings.defaultTags,
+            tags,
             this.container.settings.postVisibility,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,

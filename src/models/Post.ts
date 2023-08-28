@@ -1,10 +1,28 @@
 import { MarkdownView } from 'obsidian'
 import '@extensions/String'
 
+export interface PostInterface {
+
+    // Post title.
+    // Returns either the title included
+    // in the frontmatter, or the file name.
+    title: string
+
+    // Post Content.
+    // Returns the markdown content, without the
+    // front matter.
+    content: string
+
+    // Tags.
+    // Returns a string with the tags in the frontmatter,
+    // if applicable.
+    tags: string | undefined
+}
+
 /*
- * Represents the post which will be submitted to Micro.blog.
+ * Post from the Markdown file.
  */
-export class Post {
+export class Post implements PostInterface {
 
     // Properties
 
@@ -32,5 +50,15 @@ export class Post {
         return this.markdownView.editor
             .getValue()
             .removeFrontmatter()
+    }
+
+    public get tags(): string | undefined {
+        const file = this.markdownView.file
+        const fileCache = app.metadataCache.getFileCache(file)
+
+        return fileCache
+            ?.frontmatter
+            ?.tags
+            ?.join(',')
     }
 }
