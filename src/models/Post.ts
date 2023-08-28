@@ -31,7 +31,8 @@ export class Post implements PostInterface {
 
     // Properties
 
-    private markdownView: MarkdownView
+    private filename: string
+    private rawContent: string
     private frontmatter: FrontMatterCache | undefined
 
     // Life cycle
@@ -39,27 +40,30 @@ export class Post implements PostInterface {
     constructor(
         markdownView: MarkdownView
     ) {
-        this.markdownView = markdownView
-        this.frontmatter = app.metadataCache.getFileCache(
-            this.markdownView.file
-        )?.frontmatter
+        this.filename = markdownView.file
+            .basename
+
+        this.rawContent = markdownView.editor
+            .getValue()
+
+        this.frontmatter = app.metadataCache
+            .getFileCache(markdownView.file)
+            ?.frontmatter
     }
 
     // Public
 
     public get title(): string {
-        const filename = this.markdownView.file.basename
         const frontmatterTitle = parseFrontMatterEntry(
             this.frontmatter,
             'title'
         )
 
-        return frontmatterTitle || filename
+        return frontmatterTitle || this.filename
     }
 
     public get content(): string {
-        return this.markdownView.editor
-            .getValue()
+        return this.rawContent
             .removeFrontmatter()
     }
 
