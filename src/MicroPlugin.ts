@@ -1,3 +1,4 @@
+import '@extensions/Obsidian'
 import { ErrorView } from '@views/ErrorView'
 import { Notice, Plugin } from 'obsidian'
 import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
@@ -7,7 +8,6 @@ import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFacto
 import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
 import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
 import { ViewModelFactoryInterface, ViewModelFactory } from '@factories/ViewModelFactory'
-import { Post } from '@models/Post'
 
 export default class MicroPlugin extends Plugin {
 
@@ -41,7 +41,7 @@ export default class MicroPlugin extends Plugin {
                 } else {
                     new PublishView(
                         this.viewModelFactory.makePublishViewModel(
-                            new Post(markdownView)
+                            markdownView
                         )
                     ).open()
                 }
