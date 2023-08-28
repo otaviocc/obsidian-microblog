@@ -1,31 +1,36 @@
 import { MarkdownView } from 'obsidian'
 import '@extensions/String'
 
+/*
+ * Represents the post which will be submitted to Micro.blog.
+ */
 export class Post {
 
-	// Properties
+    // Properties
 
-	private markdownView: MarkdownView
+    private markdownView: MarkdownView
 
-	// Life cycle
+    // Life cycle
 
-	constructor(
-		markdownView: MarkdownView
-	) {
-		this.markdownView = markdownView
-	}
+    constructor(
+        markdownView: MarkdownView
+    ) {
+        this.markdownView = markdownView
+    }
 
-	// Public
+    // Public
 
-	public get title(): string {
-		const file = this.markdownView.file
-		const fileCache = app.metadataCache.getFileCache(file)
-		const frontmatter = fileCache?.frontmatter
+    public get title(): string {
+        const file = this.markdownView.file
+        const fileCache = app.metadataCache.getFileCache(file)
+        const frontmatter = fileCache?.frontmatter
 
-		return (frontmatter && frontmatter.title) || file.basename
-	}
+        return (frontmatter && frontmatter.title) || file.basename
+    }
 
-	public get content(): string {
-		return this.markdownView.editor.getValue().removeFrontmatter()
-	}
+    public get content(): string {
+        return this.markdownView.editor
+            .getValue()
+            .removeFrontmatter()
+    }
 }
