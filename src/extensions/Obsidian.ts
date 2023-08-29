@@ -23,7 +23,7 @@ declare module 'obsidian' {
     }
 }
 
-MarkdownView.prototype.title = function(this: MarkdownView) {
+MarkdownView.prototype.title = function() {
     const filename = this.file.basename
     const frontmatter = parseFrontMatterFromFile(this.file)
     const frontmatterTitle = parseFrontMatterEntry(
@@ -34,11 +34,11 @@ MarkdownView.prototype.title = function(this: MarkdownView) {
     return frontmatterTitle || filename
 }
 
-MarkdownView.prototype.content = function(this: MarkdownView) {
+MarkdownView.prototype.content = function() {
     return this.editor.getValue().removeFrontmatter()
 }
 
-MarkdownView.prototype.tags = function(this: MarkdownView) {
+MarkdownView.prototype.tags = function() {
     const frontmatter = parseFrontMatterFromFile(this.file)
     const frontmatterTags = parseFrontMatterStringArray(
         frontmatter,
