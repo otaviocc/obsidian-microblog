@@ -5,8 +5,8 @@ declare global {
 }
 
 String.prototype.removeFrontmatter = function(): string {
-    const frontmatterRegularExpression = /---\s*[\s\S]*?\s*---/g
-    return this.replace(frontmatterRegularExpression, "")
+    const regex = /---\s*[\s\S]*?\s*---/
+    return this.replace(regex, "")
 }
 
 export { }
