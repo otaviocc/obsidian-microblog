@@ -52,4 +52,4 @@ function parseFrontMatterFromFile(file: TFile) {
     return app.metadataCache.getFileCache(file)?.frontmatter
 }
 
-export {}
+export { }

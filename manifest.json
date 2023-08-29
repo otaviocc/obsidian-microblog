@@ -1,10 +1,10 @@
 {
-	"id": "microblog-publish-plugin",
-	"name": "Micro.publish",
-	"version": "1.7.0",
-	"minAppVersion": "0.15.0",
-	"description": "Publish notes to Micro.blog",
-	"author": "Otavio Cordeiro",
-	"authorUrl": "https://otavio.cc",
-	"isDesktopOnly": false
+    "id": "microblog-publish-plugin",
+    "name": "Micro.publish",
+    "version": "1.7.0",
+    "minAppVersion": "0.15.0",
+    "description": "Publish notes to Micro.blog",
+    "author": "Otavio Cordeiro",
+    "authorUrl": "https://otavio.cc",
+    "isDesktopOnly": false
 }

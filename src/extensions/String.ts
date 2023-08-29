@@ -9,4 +9,4 @@ String.prototype.removeFrontmatter = function(): string {
     return this.replace(frontmatterRegularExpression, "")
 }
 
-export {}
+export { }
