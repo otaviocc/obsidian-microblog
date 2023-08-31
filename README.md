@@ -33,6 +33,8 @@ The plugin has two commands that can be accessed through the Command Palette:
 - **Post to Micro.blog** - This command publishes the selected note to Micro.blog.
 - **Synchronize Categories** - This command fetches all the categories used in your blog from Micro.blog.
 
+![Screenshot 2023-08-31 at 06 33 49](https://github.com/otaviocc/obsidian-microblog/assets/139272/f22aaf35-cd4c-4213-9feb-805dac539a34)
+
 **Tip:** Micro.publish automatically fetches categories from Micro.blog whenever Obsidian is launched.
 
 Before publishing a note to Micro.blog, Micro.publish opens a window that allows you to change the post title, tags, visibility, and data (for scheduling a post for a future date).
