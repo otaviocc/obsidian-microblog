@@ -12,19 +12,19 @@ This community-maintained plugin is not affiliated with Micro.blog or Obsidian.
 
 To install this plugin, open Obsidian and go to `Settings > Community Plugins > Browse`. Search for `Micro.publish` and click Install. Alternately, it can be installed [directly from Obsidian's website](https://obsidian.md/plugins?search=micro.publish).
 
-<video controls="controls" src="https://otavio.cc/uploads/2023/1.install.mp4" width="600" height="400" poster="https://otavio.cc/uploads/2023/8058b9ae66.png"></video>
+![Screenshot 2023-08-31 at 06 28 51](https://github.com/otaviocc/obsidian-microblog/assets/139272/fa18e221-a8bc-42e3-99e7-56e9c370a4ac)
 
 ## Login
 
 After installation, you need to log in to a Micro.blog account with an App Token. You can create an App Token on the [Micro.blog Account Page](https://micro.blog/account/apps).
 
-<video controls="controls" src="https://otavio.cc/uploads/2023/2.login.mp4" width="600" height="400" poster="https://otavio.cc/uploads/2023/74c9f9592d.png"></video>
+![Screenshot 2023-08-31 at 06 28 29](https://github.com/otaviocc/obsidian-microblog/assets/139272/1d98c0ec-041f-43da-8c1d-fe38839adc26)
 
 ## Settings
 
 Users with multiple blogs can set a default blog, default categories, and default post visibility (draft or public). These settings can be overridden before publishing a note to Micro.blog.
 
-<video controls="controls" src="https://otavio.cc/uploads/2023/3.settings.mp4" width="600" height="400" poster="https://otavio.cc/uploads/2023/65bb41d998.png"></video>
+![Screenshot 2023-08-31 at 06 28 20](https://github.com/otaviocc/obsidian-microblog/assets/139272/3a6db0ae-bdb8-453f-91e6-a9333bdaa96f)
 
 ## Publishing
 
@@ -37,7 +37,7 @@ The plugin has two commands that can be accessed through the Command Palette:
 
 Before publishing a note to Micro.blog, Micro.publish opens a window that allows you to change the post title, tags, visibility, and data (for scheduling a post for a future date).
 
-<video controls="controls" src="https://otavio.cc/uploads/2023/4.publishing.mp4" width="600" height="400" poster="https://otavio.cc/uploads/2023/1c8a6d16ef.png"></video>
+![Screenshot 2023-08-31 at 06 28 08](https://github.com/otaviocc/obsidian-microblog/assets/139272/b8fe7e3d-f20c-448e-9bf2-67027da4e833)
 
 ## Properties
 
@@ -46,7 +46,9 @@ Micro.publish supports YAML frontmatter. It also works with the new [Properties]
 * Micro.publish will use the `title` property in the frontmatter or Properties, if it exists. Otherwise, it will fall back to the filename.
 * Micro.publish will use the `tags` property in the frontmatter or Properties, if it exists. Otherwise, it will use the default categories configured in Micro.publish's preferences.
 
-<video controls="controls" src="https://otavio.cc/uploads/2023/5.properties.mp4" width="600" height="400" poster="https://otavio.cc/uploads/2023/e485d5aacc.png"></video>
+![Screenshot 2023-08-31 at 06 27 13](https://github.com/otaviocc/obsidian-microblog/assets/139272/f6875982-959c-4c0f-a158-66df6917dde3)
+
+![Screenshot 2023-08-31 at 06 27 36](https://github.com/otaviocc/obsidian-microblog/assets/139272/3c3e12c1-2aee-437c-b7ad-102b13fbe00a)
 
 ## Building from source
 
