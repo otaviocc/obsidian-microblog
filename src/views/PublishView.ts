@@ -160,12 +160,19 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
         this.onOpen()
     }
 
-    public publishDidSucceed(response: PublishResponse) {
+    public publishDidSucceed(
+        response: PublishResponse
+    ) {
         this.makeConfirmationView(response)
     }
 
-    public publishDidFail(error: Error) {
-        this.makeMessageView('Error', error.message)
+    public publishDidFail(
+        error: Error
+    ) {
+        this.makeMessageView(
+            'Error',
+            error.message
+        )
     }
 
     public publishDidSelectTag() {
@@ -178,7 +185,9 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
     // Private
 
-    private makeConfirmationView(response: PublishResponse) {
+    private makeConfirmationView(
+        response: PublishResponse
+    ) {
         const { contentEl } = this
 
         contentEl.empty()

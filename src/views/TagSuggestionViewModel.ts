@@ -38,7 +38,9 @@ export class TagSuggestionViewModel {
         return 'Use command palette to ' + action + ' categories'
     }
 
-    public chooseCategory(tag: string) {
+    public chooseCategory(
+        tag: string
+    ) {
         this.delegate?.tagSuggestionDidSelectTag(tag)
     }
 }
