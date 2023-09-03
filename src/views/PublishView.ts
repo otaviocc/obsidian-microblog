@@ -1,4 +1,4 @@
-import { Modal, Setting } from 'obsidian'
+import { App, Modal, Setting } from 'obsidian'
 import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
 import { TagSuggestionView } from '@views/TagSuggestionView'
@@ -21,7 +21,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
     // Life cycle
 
     constructor(
-        viewModel: PublishViewModel
+        viewModel: PublishViewModel,
+        app: App
     ) {
         super(app)
 
@@ -85,7 +86,8 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
                 .setTooltip('Add categories')
                 .onClick(() => {
                     new TagSuggestionView(
-                        this.viewModel.suggestionsViewModel()
+                        this.viewModel.suggestionsViewModel(),
+                        this.app
                     ).open()
                 })
             )

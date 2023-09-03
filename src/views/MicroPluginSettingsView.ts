@@ -1,4 +1,4 @@
-import { Notice, PluginSettingTab, Setting } from 'obsidian'
+import { App, Notice, PluginSettingTab, Setting } from 'obsidian'
 import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate } from '@views/MicroPluginSettingsViewModel'
 import { ConfigResponse } from '@networking/ConfigResponse'
 
@@ -19,7 +19,10 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
     // Life cycle
 
-    constructor(viewModel: MicroPluginSettingsViewModel) {
+    constructor(
+        viewModel: MicroPluginSettingsViewModel,
+        app: App
+    ) {
         super(app, viewModel.plugin)
 
         this.viewModel = viewModel
