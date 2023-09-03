@@ -1,6 +1,6 @@
 import '@extensions/Obsidian'
 import { ErrorView } from '@views/ErrorView'
-import { Notice, Plugin } from 'obsidian'
+import { Notice, Plugin, MarkdownView } from 'obsidian'
 import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishView } from '@views/PublishView'
@@ -36,13 +36,15 @@ export default class MicroPlugin extends Plugin {
             editorCallback: (editor, markdownView) => {
                 if (editor.getValue().trim().length == 0) {
                     new ErrorView(
-                        this.viewModelFactory.makeEmptyPostErrorViewModel()
+                        this.viewModelFactory.makeEmptyPostErrorViewModel(),
+                        this.app
                     ).open()
-                } else {
+                } else if (markdownView instanceof MarkdownView) {
                     new PublishView(
                         this.viewModelFactory.makePublishViewModel(
                             markdownView
-                        )
+                        ),
+                        this.app
                     ).open()
                 }
             }
@@ -58,7 +60,8 @@ export default class MicroPlugin extends Plugin {
 
         this.addSettingTab(
             new MicroPluginSettingsView(
-                this.viewModelFactory.makeMicroPluginSettingsViewModel()
+                this.viewModelFactory.makeMicroPluginSettingsViewModel(),
+                this.app
             )
         )
     }

@@ -1,4 +1,4 @@
-import { FuzzySuggestModal } from 'obsidian'
+import { App, FuzzySuggestModal } from 'obsidian'
 import { TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
@@ -17,7 +17,8 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
     // Life cycle
 
     constructor(
-        viewModel: TagSuggestionViewModel
+        viewModel: TagSuggestionViewModel,
+        app: App
     ) {
         super(app)
 

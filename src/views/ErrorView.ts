@@ -1,4 +1,4 @@
-import { Modal } from 'obsidian'
+import { App, Modal } from 'obsidian'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 
 /*
@@ -13,7 +13,8 @@ export class ErrorView extends Modal {
     // Life cycle
 
     constructor(
-        viewModel: ErrorViewModel
+        viewModel: ErrorViewModel,
+        app: App
     ) {
         super(app)
 
