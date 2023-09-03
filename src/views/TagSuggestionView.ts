@@ -43,13 +43,15 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
         return this.viewModel.tags
     }
 
-    public getItemText(value: string): string {
+    public getItemText(
+        value: string
+    ): string {
         return value
     }
 
     public onChooseItem(
         item: string,
-        evt: MouseEvent | KeyboardEvent
+        _evt: MouseEvent | KeyboardEvent
     ) {
         this.viewModel.chooseCategory(item)
     }

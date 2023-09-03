@@ -119,7 +119,7 @@ export default class MicroPlugin extends Plugin {
     }
 
     public tagSynchronizationDidFail(
-        error: Error
+        _error: Error
     ) {
         new Notice(
             'Error synchronizing categories'

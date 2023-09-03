@@ -217,7 +217,9 @@ export class PublishViewModel implements TagSuggestionDelegate {
 
     // TagSuggestionDelegate
 
-    public tagSuggestionDidSelectTag(category: string) {
+    public tagSuggestionDidSelectTag(
+        category: string
+    ) {
         const tags = this.tags
             .split(',')
             .filter(value => value.length > 0)

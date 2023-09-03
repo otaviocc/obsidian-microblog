@@ -48,7 +48,9 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
     // MicroPluginSettingsDelegate
 
-    public loginDidSucceed(response: ConfigResponse) {
+    public loginDidSucceed(
+        _response: ConfigResponse
+    ) {
         this.display()
 
         new Notice(
@@ -56,7 +58,9 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         )
     }
 
-    public loginDidFail(error: Error) {
+    public loginDidFail(
+        _error: Error
+    ) {
         this.display()
 
         new Notice(
@@ -68,7 +72,9 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         this.display()
     }
 
-    public refreshDidFail(error: Error) {
+    public refreshDidFail(
+        _error: Error
+    ) {
         this.display()
 
         new Notice(
@@ -76,7 +82,9 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         )
     }
 
-    public refreshDidSucceed(response: ConfigResponse) {
+    public refreshDidSucceed(
+        _response: ConfigResponse
+    ) {
         this.display()
 
         new Notice(
