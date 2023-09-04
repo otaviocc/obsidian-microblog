@@ -63,12 +63,10 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             markdownView
         )
 
-        const tags = post.tags || this.container.settings.defaultTags
-
         return new PublishViewModel(
             post.title,
             post.content,
-            tags,
+            post.tags || this.container.settings.defaultTags,
             this.container.settings.postVisibility,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
