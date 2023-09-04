@@ -58,9 +58,7 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
     // Public
 
     public async fetchTags() {
-        if (this.settings.appToken.length == 0) {
-            return
-        }
+        if (this.settings.appToken.length == 0) return
 
         try {
             const response = await this.networkClient.run<CategoriesResponse>(

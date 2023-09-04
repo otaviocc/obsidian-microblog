@@ -47,10 +47,10 @@ export class FrontMatterProcessor implements FrontMatterProcessorInterface {
         value: string | null,
         key: string
     ) {
-        if (this.file === null) { return }
+        if (!this.file) return
 
         try {
-            this.app.fileManager.processFrontMatter(this.file, (frontmatter) => {
+            this.app.fileManager.processFrontMatter(this.file, frontmatter => {
                 if (value === null) {
                     delete frontmatter[key]
                 } else {
@@ -83,12 +83,8 @@ export class FrontMatterProcessor implements FrontMatterProcessorInterface {
     // Private
 
     private parseFrontMatterFromFile(): FrontMatterCache | undefined {
-        if (this.file === null) { return undefined }
-
-        const fileCache = this.app.metadataCache.getFileCache(
-            this.file
-        )
-
-        return fileCache?.frontmatter
+        return this.file
+            ? this.app.metadataCache.getFileCache(this.file)?.frontmatter
+            : undefined
     }
 }
