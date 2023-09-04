@@ -3,6 +3,7 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 import { ViewModelFactoryInterface } from '@factories/ViewModelFactory'
+import { FrontMatterProcessorInterface } from '@services/FrontMatterProcessor'
 
 /*
  * Publish View Delegate Interface, implemented by
@@ -51,6 +52,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
     private selectedBlogIDWrappedValue: string
     private scheduledDateWrappedValue: string
     private networkClient: NetworkClientInterface
+    private markdownProcessor: FrontMatterProcessorInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
     private viewModelFactory: ViewModelFactoryInterface
     readonly blogs: Record<string, string>
@@ -65,6 +67,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
         blogs: Record<string, string>,
         selectedBlogID: string,
         networkClient: NetworkClientInterface,
+        markdownProcessor: FrontMatterProcessorInterface,
         networkRequestFactory: NetworkRequestFactoryInterface,
         viewModelFactory: ViewModelFactoryInterface
     ) {
@@ -78,6 +81,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
         this.isValidDate = true
         this.isSubmitting = false
         this.networkClient = networkClient
+        this.markdownProcessor = markdownProcessor
         this.networkRequestFactory = networkRequestFactory
         this.viewModelFactory = viewModelFactory
     }
@@ -162,6 +166,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
                 response
             )
 
+            this.markdownProcessor.save(result.url, 'url')
             this.delegate?.publishDidSucceed(result)
         } catch (error) {
             this.delegate?.publishDidFail(error)
