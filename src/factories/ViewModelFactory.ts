@@ -4,6 +4,8 @@ import { PublishViewModel } from '@views/PublishViewModel'
 import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggestionViewModel'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
+import { MarkdownPost } from '@models/MarkdownService'
+import { FrontMatterProcessor } from '@services/FrontMatterProcessor'
 
 export interface ViewModelFactoryInterface {
 
@@ -51,16 +53,27 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     public makePublishViewModel(
         markdownView: MarkdownView
     ): PublishViewModel {
-        const tags = markdownView.tags() || this.container.settings.defaultTags
+        const frontMatterProcessor = new FrontMatterProcessor(
+            this.container.plugin.app,
+            markdownView.file
+        )
+
+        const markdownService = new MarkdownPost(
+            frontMatterProcessor,
+            markdownView
+        )
+
+        const tags = markdownService.tags || this.container.settings.defaultTags
 
         return new PublishViewModel(
-            markdownView.title(),
-            markdownView.content(),
+            markdownService.title,
+            markdownService.content,
             tags,
             this.container.settings.postVisibility,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
             this.container.networkClient,
+            frontMatterProcessor,
             this.container.networkRequestFactory,
             this
         )

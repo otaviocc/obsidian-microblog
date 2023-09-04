@@ -1,4 +1,3 @@
-import '@extensions/Obsidian'
 import { ErrorView } from '@views/ErrorView'
 import { Notice, Plugin, MarkdownView } from 'obsidian'
 import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
