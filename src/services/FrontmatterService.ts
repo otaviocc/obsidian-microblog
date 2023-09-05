@@ -51,11 +51,9 @@ export class FrontmatterService implements FrontmatterServiceInterface {
 
         try {
             this.app.fileManager.processFrontMatter(this.file, frontmatter => {
-                if (value === null) {
-                    delete frontmatter[key]
-                } else {
-                    frontmatter[key] = value
-                }
+                value === null
+                    ? delete frontmatter[key]
+                    : frontmatter[key] = value
             })
         } catch (error) {
             console.log('Error saving to YAML frontmatter: ' + error)
