@@ -1,4 +1,5 @@
 import MicroPlugin from '@base/MicroPlugin'
+
 import { CategoriesResponse } from '@networking/CategoriesResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
