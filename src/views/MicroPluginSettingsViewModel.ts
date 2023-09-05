@@ -1,8 +1,8 @@
 import MicroPlugin from '@base/MicroPlugin'
-import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
-import { NetworkClientInterface } from '@networking/NetworkClient'
-import { StoredSettings } from '@stores/StoredSettings'
 import { ConfigResponse } from '@networking/ConfigResponse'
+import { NetworkClientInterface } from '@networking/NetworkClient'
+import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
+import { StoredSettings } from '@stores/StoredSettings'
 
 /*
  * Plugin Settings View Delegate Interface, implemented by

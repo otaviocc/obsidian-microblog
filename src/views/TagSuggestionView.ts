@@ -1,5 +1,5 @@
-import { App, FuzzySuggestModal } from 'obsidian'
 import { TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
+import { App, FuzzySuggestModal } from 'obsidian'
 
 /*
  * Tag Suggestions View subclasses FuzzySuggestModal, and is presented from

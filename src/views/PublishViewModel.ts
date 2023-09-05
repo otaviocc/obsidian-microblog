@@ -1,9 +1,9 @@
-import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
-import { NetworkClientInterface } from '@networking/NetworkClient'
-import { PublishResponse } from '@networking/PublishResponse'
-import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 import { ViewModelFactoryInterface } from '@factories/ViewModelFactory'
+import { NetworkClientInterface } from '@networking/NetworkClient'
+import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
+import { PublishResponse } from '@networking/PublishResponse'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
  * Publish View Delegate Interface, implemented by

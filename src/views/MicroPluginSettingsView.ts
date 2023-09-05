@@ -1,6 +1,6 @@
-import { App, Notice, PluginSettingTab, Setting } from 'obsidian'
-import { MicroPluginSettingsViewModel, MicroPluginSettingsDelegate } from '@views/MicroPluginSettingsViewModel'
 import { ConfigResponse } from '@networking/ConfigResponse'
+import { MicroPluginSettingsDelegate, MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
+import { App, Notice, PluginSettingTab, Setting } from 'obsidian'
 
 /*
  * Plugin Settings View subclasses PluginSettingTab, and is presented via

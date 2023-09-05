@@ -1,9 +1,9 @@
-import { MicroPluginContainerInterface } from "@base/MicroPluginContainer";
+import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import {
-    TagSynchronizationServiceInterface,
     TagSynchronizationService,
-    TagSynchronizationServiceDelegate
-} from "@services/TagSynchronizationService";
+    TagSynchronizationServiceDelegate,
+    TagSynchronizationServiceInterface
+} from '@services/TagSynchronizationService'
 
 export interface ServiceFactoryInterface {
 

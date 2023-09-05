@@ -1,7 +1,7 @@
-import { App, Modal, Setting } from 'obsidian'
-import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
+import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
 import { TagSuggestionView } from '@views/TagSuggestionView'
+import { App, Modal, Setting } from 'obsidian'
 
 /*
  * Publish View subclasses Modal, and is presented via Obsidian's
