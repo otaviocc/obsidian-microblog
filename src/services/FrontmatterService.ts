@@ -1,7 +1,8 @@
+import '@extensions/String'
 import { App, TFile, FrontMatterCache } from "obsidian"
 import { parseFrontMatterEntry, parseFrontMatterStringArray } from 'obsidian'
 
-export interface FrontMatterProcessorInterface {
+export interface FrontmatterServiceInterface {
 
     // Saves or delete an entry to the frontmatter.
     save(
@@ -21,10 +22,10 @@ export interface FrontMatterProcessorInterface {
 }
 
 /*
- * FrontMatter Processor, responsible for manipulating (reading, and writing)
+ * Frontmatter Service, responsible for manipulating (reading, and writing)
  * to a file's frontmatter.
  */
-export class FrontMatterProcessor implements FrontMatterProcessorInterface {
+export class FrontmatterService implements FrontmatterServiceInterface {
 
     // Properties
 
@@ -65,19 +66,19 @@ export class FrontMatterProcessor implements FrontMatterProcessorInterface {
     public retrieveString(
         key: string
     ): string | null {
-        return parseFrontMatterEntry(
-            this.parseFrontMatterFromFile(),
-            key
-        )
+        const frontmatter = this.parseFrontMatterFromFile()
+        const entry = parseFrontMatterEntry(frontmatter, key)
+
+        return typeof entry === 'string'
+            ? entry
+            : null
     }
 
     public retrieveStrings(
         key: string
     ): string[] | null {
-        return parseFrontMatterStringArray(
-            this.parseFrontMatterFromFile(),
-            key
-        )
+        const frontmatter = this.parseFrontMatterFromFile()
+        return parseFrontMatterStringArray(frontmatter, key)
     }
 
     // Private

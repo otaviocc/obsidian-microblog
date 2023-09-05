@@ -3,7 +3,7 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { PublishResponse } from '@networking/PublishResponse'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 import { ViewModelFactoryInterface } from '@factories/ViewModelFactory'
-import { FrontMatterProcessorInterface } from '@services/FrontMatterProcessor'
+import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 
 /*
  * Publish View Delegate Interface, implemented by
@@ -52,7 +52,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
     private selectedBlogIDWrappedValue: string
     private scheduledDateWrappedValue: string
     private networkClient: NetworkClientInterface
-    private markdownProcessor: FrontMatterProcessorInterface
+    private markdownProcessor: FrontmatterServiceInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
     private viewModelFactory: ViewModelFactoryInterface
     readonly blogs: Record<string, string>
@@ -67,7 +67,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
         blogs: Record<string, string>,
         selectedBlogID: string,
         networkClient: NetworkClientInterface,
-        markdownProcessor: FrontMatterProcessorInterface,
+        markdownProcessor: FrontmatterServiceInterface,
         networkRequestFactory: NetworkRequestFactoryInterface,
         viewModelFactory: ViewModelFactoryInterface
     ) {

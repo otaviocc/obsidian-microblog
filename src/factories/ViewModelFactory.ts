@@ -5,7 +5,7 @@ import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggest
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { MarkdownPost } from '@models/MarkdownPost'
-import { FrontMatterProcessor } from '@services/FrontMatterProcessor'
+import { FrontmatterService } from '@services/FrontmatterService'
 
 export interface ViewModelFactoryInterface {
 
@@ -53,7 +53,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     public makePublishViewModel(
         markdownView: MarkdownView
     ): PublishViewModel {
-        const frontMatterProcessor = new FrontMatterProcessor(
+        const frontMatterProcessor = new FrontmatterService(
             this.container.plugin.app,
             markdownView.file
         )
