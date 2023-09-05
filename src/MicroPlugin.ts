@@ -1,12 +1,12 @@
+import { MicroPluginContainer, MicroPluginContainerInterface } from '@base/MicroPluginContainer'
+import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
+import { ViewModelFactory, ViewModelFactoryInterface } from '@factories/ViewModelFactory'
+import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
+import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
 import { ErrorView } from '@views/ErrorView'
-import { Notice, Plugin, MarkdownView } from 'obsidian'
-import { MicroPluginContainerInterface, MicroPluginContainer } from '@base/MicroPluginContainer'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishView } from '@views/PublishView'
-import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
-import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
-import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
-import { ViewModelFactoryInterface, ViewModelFactory } from '@factories/ViewModelFactory'
+import { MarkdownView, Notice, Plugin } from 'obsidian'
 
 export default class MicroPlugin extends Plugin {
 

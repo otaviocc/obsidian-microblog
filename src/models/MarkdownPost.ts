@@ -1,6 +1,6 @@
 import '@extensions/String'
-import { MarkdownView } from 'obsidian'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { MarkdownView } from 'obsidian'
 
 export interface MarkdownPostInterface {
 

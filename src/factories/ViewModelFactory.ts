@@ -1,11 +1,11 @@
-import { MarkdownView } from 'obsidian'
-import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
-import { PublishViewModel } from '@views/PublishViewModel'
-import { TagSuggestionViewModel, TagSuggestionDelegate } from '@views/TagSuggestionViewModel'
-import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { MarkdownPost } from '@models/MarkdownPost'
 import { FrontmatterService } from '@services/FrontmatterService'
+import { ErrorViewModel } from '@views/ErrorViewModel'
+import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
+import { PublishViewModel } from '@views/PublishViewModel'
+import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
+import { MarkdownView } from 'obsidian'
 
 export interface ViewModelFactoryInterface {
 
