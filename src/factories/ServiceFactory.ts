@@ -1,11 +1,18 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
+import { TFile } from 'obsidian'
 import {
     TagSynchronizationService,
     TagSynchronizationServiceDelegate,
     TagSynchronizationServiceInterface
 } from '@services/TagSynchronizationService'
+import { FrontmatterServiceInterface, FrontmatterService } from '@services/FrontmatterService'
 
 export interface ServiceFactoryInterface {
+
+    // Builds the frontmatter service for the giving file.
+    makeFrontmatterService(
+        file: TFile | null
+    ): FrontmatterServiceInterface
 
     // Builds the synchronization service, used by the client
     // to synchronize categories when the plugin is loaded
@@ -35,6 +42,15 @@ export class ServiceFactory implements ServiceFactoryInterface {
     }
 
     // Public
+
+    public makeFrontmatterService(
+        file: TFile | null
+    ): FrontmatterServiceInterface {
+        return new FrontmatterService(
+            this.container.plugin.app,
+            file
+        )
+    }
 
     public makeTagSynchronizationService(
         delegate?: TagSynchronizationServiceDelegate

@@ -1,11 +1,11 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { MarkdownPost } from '@models/MarkdownPost'
-import { FrontmatterService } from '@services/FrontmatterService'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishViewModel } from '@views/PublishViewModel'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 import { MarkdownView } from 'obsidian'
+import { ServiceFactoryInterface, ServiceFactory } from '@factories/ServiceFactory'
 
 export interface ViewModelFactoryInterface {
 
@@ -39,6 +39,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     // Properties
 
     private container: MicroPluginContainerInterface
+    private serviceFactory: ServiceFactoryInterface
 
     // Life cycle
 
@@ -46,6 +47,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         container: MicroPluginContainerInterface
     ) {
         this.container = container
+        this.serviceFactory = new ServiceFactory(container)
     }
 
     // Public
@@ -53,10 +55,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     public makePublishViewModel(
         markdownView: MarkdownView
     ): PublishViewModel {
-        const frontMatterProcessor = new FrontmatterService(
-            this.container.plugin.app,
-            markdownView.file
-        )
+        const frontMatterProcessor = this.serviceFactory
+            .makeFrontmatterService(markdownView.file)
 
         const post = new MarkdownPost(
             frontMatterProcessor,
