@@ -1,6 +1,6 @@
 import '@extensions/String'
 import { MarkdownView } from 'obsidian'
-import { FrontMatterProcessorInterface } from '@services/FrontMatterProcessor'
+import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 
 export interface MarkdownPostInterface {
 
@@ -30,13 +30,13 @@ export class MarkdownPost implements MarkdownPostInterface {
 
     // Properties
 
-    private frontmatterProcessor: FrontMatterProcessorInterface
+    private frontmatterProcessor: FrontmatterServiceInterface
     private markdownView: MarkdownView
 
     // Life cycle
 
     constructor(
-        frontmatterProcessor: FrontMatterProcessorInterface,
+        frontmatterProcessor: FrontmatterServiceInterface,
         markdownView: MarkdownView
     ) {
         this.frontmatterProcessor = frontmatterProcessor
