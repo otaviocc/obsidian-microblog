@@ -4,13 +4,13 @@ import { TagSuggestionView } from '@views/TagSuggestionView'
 import { App, Modal, Setting } from 'obsidian'
 
 /*
- * Publish View subclasses Modal, and is presented via Obsidian's
+ * PublishView subclasses Modal and is presented via Obsidian's
  * Command Palette.
  *
- * The data used to populate this view and all the interaction with the
- * view is handled by the view's view model. All this view does is to call
- * methods on the view model and observe (via delegate) changes so it
- * can react properly.
+ * The data used to populate this view and all interactions with the
+ * view are handled by the view's view model. All this view does is call
+ * methods on the view model and observe changes (via delegate) so it
+ * can react appropriately.
  */
 export class PublishView extends Modal implements PublishViewModelDelegate {
 

@@ -6,8 +6,8 @@ import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
- * Publish View Delegate Interface, implemented by
- * the object which needs to observe events from the view model.
+ * PublishViewDelegate interface, implemented by
+ * the object that needs to observe events from the view model.
  */
 export interface PublishViewModelDelegate {
 
