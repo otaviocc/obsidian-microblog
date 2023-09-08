@@ -1,4 +1,5 @@
 import { NetworkRequest } from '@networking/NetworkRequest'
+import { UpdatePostRequest, makeUpdatePostRequest } from '@networking/UpdatePostRequest'
 
 export interface NetworkRequestFactoryInterface {
 
@@ -21,6 +22,12 @@ export interface NetworkRequestFactoryInterface {
     // Builds the categories request, network request used to fetch
     // categories (a..k.a. tags) used in previous posts.
     makeCategoriesRequest(): NetworkRequest
+
+    // Builds the network request to update a post.
+    makeUpdatePostRequest(
+        url: string,
+        content: string
+    ): NetworkRequest
 }
 
 /*
@@ -88,6 +95,22 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
                 ['q', 'category']
             ]),
             method: 'GET'
+        }
+    }
+
+    public makeUpdatePostRequest(
+        url: string,
+        content: string
+    ): NetworkRequest {
+        return {
+            path: '/micropub',
+            method: 'POST',
+            body: JSON.stringify(
+                makeUpdatePostRequest(
+                    url,
+                    content
+                )
+            )
         }
     }
 }
