@@ -1,11 +1,11 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
-import { TFile } from 'obsidian'
+import { FrontmatterService, FrontmatterServiceInterface } from '@services/FrontmatterService'
 import {
     TagSynchronizationService,
     TagSynchronizationServiceDelegate,
     TagSynchronizationServiceInterface
 } from '@services/TagSynchronizationService'
-import { FrontmatterServiceInterface, FrontmatterService } from '@services/FrontmatterService'
+import { TFile } from 'obsidian'
 
 export interface ServiceFactoryInterface {
 
@@ -23,7 +23,7 @@ export interface ServiceFactoryInterface {
 }
 
 /*
- * Service Factory builds all the Services in the plugin.
+ * `ServiceFactory` builds all the Services in the plugin.
  * It simplifies building View Models since all the resolved dependencies
  * are already available via the factory.
  */

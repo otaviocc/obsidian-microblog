@@ -6,7 +6,7 @@ import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactor
 import { StoredSettings } from '@stores/StoredSettings'
 
 /*
- * Plugin Settings View Delegate Interface, implemented by
+ * `MicroPluginSettingsDelegate` Interface, implemented by
  * the object which needs to observe events from the view model.
  */
 export interface MicroPluginSettingsDelegate {

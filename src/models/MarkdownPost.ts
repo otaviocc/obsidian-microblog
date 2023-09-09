@@ -30,16 +30,16 @@ export class MarkdownPost implements MarkdownPostInterface {
 
     // Properties
 
-    private frontmatterProcessor: FrontmatterServiceInterface
+    private frontmatterService: FrontmatterServiceInterface
     private markdownView: MarkdownView
 
     // Life cycle
 
     constructor(
-        frontmatterProcessor: FrontmatterServiceInterface,
+        frontmatterService: FrontmatterServiceInterface,
         markdownView: MarkdownView
     ) {
-        this.frontmatterProcessor = frontmatterProcessor
+        this.frontmatterService = frontmatterService
         this.markdownView = markdownView
     }
 
@@ -47,7 +47,7 @@ export class MarkdownPost implements MarkdownPostInterface {
 
     public get title(): string {
         const filename = this.markdownView.file?.basename
-        const frontmatterTitle = this.frontmatterProcessor
+        const frontmatterTitle = this.frontmatterService
             .retrieveString('title')
 
         return frontmatterTitle || filename || ""
@@ -60,14 +60,14 @@ export class MarkdownPost implements MarkdownPostInterface {
     }
 
     public get tags(): string | null | undefined {
-        const frontmatterTags = this.frontmatterProcessor
+        const frontmatterTags = this.frontmatterService
             .retrieveStrings('tags')
 
         return frontmatterTags?.join(',')
     }
 
     public get url(): string | null {
-        const url = this.frontmatterProcessor
+        const url = this.frontmatterService
             .retrieveString('url')
 
         return url

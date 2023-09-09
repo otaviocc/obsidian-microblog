@@ -1,5 +1,6 @@
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
+import { EmptyResponse } from '@base/networking/EmptyResponse'
 
 export interface UpdateViewModelDelegate {
 
@@ -15,11 +16,12 @@ export class UpdateViewModel {
     // Properties
 
     public delegate?: UpdateViewModelDelegate
-    private url: string
+    private isSubmitting: boolean
     private content: string
     private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
+    readonly url: string
     readonly blogs: Record<string, string>
 
     // Life cycle
@@ -38,18 +40,22 @@ export class UpdateViewModel {
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
+        this.isSubmitting = false
     }
 
     // Public
 
     public async updateNote() {
+        this.isSubmitting = true
+
         try {
             const request = this.networkRequestFactory.makeUpdatePostRequest(
                 this.url,
+                this.selectedBlogIDWrappedValue,
                 this.content
             )
 
-            await this.networkClient.run<void>(
+            await this.networkClient.run<EmptyResponse>(
                 request
             )
 
@@ -69,5 +75,9 @@ export class UpdateViewModel {
 
     public set selectedBlogID(value: string) {
         this.selectedBlogIDWrappedValue = value
+    }
+
+    public get showPublishingButton(): boolean {
+        return this.isSubmitting
     }
 }

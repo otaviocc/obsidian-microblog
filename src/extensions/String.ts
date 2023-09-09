@@ -4,7 +4,7 @@ declare global {
     }
 }
 
-String.prototype.removeFrontmatter = function() {
+String.prototype.removeFrontmatter = function(this: string) {
     const regex = /---\s*[\s\S]*?\s*---/
     return this.replace(regex, "")
 }

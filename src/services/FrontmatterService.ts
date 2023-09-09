@@ -21,7 +21,7 @@ export interface FrontmatterServiceInterface {
 }
 
 /*
- * Frontmatter Service, responsible for manipulating (reading, and writing)
+ * `FrontmatterService`, responsible for manipulating (reading, and writing)
  * to a file's frontmatter.
  */
 export class FrontmatterService implements FrontmatterServiceInterface {

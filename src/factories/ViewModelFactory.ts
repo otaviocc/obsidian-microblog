@@ -1,31 +1,33 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
-import { MarkdownPost } from '@models/MarkdownPost'
+import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
+import { MarkdownPost, MarkdownPostInterface } from '@models/MarkdownPost'
+import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishViewModel } from '@views/PublishViewModel'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
+import { UpdateViewModel } from '@views/UpdateViewModel'
 import { MarkdownView } from 'obsidian'
-import { ServiceFactoryInterface, ServiceFactory } from '@factories/ServiceFactory'
 
 export interface ViewModelFactoryInterface {
 
-    // Builds the Publish View Model, used when Publishing a note
-    // to Micro.blog via the Commands Palette.
-    makePublishViewModel(
+    // Builds either the `PublishViewModel`, for publishing a note
+    // to Micro.blog, or the `UpdateViewModel`, to update a note.
+    makeSubmitViewModel(
         markdownView: MarkdownView
-    ): PublishViewModel
+    ): PublishViewModel | UpdateViewModel
 
-    // Builds the Plugin Settings View Model, used by the plugin
+    // Builds the `MicroPluginSettingsViewModel`, used by the plugin
     // Settings.
     makeMicroPluginSettingsViewModel(): MicroPluginSettingsViewModel
 
-    // Builds the Tags Suggestion View Model.
+    // Builds the `TagSuggestionViewModel`.
     makeTagSuggestionViewModel(
         excluding: Array<string>,
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
 
-    // Builds the Empty Post Error View Model.
+    // Builds the Empty Post `ErrorViewModel`.
     makeEmptyPostErrorViewModel(): ErrorViewModel
 }
 
@@ -52,17 +54,34 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     // Public
 
-    public makePublishViewModel(
+    public makeSubmitViewModel(
         markdownView: MarkdownView
-    ): PublishViewModel {
-        const frontMatterProcessor = this.serviceFactory
+    ): PublishViewModel | UpdateViewModel {
+        const frontmatterServices = this.serviceFactory
             .makeFrontmatterService(markdownView.file)
 
         const post = new MarkdownPost(
-            frontMatterProcessor,
+            frontmatterServices,
             markdownView
         )
 
+        if (post.url && post.url.length > 0) {
+            return this.makeUpdateViewModel(
+                post.url,
+                post.content
+            )
+        } {
+            return this.makePublishViewModel(
+                post,
+                frontmatterServices
+            )
+        }
+    }
+
+    public makePublishViewModel(
+        post: MarkdownPostInterface,
+        frontmatterService: FrontmatterServiceInterface
+    ): PublishViewModel {
         return new PublishViewModel(
             post.title,
             post.content,
@@ -71,9 +90,23 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
             this.container.networkClient,
-            frontMatterProcessor,
+            frontmatterService,
             this.container.networkRequestFactory,
             this
+        )
+    }
+
+    public makeUpdateViewModel(
+        url: string,
+        content: string
+    ): UpdateViewModel {
+        return new UpdateViewModel(
+            url,
+            content,
+            this.container.settings.blogs,
+            this.container.settings.selectedBlogID,
+            this.container.networkClient,
+            this.container.networkRequestFactory
         )
     }
 

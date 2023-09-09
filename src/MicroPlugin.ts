@@ -1,4 +1,5 @@
 import { MicroPluginContainer, MicroPluginContainerInterface } from '@base/MicroPluginContainer'
+import { isMarkdownView, isPublishViewModel, isUpdateViewModel } from '@base/extensions/TypeGuards'
 import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
 import { ViewModelFactory, ViewModelFactoryInterface } from '@factories/ViewModelFactory'
 import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
@@ -6,7 +7,8 @@ import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
 import { ErrorView } from '@views/ErrorView'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishView } from '@views/PublishView'
-import { MarkdownView, Notice, Plugin } from 'obsidian'
+import { UpdateView } from '@views/UpdateView'
+import { Notice, Plugin } from 'obsidian'
 
 export default class MicroPlugin extends Plugin {
 
@@ -38,13 +40,20 @@ export default class MicroPlugin extends Plugin {
                         this.viewModelFactory.makeEmptyPostErrorViewModel(),
                         this.app
                     ).open()
-                } else if (markdownView instanceof MarkdownView) {
-                    new PublishView(
-                        this.viewModelFactory.makePublishViewModel(
-                            markdownView
-                        ),
-                        this.app
-                    ).open()
+                } else if (isMarkdownView(markdownView)) {
+                    const viewModel = this.viewModelFactory.makeSubmitViewModel(
+                        markdownView
+                    )
+
+                    if (isPublishViewModel(viewModel)) {
+                        new PublishView(viewModel, this.app)
+                            .open()
+                    }
+
+                    if (isUpdateViewModel(viewModel)) {
+                        new UpdateView(viewModel, this.app)
+                            .open()
+                    }
                 }
             }
         })

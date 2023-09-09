@@ -1,9 +1,9 @@
 import { NetworkRequest } from '@networking/NetworkRequest'
-import { UpdatePostRequest, makeUpdatePostRequest } from '@networking/UpdatePostRequest'
+import { makeUpdatePostRequest } from '@networking/UpdatePostRequest'
 
 export interface NetworkRequestFactoryInterface {
 
-    // Builds the publish request, network request used to publish a new
+    // Builds the publish request, `NetworkRequest` used to publish a new
     // post to Micro.blog.
     makePublishRequest(
         title: string,
@@ -14,24 +14,25 @@ export interface NetworkRequestFactoryInterface {
         scheduledDate: string
     ): NetworkRequest
 
-    // Builds the configuration request, network request used to "log in"
+    // Builds the configuration request, `NetworkRequest` used to "log in"
     // the user. The config network request returns the list of blogs the
     // user can post to.
     makeConfigRequest(): NetworkRequest
 
-    // Builds the categories request, network request used to fetch
+    // Builds the categories request, `NetworkRequest` used to fetch
     // categories (a..k.a. tags) used in previous posts.
     makeCategoriesRequest(): NetworkRequest
 
     // Builds the network request to update a post.
     makeUpdatePostRequest(
         url: string,
+        blodID: string,
         content: string
     ): NetworkRequest
 }
 
 /*
- * Network Request Factory builds all the network requests in the plugin.
+ * `NetworkRequestFactory` builds all the network requests in the plugin.
  * It hides all the complexity, data transformation, etc... of building
  * network requests.
  */
@@ -100,17 +101,21 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
 
     public makeUpdatePostRequest(
         url: string,
+        blodID: string,
         content: string
     ): NetworkRequest {
+        const body = JSON.stringify(
+            makeUpdatePostRequest(
+                url,
+                blodID,
+                content
+            )
+        )
+
         return {
             path: '/micropub',
             method: 'POST',
-            body: JSON.stringify(
-                makeUpdatePostRequest(
-                    url,
-                    content
-                )
-            )
+            body: body
         }
     }
 }

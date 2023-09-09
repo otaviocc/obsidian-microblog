@@ -2,7 +2,7 @@ import { TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 import { App, FuzzySuggestModal } from 'obsidian'
 
 /*
- * Tag Suggestions View subclasses FuzzySuggestModal, and is presented from
+ * `TagSuggestionsView` subclasses `FuzzySuggestModal`, and is presented from
  * the Publish view.
  *
  * The data used to populate this view and all the interaction with the
