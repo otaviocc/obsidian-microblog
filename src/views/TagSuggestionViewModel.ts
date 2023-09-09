@@ -1,5 +1,5 @@
 /*
- * Tag Suggestion Delegate Interface, returns to the delegate
+ * `TagSuggestionDelegate` Interface, returns to the delegate
  * the category selected by the user.
  */
 export interface TagSuggestionDelegate {
@@ -10,7 +10,7 @@ export interface TagSuggestionDelegate {
 
 /*
  * This view model drives the content and interactions with the
- * Tag Suggestion view.
+ * `TagSuggestionView`.
  */
 export class TagSuggestionViewModel {
 

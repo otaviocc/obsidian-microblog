@@ -2,7 +2,7 @@ import { App, Modal } from 'obsidian'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 
 /*
- * Error View subclasses Modal.
+ * `ErrorView` subclasses `Modal`.
  */
 export class ErrorView extends Modal {
 

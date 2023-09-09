@@ -1,12 +1,11 @@
 import MicroPlugin from '@base/MicroPlugin'
-
 import { CategoriesResponse } from '@networking/CategoriesResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { StoredSettings } from '@stores/StoredSettings'
 
 /*
- * Tag Synchronization Delegate Interface, implemented by
+ * `TagSynchronizationServiceDelegate` Interface, implemented by
  * the object which needs to observe synchronization events.
  */
 export interface TagSynchronizationServiceDelegate {

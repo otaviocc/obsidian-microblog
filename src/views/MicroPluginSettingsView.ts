@@ -3,7 +3,7 @@ import { MicroPluginSettingsDelegate, MicroPluginSettingsViewModel } from '@view
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian'
 
 /*
- * Plugin Settings View subclasses PluginSettingTab, and is presented via
+ * `MicroPluginSettingsView` subclasses `PluginSettingTab`, and is presented via
  * Obsidian's Settings Window.
  *
  * The data used to populate this view and all the interaction with the

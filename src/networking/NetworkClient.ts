@@ -32,7 +32,7 @@ export class NetworkClient implements NetworkClientInterface {
     // Public
 
     public async run<T>(request: NetworkRequest): Promise<T> {
-        const url = 'https://micro.blog' + request.path + '?' + request.parameters
+        const url = 'https://micro.blog' + request.path + (request.parameters ? '?' + request.parameters : "")
 
         const response = await fetch(url, {
             method: request.method,
@@ -40,11 +40,19 @@ export class NetworkClient implements NetworkClientInterface {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + this.appToken()
-            }
+            },
+            body: request.body
         })
 
         if (!response.ok) {
             throw new Error('Network error: ' + response.status)
+        }
+
+        const isSuccess = response.status >= 200 && response.status < 300
+        const isEmptyBody = response.headers.get('content-length') === '0'
+
+        if (isSuccess && isEmptyBody) {
+            return {} as T
         }
 
         return await response.json() as T

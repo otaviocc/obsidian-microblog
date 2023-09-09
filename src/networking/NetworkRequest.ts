@@ -5,7 +5,7 @@
  */
 export type NetworkRequest = {
     path: string
-    parameters: URLSearchParams
+    parameters?: URLSearchParams
     method: string
     body?: string
 }

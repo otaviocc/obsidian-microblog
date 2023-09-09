@@ -1,8 +1,8 @@
-import { App, Modal, Setting } from 'obsidian'
 import { UpdateViewModel, UpdateViewModelDelegate } from '@views/UpdateViewModel'
+import { App, Modal, Setting } from 'obsidian'
 
 /*
- * UpdateView subclasses Model and is presented view Obsidian's Command
+ * `UpdateView` subclasses `Model` and is presented view Obsidian's Command
  * Palette whenever the user attempts to update a post.
  *
  * The data used to populate this view and all interactions with the
@@ -50,6 +50,23 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
                     })
                 )
         }
+
+        new Setting(contentEl)
+            .addButton(button => button
+                .setButtonText('Publish')
+                .setCta()
+                .onClick(async _ => {
+                    await this.viewModel.updateNote()
+                })
+                .then(_ => {
+                    if (this.viewModel.showPublishingButton) {
+                        button
+                            .setDisabled(true)
+                            .removeCta()
+                            .setButtonText('Publishing...')
+                    }
+                })
+            )
     }
 
     public onClose() {
@@ -59,6 +76,26 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
         contentEl.empty()
 
         this.viewModel.delegate = undefined
+    }
+
+    // UpdateViewModelDelegate
+
+    public updateDidSucceed() {
+        const { contentEl } = this
+
+        contentEl.empty()
+
+        contentEl.createEl('h2', { text: 'Updated' })
+        contentEl.createEl('a', { text: 'Open post URL', href: this.viewModel.url })
+    }
+
+    public updateDidFail(
+        error: Error
+    ) {
+        this.makeMessageView(
+            'Error',
+            error.message
+        )
     }
 
     // Private
@@ -73,19 +110,5 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
 
         contentEl.createEl('h2', { text: title })
         contentEl.createEl('p', { text: message })
-    }
-
-    // UpdateViewModelDelegate
-
-    public updateDidSucceed() {
-    }
-
-    public updateDidFail(
-        error: Error
-    ) {
-        this.makeMessageView(
-            'Error',
-            error.message
-        )
     }
 }
