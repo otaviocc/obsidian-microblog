@@ -63,7 +63,7 @@ export class FrontmatterService implements FrontmatterServiceInterface {
     public retrieveString(
         key: string
     ): string | null {
-        const frontmatter = this.parseFrontMatterFromFile()
+        const frontmatter = this.parseFrontmatterFromFile()
         const entry = parseFrontMatterEntry(frontmatter, key)
 
         return typeof entry === 'string'
@@ -74,13 +74,13 @@ export class FrontmatterService implements FrontmatterServiceInterface {
     public retrieveStrings(
         key: string
     ): string[] | null {
-        const frontmatter = this.parseFrontMatterFromFile()
+        const frontmatter = this.parseFrontmatterFromFile()
         return parseFrontMatterStringArray(frontmatter, key)
     }
 
     // Private
 
-    private parseFrontMatterFromFile(): FrontMatterCache | undefined {
+    private parseFrontmatterFromFile(): FrontMatterCache | undefined {
         return this.file
             ? this.app.metadataCache.getFileCache(this.file)?.frontmatter
             : undefined
