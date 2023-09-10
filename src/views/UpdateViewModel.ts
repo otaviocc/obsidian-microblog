@@ -1,8 +1,12 @@
+import { EmptyResponse } from '@base/networking/EmptyResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
-import { EmptyResponse } from '@base/networking/EmptyResponse'
 
 export interface UpdateViewModelDelegate {
+
+    // Triggered when user clicks the delete button when the
+    // title property is reset.
+    updateDidClearTitle(): void
 
     // Triggered when updating a post succeeds.
     updateDidSucceed(): void
@@ -17,6 +21,7 @@ export class UpdateViewModel {
 
     public delegate?: UpdateViewModelDelegate
     private isSubmitting: boolean
+    private titleWrappedValue: string
     private content: string
     private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
@@ -28,6 +33,7 @@ export class UpdateViewModel {
 
     constructor(
         url: string,
+        title: string,
         content: string,
         blogs: Record<string, string>,
         selectedBlogID: string,
@@ -35,6 +41,7 @@ export class UpdateViewModel {
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.url = url
+        this.titleWrappedValue = title
         this.content = content
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
@@ -52,6 +59,7 @@ export class UpdateViewModel {
             const request = this.networkRequestFactory.makeUpdatePostRequest(
                 this.url,
                 this.selectedBlogIDWrappedValue,
+                this.title,
                 this.content
             )
 
@@ -63,6 +71,19 @@ export class UpdateViewModel {
         } catch (error) {
             this.delegate?.updateDidFail(error)
         }
+    }
+
+    public get title(): string {
+        return this.titleWrappedValue
+    }
+
+    public set title(value: string) {
+        this.titleWrappedValue = value
+    }
+
+    public clearTitle() {
+        this.title = ''
+        this.delegate?.updateDidClearTitle()
     }
 
     public get hasMultipleBlogs(): boolean {
