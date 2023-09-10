@@ -1,0 +1,6 @@
+{
+  "apexskier.typescript.config.formatDocumentOnSave" : "true",
+  "apexskier.typescript.config.organizeImportsOnSave" : "true",
+  "apexskier.typescript.config.skipDestructiveOrganizeImports" : "True",
+  "apexskier.typescript.config.userPreferences.quotePreference" : "single"
+}
