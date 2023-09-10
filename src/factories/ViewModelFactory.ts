@@ -65,11 +65,12 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             markdownView
         )
 
-        if (post.url && post.url.length > 0) {
+        if (post.url && post.url.length > 0 && post.blogID && post.blogID.length > 0) {
             return this.makeUpdateViewModel(
                 post.url,
                 post.title,
-                post.content
+                post.content,
+                post.blogID
             )
         } {
             return this.makePublishViewModel(
@@ -100,14 +101,14 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     public makeUpdateViewModel(
         url: string,
         title: string,
-        content: string
+        content: string,
+        blogID: string
     ): UpdateViewModel {
         return new UpdateViewModel(
             url,
             title,
             content,
-            this.container.settings.blogs,
-            this.container.settings.selectedBlogID,
+            blogID,
             this.container.networkClient,
             this.container.networkRequestFactory
         )
