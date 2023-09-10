@@ -26,10 +26,11 @@ export class UpdateViewModel {
     private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string
-    private blogID: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
+    private selectedBlogIDWrappedValue: string
     readonly url: string
+    readonly blogs: Record<string, string>
 
     // Life cycle
 
@@ -37,14 +38,16 @@ export class UpdateViewModel {
         url: string,
         title: string,
         content: string,
-        blogID: string,
+        blogs: Record<string, string>,
+        selectedBlogID: string,
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.url = url
         this.titleWrappedValue = title
         this.content = content
-        this.blogID = blogID
+        this.blogs = blogs
+        this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
         this.isSubmitting = false
@@ -59,7 +62,7 @@ export class UpdateViewModel {
         try {
             const request = this.networkRequestFactory.makeUpdatePostRequest(
                 this.url,
-                this.blogID,
+                this.selectedBlogID,
                 this.title,
                 this.content
             )
@@ -72,6 +75,18 @@ export class UpdateViewModel {
         } catch (error) {
             this.delegate?.updateDidFail(error)
         }
+    }
+
+    public get hasMultipleBlogs(): boolean {
+        return Object.keys(this.blogs).length > 2
+    }
+
+    public get selectedBlogID(): string {
+        return this.selectedBlogIDWrappedValue
+    }
+
+    public set selectedBlogID(value: string) {
+        this.selectedBlogIDWrappedValue = value
     }
 
     public get title(): string {

@@ -56,6 +56,19 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
                 })
             )
 
+        if (this.viewModel.hasMultipleBlogs) {
+            new Setting(contentEl)
+                .setName('Blog')
+                .setDesc('Confirm the blog for this post.')
+                .addDropdown(dropDown => dropDown
+                    .addOptions(this.viewModel.blogs)
+                    .setValue(this.viewModel.selectedBlogID)
+                    .onChange(value => {
+                        this.viewModel.selectedBlogID = value
+                    })
+                )
+        }
+
         new Setting(contentEl)
             .addButton(button => button
                 .setButtonText('Update')
