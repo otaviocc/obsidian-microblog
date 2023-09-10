@@ -1,5 +1,4 @@
 import MicroPlugin from '@base/MicroPlugin'
-
 import { NetworkClient, NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactory, NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { StoredSettings } from '@stores/StoredSettings'
