@@ -1,5 +1,5 @@
 import '@extensions/String'
-import { App, FrontMatterCache, TFile, parseFrontMatterEntry, parseFrontMatterStringArray } from 'obsidian'
+import { App, FrontMatterCache, parseFrontMatterEntry, parseFrontMatterStringArray, TFile } from 'obsidian'
 
 export interface FrontmatterServiceInterface {
 

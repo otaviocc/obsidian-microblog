@@ -1,5 +1,5 @@
-import { App, Modal } from 'obsidian'
 import { ErrorViewModel } from '@views/ErrorViewModel'
+import { App, Modal } from 'obsidian'
 
 /*
  * `ErrorView` subclasses `Modal`.
