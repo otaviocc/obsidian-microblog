@@ -13,6 +13,9 @@ export interface UpdateViewModelDelegate {
 
     // Triggered when updating a new post fails.
     updateDidFail(error: Error): void
+
+    // Triggered when the network request starts.
+    updateRequestDidStart(): void
 }
 
 export class UpdateViewModel {
@@ -23,11 +26,10 @@ export class UpdateViewModel {
     private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string
-    private selectedBlogIDWrappedValue: string
+    private blogID: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
     readonly url: string
-    readonly blogs: Record<string, string>
 
     // Life cycle
 
@@ -35,16 +37,14 @@ export class UpdateViewModel {
         url: string,
         title: string,
         content: string,
-        blogs: Record<string, string>,
-        selectedBlogID: string,
+        blogID: string,
         networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.url = url
         this.titleWrappedValue = title
         this.content = content
-        this.blogs = blogs
-        this.selectedBlogIDWrappedValue = selectedBlogID
+        this.blogID = blogID
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
         this.isSubmitting = false
@@ -54,11 +54,12 @@ export class UpdateViewModel {
 
     public async updateNote() {
         this.isSubmitting = true
+        this.delegate?.updateRequestDidStart()
 
         try {
             const request = this.networkRequestFactory.makeUpdatePostRequest(
                 this.url,
-                this.selectedBlogIDWrappedValue,
+                this.blogID,
                 this.title,
                 this.content
             )
@@ -84,18 +85,6 @@ export class UpdateViewModel {
     public clearTitle() {
         this.title = ''
         this.delegate?.updateDidClearTitle()
-    }
-
-    public get hasMultipleBlogs(): boolean {
-        return Object.keys(this.blogs).length > 2
-    }
-
-    public get selectedBlogID(): string {
-        return this.selectedBlogIDWrappedValue
-    }
-
-    public set selectedBlogID(value: string) {
-        this.selectedBlogIDWrappedValue = value
     }
 
     public get showPublishingButton(): boolean {

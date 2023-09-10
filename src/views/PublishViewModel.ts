@@ -167,6 +167,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
             )
 
             this.frontmatterService.save(result.url, 'url')
+            this.frontmatterService.save(this.selectedBlogIDWrappedValue, 'blog-id')
             this.delegate?.publishDidSucceed(result)
         } catch (error) {
             this.delegate?.publishDidFail(error)

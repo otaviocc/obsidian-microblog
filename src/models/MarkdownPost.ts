@@ -21,6 +21,9 @@ export interface MarkdownPostInterface {
 
     // URL of the published post.
     url: string | null
+
+    // The blog ID.
+    blogID: string | null
 }
 
 /*
@@ -71,5 +74,12 @@ export class MarkdownPost implements MarkdownPostInterface {
             .retrieveString('url')
 
         return url
+    }
+
+    public get blogID(): string | null {
+        const blogID = this.frontmatterService
+            .retrieveString('blog-id')
+
+        return blogID
     }
 }
