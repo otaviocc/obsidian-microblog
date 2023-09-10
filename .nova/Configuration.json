@@ -2,5 +2,9 @@
   "apexskier.typescript.config.formatDocumentOnSave" : "true",
   "apexskier.typescript.config.organizeImportsOnSave" : "true",
   "apexskier.typescript.config.skipDestructiveOrganizeImports" : "True",
+  "apexskier.typescript.config.userPreferences.includeAutomaticOptionalChainCompletions" : true,
+  "apexskier.typescript.config.userPreferences.includeCompletionsForImportStatements" : true,
+  "apexskier.typescript.config.userPreferences.includeCompletionsForModuleExports" : true,
+  "apexskier.typescript.config.userPreferences.includeCompletionsWithInsertText" : true,
   "apexskier.typescript.config.userPreferences.quotePreference" : "single"
 }
