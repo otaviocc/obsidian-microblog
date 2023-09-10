@@ -1,10 +1,6 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { FrontmatterService, FrontmatterServiceInterface } from '@services/FrontmatterService'
-import {
-    TagSynchronizationService,
-    TagSynchronizationServiceDelegate,
-    TagSynchronizationServiceInterface
-} from '@services/TagSynchronizationService'
+import { TagSynchronizationService, TagSynchronizationServiceDelegate, TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
 import { TFile } from 'obsidian'
 
 export interface ServiceFactoryInterface {
