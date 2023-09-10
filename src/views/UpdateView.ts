@@ -40,7 +40,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
 
         new Setting(contentEl)
             .setName('Title')
-            .setDesc('Post title is optional, but encouraged for long posts.')
+            .setDesc('While optional, it is encouraged to include a post title for longer posts.')
             .addText(text => text
                 .setPlaceholder('Optional title')
                 .setValue(this.viewModel.title)
@@ -59,7 +59,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(contentEl)
                 .setName('Blog')
-                .setDesc('Confirm the blog for this post.')
+                .setDesc('Please confirm the blog of this post.')
                 .addDropdown(dropDown => dropDown
                     .addOptions(this.viewModel.blogs)
                     .setValue(this.viewModel.selectedBlogID)

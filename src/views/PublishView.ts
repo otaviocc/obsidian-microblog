@@ -42,7 +42,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
         new Setting(contentEl)
             .setName('Title')
-            .setDesc('Post title is optional, but encouraged for long posts.')
+            .setDesc('While optional, it is encouraged to include a post title for longer posts.')
             .addText(text => text
                 .setPlaceholder('Optional title')
                 .setValue(this.viewModel.title)
@@ -61,7 +61,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(contentEl)
                 .setName('Blog')
-                .setDesc('Override the default blog for this post.')
+                .setDesc('Override the default blog settings for this post.')
                 .addDropdown(dropDown => dropDown
                     .addOptions(this.viewModel.blogs)
                     .setValue(this.viewModel.selectedBlogID)
@@ -73,7 +73,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
         new Setting(contentEl)
             .setName('Categories')
-            .setDesc('Override the default categories for this post.')
+            .setDesc('Override the default categories assigned to this post.')
             .addText(text => text
                 .setPlaceholder('category1, category2, category3')
                 .setValue(this.viewModel.tags)
@@ -94,7 +94,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
         new Setting(contentEl)
             .setName('Visibility')
-            .setDesc('Override the default post visibility for this post.')
+            .setDesc('Override the default post visibility setting for this specific post.')
             .addDropdown(dropDown => dropDown
                 .addOption('draft', 'Draft')
                 .addOption('published', 'Public')
@@ -106,7 +106,7 @@ export class PublishView extends Modal implements PublishViewModelDelegate {
 
         new Setting(contentEl)
             .setName('Scheduled date')
-            .setDesc('This date is optional and used to schedule posts to be published at a future date. If empty it will use the current date and time. Format: YYYY-MM-DD HH:MM.')
+            .setDesc('The inclusion of this date is optional, and it serves the purpose of scheduling posts for future publication. If left blank, the system will default to the current date and time. Please use the following format: YYYY-MM-DD HH:MM.')
             .addText(text => text
                 .setPlaceholder('YYYY-MM-DD HH:MM')
                 .setValue(this.viewModel.scheduledDate)
