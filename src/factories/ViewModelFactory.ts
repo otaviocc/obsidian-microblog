@@ -68,6 +68,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         if (post.url && post.url.length > 0) {
             return this.makeUpdateViewModel(
                 post.url,
+                post.title,
                 post.content
             )
         } {
@@ -98,10 +99,12 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     public makeUpdateViewModel(
         url: string,
+        title: string,
         content: string
     ): UpdateViewModel {
         return new UpdateViewModel(
             url,
+            title,
             content,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,

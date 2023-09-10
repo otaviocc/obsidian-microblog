@@ -38,6 +38,24 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
         contentEl.empty()
         contentEl.createEl('h2', { text: 'Review' })
 
+        new Setting(contentEl)
+            .setName('Title')
+            .setDesc('Post title is optional, but encouraged for long posts.')
+            .addText(text => text
+                .setPlaceholder('Optional title')
+                .setValue(this.viewModel.title)
+                .onChange(value => {
+                    this.viewModel.title = value
+                })
+            )
+            .addExtraButton(button => button
+                .setIcon('cross')
+                .setTooltip('Remove title')
+                .onClick(() => {
+                    this.viewModel.clearTitle()
+                })
+            )
+
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(contentEl)
                 .setName('Blog')
@@ -53,7 +71,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
 
         new Setting(contentEl)
             .addButton(button => button
-                .setButtonText('Publish')
+                .setButtonText('Update')
                 .setCta()
                 .onClick(async _ => {
                     await this.viewModel.updateNote()
@@ -63,7 +81,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
                         button
                             .setDisabled(true)
                             .removeCta()
-                            .setButtonText('Publishing...')
+                            .setButtonText('Updating...')
                     }
                 })
             )
@@ -79,6 +97,10 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
     }
 
     // UpdateViewModelDelegate
+
+    public updateDidClearTitle() {
+        this.onOpen()
+    }
 
     public updateDidSucceed() {
         const { contentEl } = this
