@@ -2,6 +2,10 @@ import { EmptyResponse } from '@base/networking/EmptyResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 
+/*
+ * `UpdateViewModelDelegate` interface, implemented by
+ * the object that needs to observe events from the view model.
+ */
 export interface UpdateViewModelDelegate {
 
     // Triggered when user clicks the delete button when the
@@ -18,6 +22,10 @@ export interface UpdateViewModelDelegate {
     updateRequestDidStart(): void
 }
 
+/*
+ * This view model drives the content and interactions with the
+ * update view.
+ */
 export class UpdateViewModel {
 
     // Properties
