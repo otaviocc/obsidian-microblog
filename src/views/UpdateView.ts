@@ -77,7 +77,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
                     await this.viewModel.updateNote()
                 })
                 .then(_ => {
-                    if (this.viewModel.showPublishingButton) {
+                    if (this.viewModel.showUpdatingButton) {
                         button
                             .setDisabled(true)
                             .removeCta()

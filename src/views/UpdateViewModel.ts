@@ -102,7 +102,7 @@ export class UpdateViewModel {
         this.delegate?.updateDidClearTitle()
     }
 
-    public get showPublishingButton(): boolean {
+    public get showUpdatingButton(): boolean {
         return this.isSubmitting
     }
 }
