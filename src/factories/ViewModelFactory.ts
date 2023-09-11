@@ -142,8 +142,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     public makeEmptyPostErrorViewModel(): ErrorViewModel {
         return new ErrorViewModel(
-            "Oops",
-            "Micro.blog doesn't support blank posts. Write something first and try again."
+            'Oops',
+            'Micro.blog doesn\'t support blank posts. Write something first and try again.'
         )
     }
 }
