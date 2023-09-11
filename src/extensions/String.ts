@@ -6,7 +6,7 @@ declare global {
 
 String.prototype.removeFrontmatter = function(this: string) {
     const regex = /---\s*[\s\S]*?\s*---/
-    return this.replace(regex, "")
+    return this.replace(regex, '')
 }
 
 export { }
