@@ -59,7 +59,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(contentEl)
                 .setName('Blog')
-                .setDesc('Please confirm the blog of this post.')
+                .setDesc('Please confirm the blog for this post.')
                 .addDropdown(dropDown => dropDown
                     .addOptions(this.viewModel.blogs)
                     .setValue(this.viewModel.selectedBlogID)
