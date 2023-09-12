@@ -26,7 +26,7 @@ export interface NetworkRequestFactoryInterface {
     // Builds the network request to update a post.
     makeUpdatePostRequest(
         url: string,
-        blodID: string,
+        blogID: string,
         title: string,
         content: string
     ): NetworkRequest
@@ -102,14 +102,14 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
 
     public makeUpdatePostRequest(
         url: string,
-        blodID: string,
+        blogID: string,
         title: string,
         content: string
     ): NetworkRequest {
         const body = JSON.stringify(
             makeUpdatePostRequest(
                 url,
-                blodID,
+                blogID,
                 title,
                 content
             )
