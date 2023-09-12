@@ -1,1 +1,10 @@
-{}
+{
+    "files.exclude": {
+        "data.json": true,
+        "node_modules/": true,
+        "main.js": true,
+        ".vscode/": true,
+        ".github/": true,
+        ".nova/": true,
+    }
+}
