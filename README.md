@@ -52,6 +52,42 @@ Micro.publish supports YAML frontmatter. It also works with the new [Properties]
 
 ![Screenshot 2023-08-31 at 06 27 36](https://github.com/otaviocc/obsidian-microblog/assets/139272/3c3e12c1-2aee-437c-b7ad-102b13fbe00a)
 
+## Editing
+
+For posts **published with version 2.0.0 or newer**, the post's `URL` will be added to the Markdown file in the YAML frontmatter/Property.
+
+For those in _Edit mode_, it appears as a Property as shown below:
+
+![68747470733a2f2f6f746176696f2e63632f75706c6f6164732f323032332f70726f706572746965732e706e67-1](https://github.com/otaviocc/obsidian-microblog/assets/139272/6488a0e8-e188-44c6-a8b9-040d85d88b84)
+
+And for those utilizing the _Source mode_, as YAML:
+
+![68747470733a2f2f6f746176696f2e63632f75706c6f6164732f323032332f66726f6e746d61747465722e706e67](https://github.com/otaviocc/obsidian-microblog/assets/139272/d17c9a63-4e98-4880-aa48-5901ba1265d3)
+
+Once the note or title has been edited (either through the filename or [YAML/Property](https://otavio.cc/micropublish/#properties)), updating is as simple as using the [*Post to Micro.blog* command from the Command Palette](https://otavio.cc/micropublish/#publishing). A simplified version of the Review view will appear, displaying the post's title. For users with multiple blogs, it will prompt them to confirm which blog the post belongs to.
+
+![68747470733a2f2f6f746176696f2e63632f75706c6f6164732f323032332f726576696577656469742e706e67](https://github.com/otaviocc/obsidian-microblog/assets/139272/cc8452c3-690d-4914-97e6-b04ed76b1e26)
+
+It is also possible to update posts that were published using Micro.publish **versions prior to 2.0.0**. To do so, you must include a Property (or field in the YAML frontmatter) named `url` containing the URL of the published post, as illustrated below.
+
+To include a new Property, simply follow these steps in the Command Palette:
+
+![68747470733a2f2f6f746176696f2e63632f75706c6f6164732f323032332f6164642d70726f70657274792e706e67](https://github.com/otaviocc/obsidian-microblog/assets/139272/e6fa328d-9c78-4ed8-9872-5a1840ab702c)
+
+And add the `url` with the published post URL:
+
+![68747470733a2f2f6f746176696f2e63632f75706c6f6164732f323032332f70726f706572746965732e706e67-1](https://github.com/otaviocc/obsidian-microblog/assets/139272/6488a0e8-e188-44c6-a8b9-040d85d88b84)
+
+Those who prefer the YAML file can add the the `url` using the format:
+
+```yaml
+---
+url: https://example.com/path/to/post.html
+---
+```
+
+After editing the note or title (either through the filename or YAML/Property), updating is as straightforward as utilizing the *Post to Micro.blog* command from the Command Palette. Similar to the process for version 2.0.0, a simplified version of the Review view will be presented, featuring the post's title. For users with multiple blogs, it will inquire about the blog to which the post should be associated.
+
 ## Building from source
 
 Clone this repository inside the Obsidian Vault:
