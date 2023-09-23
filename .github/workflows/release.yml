@@ -8,26 +8,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
-
-      - name: Build plugin
+      - name: Build Plug-in
         run: |
           npm install
           npm run build
-
-      - name: Create release
+      - name: Create Plug-in Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${GITHUB_REF#refs/tags/}"
-
           gh release create "$tag" \
             --title="$tag" \
             --draft \
