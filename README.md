@@ -1,5 +1,8 @@
 # Micro.publish
 
+![GitHub Release (Latest)](https://img.shields.io/github/manifest-json/v/otaviocc/obsidian-microblog?color=573E7A&logo=github&style=for-the-badge)
+![GitHub Releases Downloads](https://img.shields.io/github/downloads/otaviocc/obsidian-microblog/total?color=573E7A&logo=github&style=for-the-badge)
+
 Micro.publish is a community-maintained plugin for [Obsidian](https://obsidian.md/) that allows you to publish notes to a [Micro.blog](https://micro.blog/) blog.
 
 Does this plugin improve your workflow? If so, you can show your appreciation by buying me a coffee.
