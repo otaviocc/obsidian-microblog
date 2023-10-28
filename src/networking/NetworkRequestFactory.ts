@@ -14,6 +14,14 @@ export interface NetworkRequestFactoryInterface {
         scheduledDate: string
     ): NetworkRequest
 
+    // Builds the publish page request, `NetworkRequest` used to publish a new
+    // page to Micro.blog.
+    makePublishPageRequest(
+        title: string,
+        content: string,
+        blogID: string
+    ): NetworkRequest
+
     // Builds the configuration request, `NetworkRequest` used to "log in"
     // the user. The config network request returns the list of blogs the
     // user can post to.
@@ -72,6 +80,29 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
             .forEach(value => {
                 parameters.append('category[]', value.trim())
             })
+
+        return {
+            path: '/micropub',
+            parameters: parameters,
+            method: 'POST'
+        }
+    }
+
+    makePublishPageRequest(
+        title: string,
+        content: string,
+        blogID: string
+    ): NetworkRequest {
+        const parameters = new URLSearchParams([
+            ['h', 'entry'],
+            ['name', title],
+            ['content', content],
+            ['mp-channel', 'pages']
+        ])
+
+        if (blogID.length > 0 && blogID != 'default') {
+            parameters.append('mp-destination', blogID)
+        }
 
         return {
             path: '/micropub',
