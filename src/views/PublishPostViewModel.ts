@@ -6,10 +6,10 @@ import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
- * `PublishViewDelegate` interface, implemented by
+ * `PublishPostViewModelDelegate` interface, implemented by
  * the object that needs to observe events from the view model.
  */
-export interface PublishViewModelDelegate {
+export interface PublishPostViewModelDelegate {
 
     // Triggered when user clicks the delete button when the
     // title property is reset.
@@ -38,11 +38,11 @@ export interface PublishViewModelDelegate {
  * This view model drives the content and interactions with the
  * publish view.
  */
-export class PublishViewModel implements TagSuggestionDelegate {
+export class PublishPostViewModel implements TagSuggestionDelegate {
 
     // Properties
 
-    public delegate?: PublishViewModelDelegate
+    public delegate?: PublishPostViewModelDelegate
     private isValidDate: boolean
     private isSubmitting: boolean
     private titleWrappedValue: string

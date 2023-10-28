@@ -1,10 +1,10 @@
-import { PublishViewModel } from '@views/PublishViewModel'
+import { PublishPostViewModel } from '@views/PublishPostViewModel'
 import { UpdateViewModel } from '@views/UpdateViewModel'
 import { MarkdownView } from 'obsidian'
 
-// Checks if the type is `PublishViewModel`
-export function isPublishViewModel(value: unknown): value is PublishViewModel {
-    return typeof value === 'object' && value instanceof PublishViewModel
+// Checks if the type is `PublishPostViewModel`
+export function isPublishPostViewModel(value: unknown): value is PublishPostViewModel {
+    return typeof value === 'object' && value instanceof PublishPostViewModel
 }
 
 // Checks if the type is `UpdateViewModel`
