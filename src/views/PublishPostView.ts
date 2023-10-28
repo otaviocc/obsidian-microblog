@@ -1,5 +1,5 @@
 import { PublishResponse } from '@networking/PublishResponse'
-import { PublishViewModel, PublishViewModelDelegate } from '@views/PublishViewModel'
+import { PublishPostViewModel, PublishPostViewModelDelegate } from '@base/views/PublishPostViewModel'
 import { TagSuggestionView } from '@views/TagSuggestionView'
 import { App, Modal, Setting } from 'obsidian'
 
@@ -12,16 +12,16 @@ import { App, Modal, Setting } from 'obsidian'
  * methods on the view model and observe changes (via delegate) so it
  * can react appropriately.
  */
-export class PublishView extends Modal implements PublishViewModelDelegate {
+export class PublishPostView extends Modal implements PublishPostViewModelDelegate {
 
     // Properties
 
-    private viewModel: PublishViewModel
+    private viewModel: PublishPostViewModel
 
     // Life cycle
 
     constructor(
-        viewModel: PublishViewModel,
+        viewModel: PublishPostViewModel,
         app: App
     ) {
         super(app)

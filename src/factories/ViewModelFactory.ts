@@ -4,18 +4,18 @@ import { MarkdownPost, MarkdownPostInterface } from '@models/MarkdownPost'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
-import { PublishViewModel } from '@views/PublishViewModel'
+import { PublishPostViewModel } from '@views/PublishPostViewModel'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 import { UpdateViewModel } from '@views/UpdateViewModel'
 import { MarkdownView } from 'obsidian'
 
 export interface ViewModelFactoryInterface {
 
-    // Builds either the `PublishViewModel`, for publishing a note
+    // Builds either the `PublishPostViewModel`, for publishing a note
     // to Micro.blog, or the `UpdateViewModel`, to update a note.
     makeSubmitViewModel(
         markdownView: MarkdownView
-    ): PublishViewModel | UpdateViewModel
+    ): PublishPostViewModel | UpdateViewModel
 
     // Builds the `MicroPluginSettingsViewModel`, used by the plugin
     // Settings.
@@ -56,7 +56,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
 
     public makeSubmitViewModel(
         markdownView: MarkdownView
-    ): PublishViewModel | UpdateViewModel {
+    ): PublishPostViewModel | UpdateViewModel {
         const frontmatterServices = this.serviceFactory
             .makeFrontmatterService(markdownView.file)
 
@@ -72,18 +72,18 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
                 post.content
             )
         } {
-            return this.makePublishViewModel(
+            return this.makePublishPostViewModel(
                 post,
                 frontmatterServices
             )
         }
     }
 
-    public makePublishViewModel(
+    public makePublishPostViewModel(
         post: MarkdownPostInterface,
         frontmatterService: FrontmatterServiceInterface
-    ): PublishViewModel {
-        return new PublishViewModel(
+    ): PublishPostViewModel {
+        return new PublishPostViewModel(
             post.title,
             post.content,
             post.tags || this.container.settings.defaultTags,

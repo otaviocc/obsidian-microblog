@@ -1,4 +1,4 @@
-import { isMarkdownView, isPublishViewModel, isUpdateViewModel } from '@base/extensions/TypeGuards'
+import { isMarkdownView, isPublishPostViewModel, isUpdateViewModel } from '@base/extensions/TypeGuards'
 import { MicroPluginContainer, MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
 import { ViewModelFactory, ViewModelFactoryInterface } from '@factories/ViewModelFactory'
@@ -6,7 +6,7 @@ import { TagSynchronizationServiceInterface } from '@services/TagSynchronization
 import { defaultSettings, StoredSettings } from '@stores/StoredSettings'
 import { ErrorView } from '@views/ErrorView'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
-import { PublishView } from '@views/PublishView'
+import { PublishPostView } from '@views/PublishPostView'
 import { UpdateView } from '@views/UpdateView'
 import { Notice, Plugin } from 'obsidian'
 
@@ -45,8 +45,8 @@ export default class MicroPlugin extends Plugin {
                         markdownView
                     )
 
-                    if (isPublishViewModel(viewModel)) {
-                        new PublishView(viewModel, this.app)
+                    if (isPublishPostViewModel(viewModel)) {
+                        new PublishPostView(viewModel, this.app)
                             .open()
                     }
 
