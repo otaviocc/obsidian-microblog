@@ -5,7 +5,7 @@ export interface NetworkRequestFactoryInterface {
 
     // Builds the publish request, `NetworkRequest` used to publish a new
     // post to Micro.blog.
-    makePublishRequest(
+    makePublishPostRequest(
         title: string,
         content: string,
         tags: string,
@@ -31,8 +31,8 @@ export interface NetworkRequestFactoryInterface {
     // categories (a..k.a. tags) used in previous posts.
     makeCategoriesRequest(): NetworkRequest
 
-    // Builds the network request to update a post.
-    makeUpdatePostRequest(
+    // Builds the network request to update a post or page.
+    makeUpdateRequest(
         url: string,
         blogID: string,
         title: string,
@@ -49,7 +49,7 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
 
     // Public
 
-    public makePublishRequest(
+    public makePublishPostRequest(
         title: string,
         content: string,
         tags: string,
@@ -131,7 +131,7 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         }
     }
 
-    public makeUpdatePostRequest(
+    public makeUpdateRequest(
         url: string,
         blogID: string,
         title: string,
