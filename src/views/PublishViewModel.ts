@@ -153,7 +153,7 @@ export class PublishViewModel implements TagSuggestionDelegate {
         this.delegate?.publishDidValidateDate()
 
         try {
-            const response = this.networkRequestFactory.makePublishRequest(
+            const response = this.networkRequestFactory.makePublishPostRequest(
                 this.title,
                 this.content,
                 this.tags,

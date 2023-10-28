@@ -68,7 +68,7 @@ export class UpdateViewModel {
         this.delegate?.updateRequestDidStart()
 
         try {
-            const request = this.networkRequestFactory.makeUpdatePostRequest(
+            const request = this.networkRequestFactory.makeUpdateRequest(
                 this.url,
                 this.selectedBlogID,
                 this.title,
