@@ -1,13 +1,15 @@
-import { isMarkdownView, isPublishPostViewModel, isUpdateViewModel } from '@base/extensions/TypeGuards'
 import { MicroPluginContainer, MicroPluginContainerInterface } from '@base/MicroPluginContainer'
+import { isMarkdownView, isPublishPageViewModel, isPublishPostViewModel, isUpdatePageViewModel, isUpdatePostViewModel } from '@extensions/TypeGuards'
 import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
 import { ViewModelFactory, ViewModelFactoryInterface } from '@factories/ViewModelFactory'
 import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
 import { defaultSettings, StoredSettings } from '@stores/StoredSettings'
 import { ErrorView } from '@views/ErrorView'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
+import { PublishPageView } from '@views/PublishPageView'
 import { PublishPostView } from '@views/PublishPostView'
-import { UpdateView } from '@views/UpdateView'
+import { UpdatePageView } from '@views/UpdatePageView'
+import { UpdatePostView } from '@views/UpdatePostView'
 import { Notice, Plugin } from 'obsidian'
 
 export default class MicroPlugin extends Plugin {
@@ -32,8 +34,8 @@ export default class MicroPlugin extends Plugin {
         this.synchronizationService.fetchTags()
 
         this.addCommand({
-            id: 'microblog-publish-command',
-            name: 'Post to Micro.blog',
+            id: 'microblog-publish-post-command',
+            name: 'Publish Post to Micro.blog',
             editorCallback: (editor, markdownView) => {
                 if (editor.getValue().trim().length == 0) {
                     new ErrorView(
@@ -41,7 +43,7 @@ export default class MicroPlugin extends Plugin {
                         this.app
                     ).open()
                 } else if (isMarkdownView(markdownView)) {
-                    const viewModel = this.viewModelFactory.makeSubmitViewModel(
+                    const viewModel = this.viewModelFactory.makeSubmitPostViewModel(
                         markdownView
                     )
 
@@ -50,8 +52,30 @@ export default class MicroPlugin extends Plugin {
                             .open()
                     }
 
-                    if (isUpdateViewModel(viewModel)) {
-                        new UpdateView(viewModel, this.app)
+                    if (isUpdatePostViewModel(viewModel)) {
+                        new UpdatePostView(viewModel, this.app)
+                            .open()
+                    }
+                }
+            }
+        })
+
+        this.addCommand({
+            id: 'microblog-publish-page-command',
+            name: 'Publish Page to Micro.blog',
+            editorCallback: (_, markdownView) => {
+                if (isMarkdownView(markdownView)) {
+                    const viewModel = this.viewModelFactory.makeSubmitPageViewModel(
+                        markdownView
+                    )
+
+                    if (isPublishPageViewModel(viewModel)) {
+                        new PublishPageView(viewModel, this.app)
+                            .open()
+                    }
+
+                    if (isUpdatePageViewModel(viewModel)) {
+                        new UpdatePageView(viewModel, this.app)
                             .open()
                     }
                 }
@@ -78,6 +102,24 @@ export default class MicroPlugin extends Plugin {
 
     public async saveSettings() {
         await this.saveData(this.settings)
+    }
+
+    // TagSynchronizationServiceDelegate
+
+    public tagSynchronizationDidSucceed(
+        count: number
+    ) {
+        new Notice(
+            'Categories synchronized. Found ' + count + ' categories'
+        )
+    }
+
+    public tagSynchronizationDidFail(
+        _error: Error
+    ) {
+        new Notice(
+            'Error synchronizing categories'
+        )
     }
 
     // Private
@@ -114,23 +156,5 @@ export default class MicroPlugin extends Plugin {
             .makeTagSynchronizationService(
                 this
             )
-    }
-
-    // TagSynchronizationServiceDelegate
-
-    public tagSynchronizationDidSucceed(
-        count: number
-    ) {
-        new Notice(
-            'Categories synchronized. Found ' + count + ' categories'
-        )
-    }
-
-    public tagSynchronizationDidFail(
-        _error: Error
-    ) {
-        new Notice(
-            'Error synchronizing categories'
-        )
     }
 }

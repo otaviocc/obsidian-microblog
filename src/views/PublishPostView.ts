@@ -1,10 +1,10 @@
 import { PublishResponse } from '@networking/PublishResponse'
-import { PublishPostViewModel, PublishPostViewModelDelegate } from '@base/views/PublishPostViewModel'
+import { PublishPostViewModel, PublishPostViewModelDelegate } from '@views/PublishPostViewModel'
 import { TagSuggestionView } from '@views/TagSuggestionView'
 import { App, Modal, Setting } from 'obsidian'
 
 /*
- * `PublishView` subclasses `Modal` and is presented via Obsidian's
+ * `PublishPostView` subclasses `Modal` and is presented via Obsidian's
  * Command Palette.
  *
  * The data used to populate this view and all interactions with the
@@ -52,7 +52,7 @@ export class PublishPostView extends Modal implements PublishPostViewModelDelega
             )
             .addExtraButton(button => button
                 .setIcon('cross')
-                .setTooltip('Remove title')
+                .setTooltip('Clear title')
                 .onClick(() => {
                     this.viewModel.clearTitle()
                 })
@@ -150,7 +150,7 @@ export class PublishPostView extends Modal implements PublishPostViewModelDelega
         this.viewModel.delegate = undefined
     }
 
-    // PublishViewModelDelegate
+    // PublishPostViewModelDelegate
 
     public publishDidClearTitle() {
         this.onOpen()
@@ -198,8 +198,6 @@ export class PublishPostView extends Modal implements PublishPostViewModelDelega
         contentEl.createEl('a', { text: 'Open post URL', href: response.url })
         contentEl.createEl('br')
         contentEl.createEl('a', { text: 'Open post Preview URL', href: response.preview })
-        contentEl.createEl('br')
-        contentEl.createEl('a', { text: 'Open post Edit URL', href: response.edit })
     }
 
     private makeMessageView(
