@@ -1,8 +1,8 @@
-import { UpdateViewModel, UpdateViewModelDelegate } from '@views/UpdateViewModel'
+import { UpdatePostViewModel, UpdatePostViewModelDelegate } from '@views/UpdatePostViewModel'
 import { App, Modal, Setting } from 'obsidian'
 
 /*
- * `UpdateView` subclasses `Model` and is presented view Obsidian's Command
+ * `UpdatePostView` subclasses `Model` and is presented view Obsidian's Command
  * Palette whenever the user attempts to update a post.
  *
  * The data used to populate this view and all interactions with the
@@ -10,16 +10,16 @@ import { App, Modal, Setting } from 'obsidian'
  * methods on the view model and observe changes (via delegate) so it
  * can react appropriately.
  */
-export class UpdateView extends Modal implements UpdateViewModelDelegate {
+export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate {
 
     // Properties
 
-    private viewModel: UpdateViewModel
+    private viewModel: UpdatePostViewModel
 
     // Life cycle
 
     constructor(
-        viewModel: UpdateViewModel,
+        viewModel: UpdatePostViewModel,
         app: App
     ) {
         super(app)
@@ -50,7 +50,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
             )
             .addExtraButton(button => button
                 .setIcon('cross')
-                .setTooltip('Remove title')
+                .setTooltip('Clear title')
                 .onClick(() => {
                     this.viewModel.clearTitle()
                 })
@@ -96,7 +96,7 @@ export class UpdateView extends Modal implements UpdateViewModelDelegate {
         this.viewModel.delegate = undefined
     }
 
-    // UpdateViewModelDelegate
+    // UpdatePostViewModelDelegate
 
     public updateDidClearTitle() {
         this.onOpen()

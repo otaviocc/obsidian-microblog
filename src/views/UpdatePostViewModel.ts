@@ -1,12 +1,12 @@
-import { EmptyResponse } from '@base/networking/EmptyResponse'
+import { EmptyResponse } from '@networking/EmptyResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 
 /*
- * `UpdateViewModelDelegate` interface, implemented by
+ * `UpdatePostViewModelDelegate` interface, implemented by
  * the object that needs to observe events from the view model.
  */
-export interface UpdateViewModelDelegate {
+export interface UpdatePostViewModelDelegate {
 
     // Triggered when user clicks the delete button when the
     // title property is reset.
@@ -15,7 +15,7 @@ export interface UpdateViewModelDelegate {
     // Triggered when updating a post succeeds.
     updateDidSucceed(): void
 
-    // Triggered when updating a new post fails.
+    // Triggered when updating a post fails.
     updateDidFail(error: Error): void
 
     // Triggered when the network request starts.
@@ -26,11 +26,11 @@ export interface UpdateViewModelDelegate {
  * This view model drives the content and interactions with the
  * update view.
  */
-export class UpdateViewModel {
+export class UpdatePostViewModel {
 
     // Properties
 
-    public delegate?: UpdateViewModelDelegate
+    public delegate?: UpdatePostViewModelDelegate
     private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string

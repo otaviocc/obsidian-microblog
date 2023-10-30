@@ -15,7 +15,7 @@ export interface PublishPostViewModelDelegate {
     // title property is reset.
     publishDidClearTitle(): void
 
-    // triggered when user clicks the clear button when the
+    // Triggered when user clicks the clear button when the
     // date property is reset.
     publishDidClearDate(): void
 
@@ -36,7 +36,7 @@ export interface PublishPostViewModelDelegate {
 
 /*
  * This view model drives the content and interactions with the
- * publish view.
+ * publish post view.
  */
 export class PublishPostViewModel implements TagSuggestionDelegate {
 
