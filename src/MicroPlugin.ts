@@ -63,8 +63,13 @@ export default class MicroPlugin extends Plugin {
         this.addCommand({
             id: 'microblog-publish-page-command',
             name: 'Publish Page to Micro.blog',
-            editorCallback: (_, markdownView) => {
-                if (isMarkdownView(markdownView)) {
+            editorCallback: (editor, markdownView) => {
+                if (editor.getValue().trim().length == 0) {
+                    new ErrorView(
+                        this.viewModelFactory.makeEmptyPageErrorViewModel(),
+                        this.app
+                    ).open()
+                } else if (isMarkdownView(markdownView)) {
                     const viewModel = this.viewModelFactory.makeSubmitPageViewModel(
                         markdownView
                     )

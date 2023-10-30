@@ -36,8 +36,11 @@ export interface ViewModelFactoryInterface {
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
 
-    // Builds the Empty Post `ErrorViewModel`.
+    // Builds the Empty Post Error View Model.
     makeEmptyPostErrorViewModel(): ErrorViewModel
+
+    // Builds the Empty Page Error View Model.
+    makeEmptyPageErrorViewModel(): ErrorViewModel
 }
 
 /*
@@ -144,6 +147,13 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         return new ErrorViewModel(
             'Oops',
             'Micro.blog does not support blank posts. Please write something before trying again.'
+        )
+    }
+
+    public makeEmptyPageErrorViewModel(): ErrorViewModel {
+        return new ErrorViewModel(
+            'Oops',
+            'Micro.blog does not support blank page. Please write something before trying again.'
         )
     }
 
