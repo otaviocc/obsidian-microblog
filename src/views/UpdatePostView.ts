@@ -37,6 +37,7 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
 
         contentEl.empty()
         contentEl.createEl('h2', { text: 'Review' })
+        contentEl.createEl('p', { text: 'This action will replace the current live version of the post with the version from this note.' })
 
         new Setting(contentEl)
             .setName('Title')
