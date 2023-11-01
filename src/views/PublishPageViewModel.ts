@@ -37,6 +37,7 @@ export class PublishPageViewModel {
     private titleWrappedValue: string
     private content: string
     private selectedBlogIDWrappedValue: string
+    private includeInNavigationWrappedValue: boolean
     private networkClient: NetworkClientInterface
     private frontmatterService: FrontmatterServiceInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
@@ -49,6 +50,7 @@ export class PublishPageViewModel {
         content: string,
         blogs: Record<string, string>,
         selectedBlogID: string,
+        includeInNavigation: boolean,
         networkClient: NetworkClientInterface,
         frontmatterService: FrontmatterServiceInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
@@ -57,6 +59,7 @@ export class PublishPageViewModel {
         this.content = content
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
+        this.includeInNavigationWrappedValue = includeInNavigation
         this.isSubmitting = false
         this.networkClient = networkClient
         this.frontmatterService = frontmatterService
@@ -83,6 +86,14 @@ export class PublishPageViewModel {
 
     public set selectedBlogID(value: string) {
         this.selectedBlogIDWrappedValue = value
+    }
+
+    public get includeInNavigation(): boolean {
+        return this.includeInNavigationWrappedValue
+    }
+
+    public set includeInNavigation(value: boolean) {
+        this.includeInNavigationWrappedValue = value
     }
 
     public clearTitle() {
@@ -112,7 +123,8 @@ export class PublishPageViewModel {
             const response = this.networkRequestFactory.makePublishPageRequest(
                 this.title,
                 this.content,
-                this.selectedBlogID
+                this.selectedBlogID,
+                this.includeInNavigation
             )
 
             const result = await this.networkClient.run<PublishResponse>(

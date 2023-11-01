@@ -129,10 +129,11 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         const { containerEl } = this
 
         containerEl.empty()
+        containerEl.createEl('h2', { text: 'Blog' })
 
         new Setting(containerEl)
             .setName('Blog')
-            .setDesc('Default blog for new posts.')
+            .setDesc('Default blog for new posts and pages.')
             .addDropdown(dropDown => dropDown
                 .addOptions(this.viewModel.blogs)
                 .setValue(this.viewModel.selectedBlogID)
@@ -151,6 +152,8 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                 })
             )
 
+        containerEl.createEl('h2', { text: 'Posts' })
+
         new Setting(containerEl)
             .setName('Categories')
             .setDesc('Default list of categories for new posts.')
@@ -163,7 +166,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
             )
 
         new Setting(containerEl)
-            .setName('Post visibility')
+            .setName('Visibility')
             .setDesc('Default visibility for new posts.')
             .addDropdown(dropDown => dropDown
                 .addOption('draft', 'Draft')
@@ -173,6 +176,20 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
                     this.viewModel.visibility = value
                 })
             )
+
+        containerEl.createEl('h2', { text: 'Pages' })
+
+        new Setting(containerEl)
+            .setName('Navigation')
+            .setDesc('Default setting to determine whether new pages should be included in the blog\'s navigation automatically.')
+            .addToggle(toggle => toggle
+                .setValue(this.viewModel.includePagesInNavigation)
+                .onChange(value => {
+                    this.viewModel.includePagesInNavigation = value
+                })
+            )
+
+        containerEl.createEl('h2', { text: 'Misc.' })
 
         new Setting(this.containerEl)
             .setName('Sponsor')

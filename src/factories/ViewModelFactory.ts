@@ -202,6 +202,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             page.content,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
+            this.container.settings.includePagesInNavigation,
             this.container.networkClient,
             frontmatterService,
             this.container.networkRequestFactory
