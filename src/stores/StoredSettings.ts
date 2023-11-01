@@ -23,6 +23,10 @@ export interface StoredSettings {
     // List of tag suggestions for new posts,
     // retrieved from Micro.blog for the selected blog.
     tagSuggestions: Array<string>
+
+    // Boolean indicating if pages should be added
+    // to the blog navigation.
+    includePagesInNavigation: boolean
 }
 
 // Default values for the plugin.
@@ -32,5 +36,6 @@ export const defaultSettings: StoredSettings = {
     postVisibility: 'draft',
     blogs: {},
     selectedBlogID: 'default',
-    tagSuggestions: []
+    tagSuggestions: [],
+    includePagesInNavigation: false
 }

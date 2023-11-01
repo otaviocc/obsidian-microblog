@@ -118,6 +118,15 @@ export class MicroPluginSettingsViewModel {
         this.plugin.saveSettings()
     }
 
+    public get includePagesInNavigation(): boolean {
+        return this.settings.includePagesInNavigation
+    }
+
+    public set includePagesInNavigation(value: boolean) {
+        this.settings.includePagesInNavigation = value
+        this.plugin.saveSettings()
+    }
+
     public async validate() {
         console.log('Logging in')
 

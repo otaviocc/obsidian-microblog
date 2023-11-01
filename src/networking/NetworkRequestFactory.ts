@@ -19,7 +19,8 @@ export interface NetworkRequestFactoryInterface {
     makePublishPageRequest(
         title: string,
         content: string,
-        blogID: string
+        blogID: string,
+        navigation: boolean
     ): NetworkRequest
 
     // Builds the configuration request, `NetworkRequest` used to "log in"
@@ -91,13 +92,15 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
     makePublishPageRequest(
         title: string,
         content: string,
-        blogID: string
+        blogID: string,
+        navigation: boolean
     ): NetworkRequest {
         const parameters = new URLSearchParams([
             ['h', 'entry'],
             ['name', title],
             ['content', content],
-            ['mp-channel', 'pages']
+            ['mp-channel', 'pages'],
+            ['mp-navigation', navigation.toString()]
         ])
 
         if (blogID.length > 0 && blogID != 'default') {
