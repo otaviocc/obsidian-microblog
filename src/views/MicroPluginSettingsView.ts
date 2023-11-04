@@ -181,7 +181,7 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
         new Setting(containerEl)
             .setName('Navigation')
-            .setDesc('Default navigation value. Toggle to automatically include new pages in the blog\'s navigation.')
+            .setDesc('Default navigation value. Toggle on to automatically include new pages in the blog\'s navigation.')
             .addToggle(toggle => toggle
                 .setValue(this.viewModel.includePagesInNavigation)
                 .onChange(value => {
