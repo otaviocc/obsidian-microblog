@@ -72,7 +72,7 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
 
         new Setting(contentEl)
             .setName('Navigation')
-            .setDesc('Override the default setting to determine whether new pages should be included in the blog\'s navigation automatically for this page.')
+            .setDesc('Override the default setting. Toggle to automatically include this page in the blog\'s navigation.')
             .addToggle(toggle => toggle
                 .setValue(this.viewModel.includeInNavigation)
                 .onChange(value => {
