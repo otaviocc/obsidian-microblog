@@ -110,7 +110,6 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
     ) {
         this.makeConfirmationView(
             response
-
         )
     }
 

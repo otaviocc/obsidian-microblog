@@ -3,6 +3,7 @@ import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFacto
 import { MarkdownPage, MarkdownPageInterface } from '@models/MarkdownPage'
 import { MarkdownPost, MarkdownPostInterface } from '@models/MarkdownPost'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { ComposeViewModel } from '@views/ComposeViewModel'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishPageViewModel } from '@views/PublishPageViewModel'
@@ -35,6 +36,9 @@ export interface ViewModelFactoryInterface {
         excluding: Array<string>,
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
+
+    // Builds the `ComposeViewModel`.
+    makeComposeViewModel(): ComposeViewModel
 
     // Builds the Empty Post Error View Model.
     makeEmptyPostErrorViewModel(): ErrorViewModel
@@ -141,6 +145,16 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         viewModel.delegate = delegate
 
         return viewModel
+    }
+
+    public makeComposeViewModel(): ComposeViewModel {
+        return new ComposeViewModel(
+            this.container.settings.postVisibility,
+            this.container.settings.blogs,
+            this.container.settings.selectedBlogID,
+            this.container.networkClient,
+            this.container.networkRequestFactory
+        )
     }
 
     public makeEmptyPostErrorViewModel(): ErrorViewModel {

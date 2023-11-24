@@ -3,7 +3,8 @@ import { isMarkdownView, isPublishPageViewModel, isPublishPostViewModel, isUpdat
 import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
 import { ViewModelFactory, ViewModelFactoryInterface } from '@factories/ViewModelFactory'
 import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
-import { defaultSettings, StoredSettings } from '@stores/StoredSettings'
+import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
+import { ComposeView } from '@views/ComposeView'
 import { ErrorView } from '@views/ErrorView'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishPageView } from '@views/PublishPageView'
@@ -84,6 +85,19 @@ export default class MicroPlugin extends Plugin {
                             .open()
                     }
                 }
+            }
+        })
+
+        this.addCommand({
+            id: 'microblog-publish-compose-micropost',
+            name: 'Compose Micropost',
+            callback: () => {
+                const viewModel = this.viewModelFactory.makeComposeViewModel()
+
+                new ComposeView(
+                    viewModel,
+                    this.app
+                ).open()
             }
         })
 
