@@ -10,8 +10,8 @@ export class ComposeView extends Modal implements ComposeViewModelDelegate {
     // Properties
 
     private viewModel: ComposeViewModel
-    private submitButton: ButtonComponent
-    private characterCounterElement: HTMLParagraphElement
+    private submitButton?: ButtonComponent
+    private counterHTMLElement?: HTMLParagraphElement
 
     // Life cycle
 
@@ -45,7 +45,7 @@ export class ComposeView extends Modal implements ComposeViewModelDelegate {
                 textArea.inputEl.rows = 10;
             })
 
-        this.characterCounterElement = contentEl.createEl(
+        this.counterHTMLElement = contentEl.createEl(
             'p',
             { text: this.viewModel.characterCounterText }
         )
@@ -119,12 +119,18 @@ export class ComposeView extends Modal implements ComposeViewModelDelegate {
     public publishUpdateCounter(
         string: string
     ) {
-        this.characterCounterElement.innerText = string
+        if (this.counterHTMLElement) {
+            this.counterHTMLElement.innerText = string
+        }
     }
 
     public publicUpdateSubmitButton(
         style: SubmitButtonStyle
     ) {
+        if (!this.submitButton) {
+            return
+        }
+
         switch (style) {
             case SubmitButtonStyle.Disabled:
                 this.submitButton

@@ -39,6 +39,7 @@ export class ComposeViewModel {
     public delegate?: ComposeViewModelDelegate
     private isSubmitting: boolean
     private contentWrappedValue: string
+    private plainTextContent: string
     private visibilityWrappedValue: string
     private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
@@ -56,6 +57,7 @@ export class ComposeViewModel {
     ) {
         this.visibilityWrappedValue = visibility
         this.contentWrappedValue = ""
+        this.plainTextContent = ""
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
@@ -71,6 +73,7 @@ export class ComposeViewModel {
 
     public set content(value: string) {
         this.contentWrappedValue = value
+        this.plainTextContent = this.markdownToPlainText(value)
 
         this.delegate?.publishUpdateCounter(this.characterCounterText)
         this.publishButtonStyle()
@@ -97,7 +100,7 @@ export class ComposeViewModel {
     }
 
     public get characterCounterText(): string {
-        return this.content.length + '/300'
+        return this.plainTextContent.length + '/300'
     }
 
     public async publish() {
@@ -127,12 +130,31 @@ export class ComposeViewModel {
     // Private
 
     private publishButtonStyle() {
-        if (this.content.length == 0 || this.content.length > 300) {
+        if (this.plainTextContent.length == 0 || this.plainTextContent.length > 300) {
             this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Disabled)
         } else if (this.isSubmitting) {
             this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Publishing)
         } else {
             this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Enabled)
         }
+    }
+
+    private markdownToPlainText(
+        markdown: string
+    ): string {
+        return markdown
+            .replace(/^#+\s+/gm, '')
+            .replace(/(\*\*|__)(.*?)\1/g, '$2')
+            .replace(/(\*|_)(.*?)\1/g, '$2')
+            .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+            .replace(/!\[([^\]]*)\]\([^\)]+\)/g, '$1')
+            .replace(/(\n-{3,}|\n>{1,}.+)/g, '')
+            .replace(/`{1,3}(.*?)`{1,3}/g, '$1')
+            .replace(/^\s*[\d.\-+*]\s+/gm, '')
+            .split('\n')
+            .map(line => line.trim())
+            .join(' ')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
     }
 }
