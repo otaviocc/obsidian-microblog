@@ -119,9 +119,11 @@ export class ComposeView extends Modal implements ComposeViewModelDelegate {
     public publishUpdateCounter(
         string: string
     ) {
-        if (this.counterHTMLElement) {
-            this.counterHTMLElement.innerText = string
+        if (!this.counterHTMLElement) {
+            return
         }
+
+        this.counterHTMLElement.innerText = string
     }
 
     public publicUpdateSubmitButton(
