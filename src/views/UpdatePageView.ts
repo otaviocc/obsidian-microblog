@@ -77,7 +77,7 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
                 .onClick(async _ => {
                     await this.viewModel.updateNote()
                 })
-                .then(_ => {
+                .then(button => {
                     if (this.viewModel.showUpdatingButton) {
                         button
                             .setDisabled(true)

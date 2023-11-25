@@ -87,7 +87,7 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
                 .onClick(async _ => {
                     await this.viewModel.publishPage()
                 })
-                .then(_ => {
+                .then(button => {
                     if (this.viewModel.showPublishingButton) {
                         button
                             .setDisabled(true)

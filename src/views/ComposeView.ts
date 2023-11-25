@@ -83,7 +83,7 @@ export class ComposeView extends Modal implements ComposeViewModelDelegate {
                 .onClick(async _ => {
                     await this.viewModel.publish()
                 })
-                .then(_ => {
+                .then(button => {
                     this.submitButton = button
                 })
             )
