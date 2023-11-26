@@ -11,7 +11,7 @@ import { PublishPageView } from '@views/PublishPageView'
 import { PublishPostView } from '@views/PublishPostView'
 import { UpdatePageView } from '@views/UpdatePageView'
 import { UpdatePostView } from '@views/UpdatePostView'
-import { Notice, Plugin } from 'obsidian'
+import { Notice, Plugin, Platform } from 'obsidian'
 
 export default class MicroPlugin extends Plugin {
 
@@ -89,14 +89,6 @@ export default class MicroPlugin extends Plugin {
         })
 
         this.addCommand({
-            id: 'microblog-publish-compose-micropost',
-            name: 'Compose Micropost',
-            callback: () => {
-                this.openComposeMicropostView()
-            }
-        })
-
-        this.addCommand({
             id: 'microblog-categories-sync-command',
             name: 'Synchronize Categories',
             callback: () => {
@@ -104,19 +96,29 @@ export default class MicroPlugin extends Plugin {
             }
         })
 
+        if (Platform.isDesktopApp) {
+            this.addCommand({
+                id: 'microblog-publish-compose-micropost',
+                name: 'Compose Micropost',
+                callback: () => {
+                    this.openComposeMicropostView()
+                }
+            })
+
+            this.addRibbonIcon(
+                "message-circle",
+                "Compose Micropost",
+                () => {
+                    this.openComposeMicropostView()
+                }
+            )
+        }
+
         this.addSettingTab(
             new MicroPluginSettingsView(
                 this.viewModelFactory.makeMicroPluginSettingsViewModel(),
                 this.app
             )
-        )
-
-        this.addRibbonIcon(
-            "message-circle",
-            "Compose Micropost",
-            () => {
-                this.openComposeMicropostView()
-            }
         )
     }
 
