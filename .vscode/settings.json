@@ -6,5 +6,8 @@
         ".vscode/": true,
         ".github/": true,
         ".nova/": true,
-    }
+    },
+    "cSpell.words": [
+        "Micropost"
+    ]
 }

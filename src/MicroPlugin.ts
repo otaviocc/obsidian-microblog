@@ -92,12 +92,7 @@ export default class MicroPlugin extends Plugin {
             id: 'microblog-publish-compose-micropost',
             name: 'Compose Micropost',
             callback: () => {
-                const viewModel = this.viewModelFactory.makeComposeViewModel()
-
-                new ComposeView(
-                    viewModel,
-                    this.app
-                ).open()
+                this.openComposeMicropostView()
             }
         })
 
@@ -114,6 +109,14 @@ export default class MicroPlugin extends Plugin {
                 this.viewModelFactory.makeMicroPluginSettingsViewModel(),
                 this.app
             )
+        )
+
+        this.addRibbonIcon(
+            "message-circle",
+            "Compose Micropost",
+            () => {
+                this.openComposeMicropostView()
+            }
         )
     }
 
@@ -175,5 +178,14 @@ export default class MicroPlugin extends Plugin {
             .makeTagSynchronizationService(
                 this
             )
+    }
+
+    private openComposeMicropostView() {
+        const viewModel = this.viewModelFactory.makeComposeViewModel()
+
+        new ComposeView(
+            viewModel,
+            this.app
+        ).open()
     }
 }

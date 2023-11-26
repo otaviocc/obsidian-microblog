@@ -8,6 +8,11 @@ export enum SubmitButtonStyle {
     Enabled
 }
 
+enum TextLengthLimits {
+    MinLength = 0,
+    MaxLength = 300
+}
+
 /*
  * `ComposeViewModelDelegate` interface, implemented by
  * the object that needs to observe events from the view model.
@@ -130,13 +135,20 @@ export class ComposeViewModel {
     // Private
 
     private publishButtonStyle() {
-        if (this.plainTextContent.length == 0 || this.plainTextContent.length > 300) {
-            this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Disabled)
-        } else if (this.isSubmitting) {
-            this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Publishing)
-        } else {
-            this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Enabled)
+        const isContentInvalid = this.plainTextContent.length <= TextLengthLimits.MinLength ||
+                                 this.plainTextContent.length > TextLengthLimits.MaxLength;
+
+        if (isContentInvalid) {
+            this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Disabled);
+            return;
         }
+
+        if (this.isSubmitting) {
+            this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Publishing);
+            return;
+        }
+
+        this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Enabled);
     }
 
     private markdownToPlainText(
@@ -146,8 +158,8 @@ export class ComposeViewModel {
             .replace(/^#+\s+/gm, '')
             .replace(/(\*\*|__)(.*?)\1/g, '$2')
             .replace(/(\*|_)(.*?)\1/g, '$2')
-            .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
-            .replace(/!\[([^\]]*)\]\([^\)]+\)/g, '$1')
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+            .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
             .replace(/(\n-{3,}|\n>{1,}.+)/g, '')
             .replace(/`{1,3}(.*?)`{1,3}/g, '$1')
             .replace(/^\s*[\d.\-+*]\s+/gm, '')
