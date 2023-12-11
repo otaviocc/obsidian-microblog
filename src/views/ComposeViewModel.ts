@@ -24,7 +24,7 @@ export interface ComposeViewModelDelegate {
     publishUpdateCounter(string: string): void
 
     // Triggered when the submit button needs to be updated.
-    publicUpdateSubmitButton(style: SubmitButtonStyle): void
+    publishUpdateSubmitButton(style: SubmitButtonStyle): void
 
     // Triggered when publishing a new post succeeds.
     publishDidSucceed(response: PublishResponse): void
@@ -139,16 +139,16 @@ export class ComposeViewModel {
                                  this.plainTextContent.length > TextLengthLimits.MaxLength;
 
         if (isContentInvalid) {
-            this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Disabled);
+            this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Disabled);
             return;
         }
 
         if (this.isSubmitting) {
-            this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Publishing);
+            this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Publishing);
             return;
         }
 
-        this.delegate?.publicUpdateSubmitButton(SubmitButtonStyle.Enabled);
+        this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Enabled);
     }
 
     private markdownToPlainText(
