@@ -1,17 +1,17 @@
 import { MicroPluginContainer, MicroPluginContainerInterface } from '@base/MicroPluginContainer'
+import { MicropostView } from '@base/views/MicropostView'
 import { isMarkdownView, isPublishPageViewModel, isPublishPostViewModel, isUpdatePageViewModel, isUpdatePostViewModel } from '@extensions/TypeGuards'
 import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
 import { ViewModelFactory, ViewModelFactoryInterface } from '@factories/ViewModelFactory'
 import { TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
 import { StoredSettings, defaultSettings } from '@stores/StoredSettings'
-import { ComposeView } from '@views/ComposeView'
 import { ErrorView } from '@views/ErrorView'
 import { MicroPluginSettingsView } from '@views/MicroPluginSettingsView'
 import { PublishPageView } from '@views/PublishPageView'
 import { PublishPostView } from '@views/PublishPostView'
 import { UpdatePageView } from '@views/UpdatePageView'
 import { UpdatePostView } from '@views/UpdatePostView'
-import { Notice, Plugin, Platform } from 'obsidian'
+import { Notice, Platform, Plugin } from 'obsidian'
 
 export default class MicroPlugin extends Plugin {
 
@@ -101,7 +101,7 @@ export default class MicroPlugin extends Plugin {
                 id: 'microblog-publish-compose-micropost',
                 name: 'Compose Micropost',
                 callback: () => {
-                    this.openComposeMicropostView()
+                    this.openMicropostView()
                 }
             })
 
@@ -109,7 +109,7 @@ export default class MicroPlugin extends Plugin {
                 "message-circle",
                 "Compose Micropost",
                 () => {
-                    this.openComposeMicropostView()
+                    this.openMicropostView()
                 }
             )
         }
@@ -182,10 +182,10 @@ export default class MicroPlugin extends Plugin {
             )
     }
 
-    private openComposeMicropostView() {
-        const viewModel = this.viewModelFactory.makeComposeViewModel()
+    private openMicropostView() {
+        const viewModel = this.viewModelFactory.makeMicropostViewModel()
 
-        new ComposeView(
+        new MicropostView(
             viewModel,
             this.app
         ).open()

@@ -1,22 +1,22 @@
+import { MicropostViewModel, MicropostViewModelDelegate, SubmitButtonStyle } from '@base/views/MicropostViewModel'
 import { PublishResponse } from '@networking/PublishResponse'
-import { ComposeViewModel, ComposeViewModelDelegate, SubmitButtonStyle } from '@views/ComposeViewModel'
 import { App, ButtonComponent, Modal, Setting, TextAreaComponent } from 'obsidian'
 
 /*
- * `ComposeView` subclasses `Modal`.
+ * `MicropostView` subclasses `Modal`.
  */
-export class ComposeView extends Modal implements ComposeViewModelDelegate {
+export class MicropostView extends Modal implements MicropostViewModelDelegate {
 
     // Properties
 
-    private viewModel: ComposeViewModel
+    private viewModel: MicropostViewModel
     private submitButton?: ButtonComponent
     private counterHTMLElement?: HTMLParagraphElement
 
     // Life cycle
 
     constructor(
-        viewModel: ComposeViewModel,
+        viewModel: MicropostViewModel,
         app: App
     ) {
         super(app)
@@ -97,7 +97,7 @@ export class ComposeView extends Modal implements ComposeViewModelDelegate {
         contentEl.empty()
     }
 
-    // ComposeViewModelDelegate
+    // MicropostViewModelDelegate
 
     public publishDidSucceed(
         response: PublishResponse

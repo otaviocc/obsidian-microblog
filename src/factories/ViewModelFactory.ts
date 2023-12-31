@@ -1,9 +1,9 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
+import { MicropostViewModel } from '@base/views/MicropostViewModel'
 import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
 import { MarkdownPage, MarkdownPageInterface } from '@models/MarkdownPage'
 import { MarkdownPost, MarkdownPostInterface } from '@models/MarkdownPost'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
-import { ComposeViewModel } from '@views/ComposeViewModel'
 import { ErrorViewModel } from '@views/ErrorViewModel'
 import { MicroPluginSettingsViewModel } from '@views/MicroPluginSettingsViewModel'
 import { PublishPageViewModel } from '@views/PublishPageViewModel'
@@ -37,8 +37,8 @@ export interface ViewModelFactoryInterface {
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
 
-    // Builds the `ComposeViewModel`.
-    makeComposeViewModel(): ComposeViewModel
+    // Builds the `MicropostViewModel`.
+    makeMicropostViewModel(): MicropostViewModel
 
     // Builds the Empty Post Error View Model.
     makeEmptyPostErrorViewModel(): ErrorViewModel
@@ -147,8 +147,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         return viewModel
     }
 
-    public makeComposeViewModel(): ComposeViewModel {
-        return new ComposeViewModel(
+    public makeMicropostViewModel(): MicropostViewModel {
+        return new MicropostViewModel(
             this.container.settings.postVisibility,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
