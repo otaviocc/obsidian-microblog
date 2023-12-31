@@ -14,10 +14,10 @@ enum TextLengthLimits {
 }
 
 /*
- * `ComposeViewModelDelegate` interface, implemented by
+ * `MicropostViewModelDelegate` interface, implemented by
  * the object that needs to observe events from the view model.
  */
-export interface ComposeViewModelDelegate {
+export interface MicropostViewModelDelegate {
 
     // Triggered when the view needs to update the character count
     // fir the number of text-only characters in the post.
@@ -35,13 +35,13 @@ export interface ComposeViewModelDelegate {
 
 /*
  * This view model drives the content and interactions with the
- * compose view.
+ * micropost view.
  */
-export class ComposeViewModel {
+export class MicropostViewModel {
 
     // Properties
 
-    public delegate?: ComposeViewModelDelegate
+    public delegate?: MicropostViewModelDelegate
     private isSubmitting: boolean
     private contentWrappedValue: string
     private plainTextContent: string
