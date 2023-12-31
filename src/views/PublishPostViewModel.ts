@@ -156,7 +156,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
             const response = this.networkRequestFactory.makePublishPostRequest(
                 this.title,
                 this.content,
-                this.tags,
+                this.tags.split(","),
                 this.visibility,
                 this.selectedBlogID,
                 this.formattedScheduledDate()

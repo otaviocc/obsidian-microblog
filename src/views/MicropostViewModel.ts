@@ -116,7 +116,7 @@ export class MicropostViewModel {
             const request = this.networkRequestFactory.makePublishPostRequest(
                 "",
                 this.content,
-                "",
+                [],
                 this.visibility,
                 this.selectedBlogID,
                 ""
