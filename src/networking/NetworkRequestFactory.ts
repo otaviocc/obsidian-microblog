@@ -1,5 +1,6 @@
 import { NetworkRequest } from '@networking/NetworkRequest'
 import { makeUpdatePostRequest } from '@networking/UpdatePostRequest'
+import { makeNewPostRequest } from '@networking/NewPostRequest'
 
 export interface NetworkRequestFactoryInterface {
 
@@ -8,7 +9,7 @@ export interface NetworkRequestFactoryInterface {
     makePublishPostRequest(
         title: string,
         content: string,
-        tags: string,
+        tags: string[],
         visibility: string,
         blogID: string,
         scheduledDate: string
@@ -53,39 +54,26 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
     public makePublishPostRequest(
         title: string,
         content: string,
-        tags: string,
+        tags: string[],
         visibility: string,
         blogID: string,
         scheduledDate: string
     ): NetworkRequest {
-        const parameters = new URLSearchParams([
-            ['h', 'entry'],
-            ['content', content],
-            ['post-status', visibility]
-        ])
-
-        if (title.length > 0) {
-            parameters.append('name', title)
-        }
-
-        if (blogID.length > 0 && blogID != 'default') {
-            parameters.append('mp-destination', blogID)
-        }
-
-        if (scheduledDate.length > 0) {
-            parameters.append('published', scheduledDate)
-        }
-
-        tags
-            .split(",")
-            .forEach(value => {
-                parameters.append('category[]', value.trim())
-            })
+        const body = JSON.stringify(
+            makeNewPostRequest(
+                blogID,
+                title,
+                content,
+                tags,
+                scheduledDate,
+                visibility
+            )
+        )
 
         return {
             path: '/micropub',
-            parameters: parameters,
-            method: 'POST'
+            method: 'POST',
+            body: body
         }
     }
 
