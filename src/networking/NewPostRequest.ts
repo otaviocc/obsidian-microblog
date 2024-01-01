@@ -2,14 +2,14 @@
  * Definition of the JSON used to create a post.
  */
 export type NewPostRequest = {
-    'type': [string]
-    'mp-destination': string
+    'type': string[]
+    'mp-destination'?: string
     'properties': {
-        "name": string[]
+        "name"?: string[]
         'content': string[],
         'category': string[],
-        'published': [string],
-        'post-status': [string]
+        'published'?: string[],
+        'post-status': string[]
     }
 }
 
@@ -24,12 +24,12 @@ export function makeNewPostRequest(
 ): NewPostRequest {
     return {
         'type': ["h-entry"],
-        'mp-destination': blogID,
+        ...blogID.length > 0 && blogID !== 'default' && { 'mp-destination': blogID },
         'properties': {
-            "name": [title],
+            ...title.length > 0 && { "name": [title] },
             'content': [content],
             'category': categories,
-            'published': [published],
+            ...published.length > 0 && { 'published': [published] },
             'post-status': [postStatus]
         }
     }
