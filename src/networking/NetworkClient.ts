@@ -32,7 +32,7 @@ export class NetworkClient implements NetworkClientInterface {
     // Public
 
     public async run<T>(request: NetworkRequest): Promise<T> {
-        const url = 'https://micro.blog' + request.path + (request.parameters ? '?' + request.parameters : "")
+        const url = 'https://micro.blog' + request.path + (request.parameters ? '?' + request.parameters : '')
 
         const response = await fetch(url, {
             method: request.method,

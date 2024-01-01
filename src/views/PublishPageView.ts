@@ -1,6 +1,6 @@
-import { PublishResponse } from "@networking/PublishResponse"
-import { PublishPageViewModel, PublishPageViewModelDelegate } from "@views/PublishPageViewModel"
-import { App, Modal, Setting } from "obsidian"
+import { PublishResponse } from '@networking/PublishResponse'
+import { PublishPageViewModel, PublishPageViewModelDelegate } from '@views/PublishPageViewModel'
+import { App, Modal, Setting } from 'obsidian'
 
 /*
  * `PublishPageView` subclasses `Modal` and is presented via Obsidian's

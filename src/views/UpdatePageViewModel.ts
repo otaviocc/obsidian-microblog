@@ -121,7 +121,7 @@ export class UpdatePageViewModel {
     }
 
     public get missingTitleText(): string {
-        return this.hasValidTitle ? "" : "Title is mandatory"
+        return this.hasValidTitle ? '' : 'Title is mandatory'
     }
 
     // Private

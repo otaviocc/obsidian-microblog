@@ -1,6 +1,6 @@
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
-import { PublishResponse } from "@networking/PublishResponse"
+import { PublishResponse } from '@networking/PublishResponse'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 
 /*
@@ -106,7 +106,7 @@ export class PublishPageViewModel {
     }
 
     public get missingTitleText(): string {
-        return this.hasValidTitle ? "" : "Title is mandatory"
+        return this.hasValidTitle ? '' : 'Title is mandatory'
     }
 
     public async publishPage() {

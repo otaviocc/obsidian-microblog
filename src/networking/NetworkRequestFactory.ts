@@ -24,7 +24,7 @@ export interface NetworkRequestFactoryInterface {
         navigation: boolean
     ): NetworkRequest
 
-    // Builds the configuration request, `NetworkRequest` used to "log in"
+    // Builds the configuration request, `NetworkRequest` used to log in
     // the user. The config network request returns the list of blogs the
     // user can post to.
     makeConfigRequest(): NetworkRequest

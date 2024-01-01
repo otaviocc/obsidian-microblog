@@ -5,7 +5,7 @@ export type NewPostRequest = {
     'type': string[]
     'mp-destination'?: string
     'properties': {
-        "name"?: string[]
+        'name'?: string[]
         'content': string[],
         'category': string[],
         'published'?: string[],
@@ -26,7 +26,7 @@ export function makeNewPostRequest(
         'type': ["h-entry"],
         ...blogID.length > 0 && blogID !== 'default' && { 'mp-destination': blogID },
         'properties': {
-            ...title.length > 0 && { "name": [title] },
+            ...title.length > 0 && { 'name': [title] },
             'content': [content],
             'category': categories,
             ...published.length > 0 && { 'published': [published] },

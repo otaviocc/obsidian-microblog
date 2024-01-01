@@ -1,6 +1,6 @@
-import { NetworkClientInterface } from "@networking/NetworkClient";
-import { NetworkRequestFactoryInterface } from "@networking/NetworkRequestFactory";
-import { PublishResponse } from "@networking/PublishResponse";
+import { NetworkClientInterface } from '@networking/NetworkClient'
+import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
+import { PublishResponse } from '@networking/PublishResponse'
 
 export enum SubmitButtonStyle {
     Disabled,
@@ -61,8 +61,8 @@ export class MicropostViewModel {
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.visibilityWrappedValue = visibility
-        this.contentWrappedValue = ""
-        this.plainTextContent = ""
+        this.contentWrappedValue = ''
+        this.plainTextContent = ''
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
@@ -114,12 +114,12 @@ export class MicropostViewModel {
 
         try {
             const request = this.networkRequestFactory.makePublishPostRequest(
-                "",
+                '',
                 this.content,
                 [],
                 this.visibility,
                 this.selectedBlogID,
-                ""
+                ''
             )
 
             const result = await this.networkClient.run<PublishResponse>(

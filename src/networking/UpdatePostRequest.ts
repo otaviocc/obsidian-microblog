@@ -7,7 +7,7 @@ export type UpdatePostRequest = {
     'mp-destination': string
     'replace': {
         'content': string[],
-        "name": string[]
+        'name': string[]
     }
 }
 
@@ -24,7 +24,7 @@ export function makeUpdatePostRequest(
         'mp-destination': blogID,
         'replace': {
             'content': [content],
-            "name": [title]
+            'name': [title]
         }
     }
 }
