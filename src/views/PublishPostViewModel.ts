@@ -137,7 +137,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
     }
 
     public get invalidDateText(): string {
-        return this.isValidDate ? "" : "Invalid date format"
+        return this.isValidDate ? '' : 'Invalid date format'
     }
 
     public async publishNote() {
@@ -156,7 +156,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
             const response = this.networkRequestFactory.makePublishPostRequest(
                 this.title,
                 this.content,
-                this.tags.split(","),
+                this.tags.split(','),
                 this.visibility,
                 this.selectedBlogID,
                 this.formattedScheduledDate()

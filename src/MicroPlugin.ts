@@ -106,8 +106,8 @@ export default class MicroPlugin extends Plugin {
             })
 
             this.addRibbonIcon(
-                "message-circle",
-                "Compose Micropost",
+                'message-circle',
+                'Compose Micropost',
                 () => {
                     this.openMicropostView()
                 }

@@ -41,7 +41,7 @@ export class MicropostView extends Modal implements MicropostViewModelDelegate {
                 this.viewModel.content = value
             })
             .then(textArea => {
-                textArea.inputEl.style.width = "100%";
+                textArea.inputEl.style.width = '100%'
                 textArea.inputEl.rows = 10;
             })
 
