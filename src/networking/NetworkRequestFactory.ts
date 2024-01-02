@@ -1,6 +1,7 @@
 import { NetworkRequest } from '@networking/NetworkRequest'
-import { makeUpdatePostRequest } from '@networking/UpdatePostRequest'
+import { makeNewPageRequest } from '@networking/NewPageRequest'
 import { makeNewPostRequest } from '@networking/NewPostRequest'
+import { makeUpdatePostRequest } from '@networking/UpdatePostRequest'
 
 export interface NetworkRequestFactoryInterface {
 
@@ -83,22 +84,19 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         blogID: string,
         navigation: boolean
     ): NetworkRequest {
-        const parameters = new URLSearchParams([
-            ['h', 'entry'],
-            ['name', title],
-            ['content', content],
-            ['mp-channel', 'pages'],
-            ['mp-navigation', navigation.toString()]
-        ])
-
-        if (blogID.length > 0 && blogID != 'default') {
-            parameters.append('mp-destination', blogID)
-        }
+        const body = JSON.stringify(
+            makeNewPageRequest(
+                title,
+                content,
+                blogID,
+                navigation
+            )
+        )
 
         return {
             path: '/micropub',
-            parameters: parameters,
-            method: 'POST'
+            method: 'POST',
+            body: body
         }
     }
 
