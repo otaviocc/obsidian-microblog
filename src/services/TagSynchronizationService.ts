@@ -31,9 +31,6 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
     // Properties
 
     private delegate?: TagSynchronizationServiceDelegate
-
-    // Life cycle
-
     private settings: StoredSettings
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
