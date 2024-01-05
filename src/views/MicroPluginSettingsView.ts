@@ -191,6 +191,16 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
 
         containerEl.createEl('h2', { text: 'Misc.' })
 
+        new Setting(containerEl)
+            .setName('Categories synchronization')
+            .setDesc('Toggle on to automatically synchronize categories when Obsidian opens.')
+            .addToggle(toggle => toggle
+                .setValue(this.viewModel.synchronizeCategoriesOnOpen)
+                .onChange(value => {
+                    this.viewModel.synchronizeCategoriesOnOpen = value
+                })
+            )
+
         new Setting(this.containerEl)
             .setName('Sponsor')
             .setDesc('Enjoying this plugin? Show your appreciation with a cup of coffee! 😊☕')

@@ -32,7 +32,9 @@ export default class MicroPlugin extends Plugin {
         await this.loadServiceFactory()
         await this.registerSynchronizationService()
 
-        this.synchronizationService.fetchTags()
+        if (this.settings.synchronizeCategoriesOnOpen) {
+            this.synchronizationService.fetchTags()
+        }
 
         this.addCommand({
             id: 'microblog-publish-post-command',

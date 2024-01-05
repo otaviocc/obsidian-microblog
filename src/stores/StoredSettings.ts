@@ -27,6 +27,10 @@ export interface StoredSettings {
     // Boolean indicating if pages should be added
     // to the blog navigation.
     includePagesInNavigation: boolean
+
+    // Boolean indicating if the plugin should synchronize
+    // the list of categories when Obsidian opens.
+    synchronizeCategoriesOnOpen: boolean
 }
 
 // Default values for the plugin.
@@ -37,5 +41,6 @@ export const defaultSettings: StoredSettings = {
     blogs: {},
     selectedBlogID: 'default',
     synchronizedCategories: {},
-    includePagesInNavigation: false
+    includePagesInNavigation: false,
+    synchronizeCategoriesOnOpen: true
 }

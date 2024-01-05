@@ -125,6 +125,15 @@ export class MicroPluginSettingsViewModel {
         this.plugin.saveSettings()
     }
 
+    public get synchronizeCategoriesOnOpen(): boolean {
+        return this.settings.synchronizeCategoriesOnOpen
+    }
+
+    public set synchronizeCategoriesOnOpen(value: boolean) {
+        this.settings.synchronizeCategoriesOnOpen = value
+        this.plugin.saveSettings()
+    }
+
     public async validate() {
         console.log('Logging in')
 
@@ -151,6 +160,9 @@ export class MicroPluginSettingsViewModel {
         this.selectedBlogID = 'default'
         this.visibility = 'draft'
         this.synchronizedCategories = {}
+        this.includePagesInNavigation = false
+        this.synchronizeCategoriesOnOpen = true
+
         this.delegate?.logoutDidSucceed()
         console.log('Logout successful')
     }
