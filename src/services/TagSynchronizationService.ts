@@ -11,7 +11,10 @@ import { StoredSettings } from '@stores/StoredSettings'
 export interface TagSynchronizationServiceDelegate {
 
     // Triggered when tag synchronization succeeds.
-    tagSynchronizationDidSucceed(count: number): void
+    tagSynchronizationDidSucceed(
+        count: number,
+        blogsCount: number
+    ): void
 
     // Triggered when tag synchronization fails.
     tagSynchronizationDidFail(error: Error): void
@@ -63,9 +66,6 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
 
             let categoriesCount = 0
 
-            this.settings.synchronizedCategories = {};
-            this.plugin.saveSettings()
-
             for (const blogID of blogIDs) {
                 const response = await this.networkClient.run<CategoriesResponse>(
                     this.networkRequestFactory.makeCategoriesRequest(blogID)
@@ -76,7 +76,7 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
                 this.plugin.saveSettings()
             }
 
-            this.delegate?.tagSynchronizationDidSucceed(categoriesCount)
+            this.delegate?.tagSynchronizationDidSucceed(categoriesCount, blogIDs.length)
             console.log('Categories synchronized')
         } catch (error) {
             this.delegate?.tagSynchronizationDidFail(error)

@@ -131,10 +131,11 @@ export default class MicroPlugin extends Plugin {
     // TagSynchronizationServiceDelegate
 
     public tagSynchronizationDidSucceed(
-        count: number
+        count: number,
+        blogsCount: number
     ) {
         new Notice(
-            'Categories synchronized. Found ' + count + ' categories'
+            'Categories synchronized. Found ' + count + ' categories in ' + blogsCount + ' blog(s).'
         )
     }
 
