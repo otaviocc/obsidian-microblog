@@ -39,7 +39,7 @@ export class TagSuggestionView extends FuzzySuggestModal<string> {
         ])
     }
 
-    public getItems(): Array<string> {
+    public getItems(): string[] {
         return this.viewModel.tags
     }
 

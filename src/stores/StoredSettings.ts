@@ -20,9 +20,9 @@ export interface StoredSettings {
     // Default blog used for new posts.
     selectedBlogID: string
 
-    // List of tag suggestions for new posts,
-    // retrieved from Micro.blog for the selected blog.
-    tagSuggestions: Array<string>
+    // List of synchronized categories used for suggestions
+    // in new posts.
+    synchronizedCategories: Record<string, string[]>
 
     // Boolean indicating if pages should be added
     // to the blog navigation.
@@ -36,6 +36,6 @@ export const defaultSettings: StoredSettings = {
     postVisibility: 'draft',
     blogs: {},
     selectedBlogID: 'default',
-    tagSuggestions: [],
+    synchronizedCategories: {},
     includePagesInNavigation: false
 }

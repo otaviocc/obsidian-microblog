@@ -31,8 +31,10 @@ export interface NetworkRequestFactoryInterface {
     makeConfigRequest(): NetworkRequest
 
     // Builds the categories request, `NetworkRequest` used to fetch
-    // categories (a..k.a. tags) used in previous posts.
-    makeCategoriesRequest(): NetworkRequest
+    // categories (a.k.a. tags) used in previous posts.
+    makeCategoriesRequest(
+        blogID: string
+    ): NetworkRequest
 
     // Builds the network request to update a post or page.
     makeUpdateRequest(
@@ -110,11 +112,14 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         }
     }
 
-    public makeCategoriesRequest(): NetworkRequest {
+    public makeCategoriesRequest(
+        blogID: string
+    ): NetworkRequest {
         return {
             path: '/micropub',
             parameters: new URLSearchParams([
-                ['q', 'category']
+                ['q', 'category'],
+                ['mp-destination', blogID]
             ]),
             method: 'GET'
         }

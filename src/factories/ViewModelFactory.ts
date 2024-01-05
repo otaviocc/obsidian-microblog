@@ -33,7 +33,8 @@ export interface ViewModelFactoryInterface {
 
     // Builds the `TagSuggestionViewModel`.
     makeTagSuggestionViewModel(
-        excluding: Array<string>,
+        blogID: string,
+        excluding: string[],
         delegate?: TagSuggestionDelegate
     ): TagSuggestionViewModel
 
@@ -130,13 +131,16 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     }
 
     public makeTagSuggestionViewModel(
-        excluding: Array<string>,
+        blogID: string,
+        excluding: string[],
         delegate?: TagSuggestionDelegate,
     ): TagSuggestionViewModel {
-        const suggestions = this.container.settings.tagSuggestions
+        const suggestions = this
+            .synchronizedCategories(blogID)
             .filter(element =>
                 !excluding.includes(element)
             )
+            .sort()
 
         const viewModel = new TagSuggestionViewModel(
             suggestions
@@ -237,5 +241,26 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.container.networkClient,
             this.container.networkRequestFactory
         )
+    }
+
+    // Return the categories for the selected blog.
+    // In case the selected blog is the `default`, then show
+    // all categories (removing duplicates).
+    private synchronizedCategories(
+        blogID: string
+    ): string[] {
+        const categories = this.container
+            .settings
+            .synchronizedCategories
+
+        if (blogID == 'default') {
+            return Array.from(
+                new Set(
+                    Object.values(categories).flat()
+                )
+            )
+        } else {
+            return categories[blogID]
+        }
     }
 }

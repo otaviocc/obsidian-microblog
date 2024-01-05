@@ -78,12 +78,10 @@ export class MicroPluginSettingsViewModel {
         this.plugin.saveSettings()
     }
 
-    public get tagSuggestions(): Array<string> {
-        return this.settings.tagSuggestions
-    }
-
-    public set tagSuggestions(value: Array<string>) {
-        this.settings.tagSuggestions = value
+    public set synchronizedCategories(
+        value: Record<string, string[]>
+    ) {
+        this.settings.synchronizedCategories = value
         this.plugin.saveSettings()
     }
 
@@ -152,7 +150,7 @@ export class MicroPluginSettingsViewModel {
         this.tags = ''
         this.selectedBlogID = 'default'
         this.visibility = 'draft'
-        this.tagSuggestions = []
+        this.synchronizedCategories = {}
         this.delegate?.logoutDidSucceed()
         console.log('Logout successful')
     }

@@ -185,6 +185,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
             .map(tag => tag.trim())
 
         return this.viewModelFactory.makeTagSuggestionViewModel(
+            this.selectedBlogID,
             excluding,
             this
         )

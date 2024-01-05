@@ -58,14 +58,25 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
         if (this.settings.appToken.length == 0) return
 
         try {
-            const response = await this.networkClient.run<CategoriesResponse>(
-                this.networkRequestFactory.makeCategoriesRequest()
-            )
+            const blogIDs = Object.keys(this.settings.blogs)
+                .filter(value => value != 'default')
 
-            this.settings.tagSuggestions = response.categories
+            let categoriesCount = 0
+
+            this.settings.synchronizedCategories = {};
             this.plugin.saveSettings()
 
-            this.delegate?.tagSynchronizationDidSucceed(response.categories.length)
+            for (const blogID of blogIDs) {
+                const response = await this.networkClient.run<CategoriesResponse>(
+                    this.networkRequestFactory.makeCategoriesRequest(blogID)
+                )
+
+                categoriesCount += response.categories.length
+                this.settings.synchronizedCategories[blogID] = response.categories;
+                this.plugin.saveSettings()
+            }
+
+            this.delegate?.tagSynchronizationDidSucceed(categoriesCount)
             console.log('Categories synchronized')
         } catch (error) {
             this.delegate?.tagSynchronizationDidFail(error)

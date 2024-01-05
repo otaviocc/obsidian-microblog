@@ -16,13 +16,13 @@ export class TagSuggestionViewModel {
 
     // Properties
 
-    public tags: Array<string>
+    public tags: string[]
     public delegate?: TagSuggestionDelegate
 
     // Life cycle
 
     constructor(
-        tags: Array<string>
+        tags: string[]
     ) {
         this.tags = tags
     }
