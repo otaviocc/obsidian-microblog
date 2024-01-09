@@ -72,7 +72,7 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
                 )
 
                 categoriesCount += response.categories.length
-                this.settings.synchronizedCategories[blogID] = response.categories;
+                this.settings.synchronizedCategories[blogID] = response.categories
                 this.plugin.saveSettings()
             }
 
