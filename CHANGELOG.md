@@ -1,81 +1,83 @@
 # Changelog
 
-## 2.4.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.4.0))
+All notable changes to this project will be documented in this file.
 
-- As a user, I want the categories across all my blogs to synchronize automatically
-- As a user, I want the category suggestion picker to display only the categories relevant to the blog currently selected
-- As a user, I desire the ability to decide if categories should automatically synchronize upon opening Obsidian
+## [2.4.0] - 2024-01-05
+### Added
+- Automatic synchronization of categories across all blogs.
+- Display of relevant categories in the category suggestion picker based on the blog currently selected.
+- Option for users to decide if categories should automatically synchronize upon opening Obsidian.
 
-## 2.3.3 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.3.3))
+## [2.3.3] - 2024-01-02
+### Improved
+- Stability when publishing very long pages.
 
-- Improve stability when publishing very long pages
+## [2.3.2] - 2024-01-01
+### Improved
+- Stability when publishing very long posts.
 
-## 2.3.2 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.3.2))
+## [2.3.1] - 2023-11-26
+### Changed
+- Made the Micropost composer available only on Desktop.
 
-- Improve stability when publishing very long posts
+## [2.3.0] - 2023-11-26
+### Added
+- Micropost composer window to allow posting without creating a new file.
 
-## 2.3.1 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.3.1))
+## [2.2.2] - 2023-11-04
+### Improved
+- Copywriting.
 
-- Make the Micropost composer only available on Desktop
+## [2.2.1] - 2023-11-04
+### Improved
+- Copywriting.
 
-## 2.3.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.3.0))
+## [2.2.0] - 2023-11-01
+### Added
+- Option for users to decide if the page should be included in the blog navigation.
 
-- As a user I want to post using the Micropost composer window so that I don't have to create a new file just to post
+## [2.1.0] - 2023-10-31
+### Added
+- Functionality for users to publish and update pages.
 
-## 2.2.2 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.2.2))
+## [2.0.0] - 2023-09-13
+### Added
+- URL setting in frontmatter once the post is published.
+- Ability to update a note by simply re-publishing it.
 
-- Improve copy
+## [1.7.0] - 2023-08-29
+### Changed
+- Excluded frontmatter from being published in the post.
+### Added
+- Setting post title and tags via YAML frontmatter/Properties.
 
-## 2.2.1 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.2.1))
+## [1.6.0] - 2023-05-31
+### Added
+- Error message display for attempts to publish an empty post.
 
-- Improve copy
+## [1.5.0] - 2023-04-08
+### Added
+- Post scheduling feature for specific future dates.
+- Automatic fetching of Categories when the app launches.
 
-## 2.2.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.2.0))
+## [1.4.0] - 2023-02-08
+### Improved
+- Minor improvements.
 
-- As a user I want to set if the page should be included in the blog navigation or not
+## [1.3.0] - 2023-02-08
+### Improved
+- Minor improvements.
 
-## 2.1.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.1.0))
+## [1.2.0] - 2022-10-30
+### Added
+- Persistent display of the list of hosted blogs.
+- New command to synchronize categories (a.k.a. tags).
+- Category picker feature when publishing a note.
 
-- As a user I want to publish and update pages
+## [1.1.0] - 2022-09-25
+### Improved
+- Minor improvements.
 
-## 2.0.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/2.0.0))
-
-- As a user I want the note to have the URL set in the frontmatter once the post is published
-- As a user I want to update a note by simply re-publishing a note
-
-## 1.7.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.7.0))
-
-- As a user I don't want frontmatter published in the post
-- As a user I want to set the title of my post via YAML frontmatter/Properties
-- As a user I want to set the tags of my post via YAML frontmatter/Properties
-
-## 1.6.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.6.0))
-
-- As a user I want to see an error message in case I try to publish an empty post
-
-## 1.5.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.5.0))
-
-- As a user I want to schedule my post to be published in a specific date
-- As a user I want Obsidian to automatically fetch my Categories when the app launches
-
-## 1.4.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.4.0))
-
-- Minor improvements
-
-## 1.3.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.3.0))
-
-- Minor improvements
-
-## 1.2.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.2.0))
-
-- Always show list of hosted blogs (even when there's a single blog)
-- New command to synchronize categories (a.k.a. tags)
-- Category picker when publishing a note
-
-## 1.1.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.1.0))
-
-- Minor improvements
-
-## 1.0.0 ([tag](https://github.com/otaviocc/obsidian-microblog/releases/tag/1.0.0))
-
-- Initial version
+## [1.0.0] - 2022-09-22
+### Added
+- Initial release of the software.
