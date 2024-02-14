@@ -153,10 +153,12 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
         this.delegate?.publishDidValidateDate()
 
         try {
+            const tags = this.tags.split(',')
+
             const response = this.networkRequestFactory.makePublishPostRequest(
                 this.title,
                 this.content,
-                this.tags.split(','),
+                tags,
                 this.visibility,
                 this.selectedBlogID,
                 this.formattedScheduledDate()
@@ -167,6 +169,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
             )
 
             this.frontmatterService.save(result.url, 'url')
+            this.frontmatterService.save(tags, 'tags')
             this.delegate?.publishDidSucceed(result)
         } catch (error) {
             this.delegate?.publishDidFail(error)

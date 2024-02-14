@@ -5,7 +5,7 @@ export interface FrontmatterServiceInterface {
 
     // Saves or delete an entry to the frontmatter.
     save(
-        value: string | null,
+        value: string | string[] | null,
         key: string
     ): void
 
@@ -44,7 +44,7 @@ export class FrontmatterService implements FrontmatterServiceInterface {
     // Public
 
     public save(
-        value: string | null,
+        value: string | string[] | null,
         key: string
     ) {
         if (!this.file) return
