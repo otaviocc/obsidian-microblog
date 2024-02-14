@@ -168,8 +168,10 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
                 response
             )
 
+            this.frontmatterService.save(this.title, 'title')
             this.frontmatterService.save(result.url, 'url')
             this.frontmatterService.save(tags, 'tags')
+
             this.delegate?.publishDidSucceed(result)
         } catch (error) {
             this.delegate?.publishDidFail(error)
