@@ -131,7 +131,9 @@ export class PublishPageViewModel {
                 response
             )
 
+            this.frontmatterService.save(this.title, 'title')
             this.frontmatterService.save(result.url, 'url')
+
             this.delegate?.publishDidSucceed(result)
         } catch (error) {
             this.delegate?.publishDidFail(error)
