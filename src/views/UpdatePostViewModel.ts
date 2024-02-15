@@ -1,6 +1,7 @@
 import { EmptyResponse } from '@networking/EmptyResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
+import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 
 /*
  * `UpdatePostViewModelDelegate` interface, implemented by
@@ -37,6 +38,7 @@ export class UpdatePostViewModel {
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
     private selectedBlogIDWrappedValue: string
+    private frontmatterService: FrontmatterServiceInterface
     readonly url: string
     readonly blogs: Record<string, string>
 
@@ -49,6 +51,7 @@ export class UpdatePostViewModel {
         blogs: Record<string, string>,
         selectedBlogID: string,
         networkClient: NetworkClientInterface,
+        frontmatterService: FrontmatterServiceInterface,
         networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.url = url
@@ -57,6 +60,7 @@ export class UpdatePostViewModel {
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.networkClient = networkClient
+        this.frontmatterService = frontmatterService
         this.networkRequestFactory = networkRequestFactory
         this.isSubmitting = false
     }
@@ -78,6 +82,8 @@ export class UpdatePostViewModel {
             await this.networkClient.run<EmptyResponse>(
                 request
             )
+
+            this.frontmatterService.save(this.title, 'title')
 
             this.delegate?.updateDidSucceed()
         } catch (error) {

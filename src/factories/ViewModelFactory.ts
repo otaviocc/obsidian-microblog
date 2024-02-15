@@ -86,7 +86,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             return this.makeUpdatePostViewModel(
                 post.url,
                 post.title,
-                post.content
+                post.content,
+                frontmatterService
             )
         } else {
             return this.makePublishPostViewModel(
@@ -198,7 +199,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     private makeUpdatePostViewModel(
         url: string,
         title: string,
-        content: string
+        content: string,
+        frontmatterService: FrontmatterServiceInterface
     ): UpdatePostViewModel {
         return new UpdatePostViewModel(
             url,
@@ -207,6 +209,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
             this.container.networkClient,
+            frontmatterService,
             this.container.networkRequestFactory
         )
     }
