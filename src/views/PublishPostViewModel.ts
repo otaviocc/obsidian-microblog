@@ -153,7 +153,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
         this.delegate?.publishDidValidateDate()
 
         try {
-            const tags = this.tags.split(',')
+            const tags = this.tags.nonEmptyValues()
 
             const response = this.networkRequestFactory.makePublishPostRequest(
                 this.title,
@@ -184,10 +184,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
     }
 
     public suggestionsViewModel(): TagSuggestionViewModel {
-        const excluding = this.tags
-            .split(',')
-            .filter(value => value.length > 0)
-            .map(tag => tag.trim())
+        const excluding = this.tags.nonEmptyValues()
 
         return this.viewModelFactory.makeTagSuggestionViewModel(
             this.selectedBlogID,
@@ -231,11 +228,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
     public tagSuggestionDidSelectTag(
         category: string
     ) {
-        const tags = this.tags
-            .split(',')
-            .filter(value => value.length > 0)
-            .map(tag => tag.trim())
-
+        const tags = this.tags.nonEmptyValues()
         tags.push(category)
 
         const formattedTags = tags

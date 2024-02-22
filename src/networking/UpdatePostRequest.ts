@@ -7,6 +7,7 @@ export type UpdatePostRequest = {
     'mp-destination': string
     'replace': {
         'content': string[],
+        'category'?: string[],
         'name': string[]
     }
 }
@@ -16,7 +17,8 @@ export function makeUpdatePostRequest(
     url: string,
     blogID: string,
     title: string,
-    content: string
+    content: string,
+    categories?: string[]
 ): UpdatePostRequest {
     return {
         'action': 'update',
@@ -24,6 +26,7 @@ export function makeUpdatePostRequest(
         'mp-destination': blogID,
         'replace': {
             'content': [content],
+            ...categories !== undefined && { 'category': categories },
             'name': [title]
         }
     }

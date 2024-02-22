@@ -87,6 +87,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
                 post.url,
                 post.title,
                 post.content,
+                post.tags || "",
                 frontmatterService
             )
         } else {
@@ -201,17 +202,20 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         url: string,
         title: string,
         content: string,
+        tags: string,
         frontmatterService: FrontmatterServiceInterface
     ): UpdatePostViewModel {
         return new UpdatePostViewModel(
             url,
             title,
             content,
+            tags,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
             this.container.networkClient,
             frontmatterService,
-            this.container.networkRequestFactory
+            this.container.networkRequestFactory,
+            this
         )
     }
 

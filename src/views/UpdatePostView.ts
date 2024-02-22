@@ -1,3 +1,4 @@
+import { TagSuggestionView } from '@views/TagSuggestionView'
 import { UpdatePostViewModel, UpdatePostViewModelDelegate } from '@views/UpdatePostViewModel'
 import { App, Modal, Setting } from 'obsidian'
 
@@ -60,7 +61,7 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
         if (this.viewModel.hasMultipleBlogs) {
             new Setting(contentEl)
                 .setName('Blog')
-                .setDesc('Please confirm the blog for this post.')
+                .setDesc('Confirm the blog for this post.')
                 .addDropdown(dropDown => dropDown
                     .addOptions(this.viewModel.blogs)
                     .setValue(this.viewModel.selectedBlogID)
@@ -69,6 +70,27 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
                     })
                 )
         }
+
+        new Setting(contentEl)
+            .setName('Categories')
+            .setDesc('Confirm the categories assigned to this post.')
+            .addText(text => text
+                .setPlaceholder('category1, category2, category3')
+                .setValue(this.viewModel.tags)
+                .onChange(value => {
+                    this.viewModel.tags = value
+                })
+            )
+            .addExtraButton(button => button
+                .setIcon('plus')
+                .setTooltip('Add categories')
+                .onClick(() => {
+                    new TagSuggestionView(
+                        this.viewModel.suggestionsViewModel(),
+                        this.app
+                    ).open()
+                })
+            )
 
         new Setting(contentEl)
             .addButton(button => button
@@ -98,6 +120,10 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
     }
 
     // UpdatePostViewModelDelegate
+
+    public updateDidSelectTag() {
+        this.onOpen()
+    }
 
     public updateDidClearTitle() {
         this.onOpen()

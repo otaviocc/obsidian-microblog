@@ -41,7 +41,8 @@ export interface NetworkRequestFactoryInterface {
         url: string,
         blogID: string,
         title: string,
-        content: string
+        content: string,
+        tags?: string[]
     ): NetworkRequest
 }
 
@@ -129,14 +130,16 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         url: string,
         blogID: string,
         title: string,
-        content: string
+        content: string,
+        tags?: string[]
     ): NetworkRequest {
         const body = JSON.stringify(
             makeUpdatePostRequest(
                 url,
                 blogID,
                 title,
-                content
+                content,
+                tags
             )
         )
 
