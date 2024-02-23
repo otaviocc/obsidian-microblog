@@ -66,8 +66,10 @@ export class FrontmatterService implements FrontmatterServiceInterface {
         const frontmatter = this.parseFrontmatterFromFile()
         const entry = parseFrontMatterEntry(frontmatter, key)
 
-        return typeof entry === 'string'
-            ? entry
+        return frontmatter && key in frontmatter
+            ? entry === null || entry === ''
+                ? ''
+                : typeof entry === 'string' ? entry : null
             : null
     }
 

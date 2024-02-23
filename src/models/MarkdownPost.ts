@@ -50,7 +50,9 @@ export class MarkdownPost implements MarkdownPostInterface {
         const frontmatterTitle = this.frontmatterService
             .retrieveString('title')
 
-        return frontmatterTitle || filename || ''
+        return frontmatterTitle !== null
+            ? frontmatterTitle
+            : (filename || '')
     }
 
     public get content(): string {
