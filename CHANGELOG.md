@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.0] - 2024-03-05
+### Added
+- The ability to update tags while editing posts.
+### Improved
+- Titles and tags/categories are now saved to YAML/Property after publishing/updating posts.
+- Titles are now saved to YAML/Property after publishing/updating pages.
+- The `title` Property can be left empty, allowing the creation of posts without a title.
+
 ## [2.4.0] - 2024-01-05
 ### Added
 - Automatic synchronization of categories across all blogs.
