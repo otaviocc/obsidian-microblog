@@ -1,7 +1,7 @@
 declare global {
     export interface String {
         removeFrontmatter(): string
-        nonEmptyValues(): string[]
+        validValues(): string[]
     }
 }
 
@@ -10,7 +10,7 @@ String.prototype.removeFrontmatter = function(this: string) {
     return this.replace(regex, '')
 }
 
-String.prototype.nonEmptyValues = function(this: string) {
+String.prototype.validValues = function(this: string) {
     return this
         .split(',')
         .filter(value => value.length > 0)

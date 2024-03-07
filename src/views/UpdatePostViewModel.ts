@@ -83,7 +83,7 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
         this.delegate?.updateRequestDidStart()
 
         try {
-            const tags = this.tags.nonEmptyValues()
+            const tags = this.tags.validValues()
 
             const request = this.networkRequestFactory.makeUpdateRequest(
                 this.url,
@@ -144,7 +144,7 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
     }
 
     public suggestionsViewModel(): TagSuggestionViewModel {
-        const excluding = this.tags.nonEmptyValues()
+        const excluding = this.tags.validValues()
 
         return this.viewModelFactory.makeTagSuggestionViewModel(
             this.selectedBlogID,
@@ -158,7 +158,7 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
     public tagSuggestionDidSelectTag(
         category: string
     ) {
-        const tags = this.tags.nonEmptyValues()
+        const tags = this.tags.validValues()
         tags.push(category)
 
         const formattedTags = tags
