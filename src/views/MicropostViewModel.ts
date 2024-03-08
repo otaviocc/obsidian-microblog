@@ -8,7 +8,7 @@ export enum SubmitButtonStyle {
     Enabled
 }
 
-enum TextLengthLimits {
+enum TextLengthLimit {
     MinLength = 0,
     MaxLength = 300
 }
@@ -135,8 +135,8 @@ export class MicropostViewModel {
     // Private
 
     private publishButtonStyle() {
-        const isContentInvalid = this.plainTextContent.length <= TextLengthLimits.MinLength ||
-                                 this.plainTextContent.length > TextLengthLimits.MaxLength;
+        const isContentInvalid = this.plainTextContent.length <= TextLengthLimit.MinLength ||
+                                 this.plainTextContent.length > TextLengthLimit.MaxLength;
 
         if (isContentInvalid) {
             this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Disabled);
