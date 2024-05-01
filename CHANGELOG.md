@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.6.0] - 2024-05-01
+### Added
+- Obsidian links (internal links to other notes) are removed before publishing/updating posts and pages.
+
 ## [2.5.0] - 2024-03-05
 ### Added
 - The ability to update tags while editing posts.
