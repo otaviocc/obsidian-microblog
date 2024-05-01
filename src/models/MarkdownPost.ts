@@ -59,6 +59,7 @@ export class MarkdownPost implements MarkdownPostInterface {
         return this.markdownView.editor
             .getValue()
             .removeFrontmatter()
+            .removeObsidianLinks()
     }
 
     public get tags(): string | null | undefined {

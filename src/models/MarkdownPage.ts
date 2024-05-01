@@ -52,6 +52,7 @@ export class MarkdownPage implements MarkdownPageInterface {
         return this.markdownView.editor
             .getValue()
             .removeFrontmatter()
+            .removeObsidianLinks()
     }
 
     public get url(): string | null {
