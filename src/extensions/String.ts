@@ -45,20 +45,12 @@ String.prototype.removeObsidianLinks = function (this: string) {
     const codeBlocksBounds = extractBounds(codeBlockRegex)
     const inlineCodesBounds = extractBounds(inlineCodeRegex)
 
-    const cleanMarkdown = (match: string, content: string, index: number): string => {
-        const isInCodeBlock = codeBlocksBounds.some(
-            (block) => index >= block.start && index <= block.end
-        )
-        const isInInlineCode = inlineCodesBounds.some(
-            (code) => index >= code.start && index <= code.end
-        )
+    const isCode = (index: number) =>
+        codeBlocksBounds.some((block) => index >= block.start && index <= block.end) ||
+        inlineCodesBounds.some((code) => index >= code.start && index <= code.end)
 
-        if (isInCodeBlock || isInInlineCode) {
-            return match
-        } else {
-            return content.includes('|') ? content.split('|')[1] : content
-        }
-    }
+    const cleanMarkdown = (match: string, content: string, index: number) =>
+        isCode(index) ? match : content.includes("|") ? content.split("|")[1] : content
 
     return this.replace(linkRegex, cleanMarkdown)
 }
