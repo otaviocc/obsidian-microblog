@@ -1,3 +1,4 @@
+import { ErrorFactory } from '@networking/ErrorFactory'
 import { NetworkRequest } from '@networking/NetworkRequest'
 
 export interface NetworkClientInterface {
@@ -45,7 +46,7 @@ export class NetworkClient implements NetworkClientInterface {
         })
 
         if (!response.ok) {
-            throw new Error('Network error: ' + response.status)
+            throw await ErrorFactory.makeErrorFromResponse(response)
         }
 
         const isSuccess = response.status >= 200 && response.status < 300
