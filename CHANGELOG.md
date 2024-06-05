@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.7.0] - 2024-06-05
+### Improved
+- Show Micro.blog error messages when available.
+
 ## [2.6.0] - 2024-05-01
 ### Added
 - Obsidian links (internal links to other notes) are removed before publishing/updating posts and pages.
