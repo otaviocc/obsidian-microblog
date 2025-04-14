@@ -5,10 +5,6 @@
 
 Micro.publish is a community-maintained plugin for [Obsidian](https://obsidian.md/) that allows you to publish notes to a [Micro.blog](https://micro.blog/) blog.
 
-Does this plugin improve your workflow? If so, you can show your appreciation by buying me a coffee.
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z0C9KPT)
-
 This community-maintained plugin is not affiliated with Micro.blog or Obsidian.
 
 ## Installation

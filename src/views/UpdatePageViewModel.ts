@@ -2,6 +2,7 @@ import { EmptyResponse } from '@networking/EmptyResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { ImageServiceInterface, ImageServiceDelegate } from '@services/ImageService'
 
 /*
  * `UpdatePageViewModelDelegate` interface, implemented by
@@ -21,26 +22,32 @@ export interface UpdatePageViewModelDelegate {
 
     // Triggered when the network request starts.
     updateRequestDidStart(): void
+
+    // Triggered when image processing status is updated
+    updateDidUpdateImageProcessingStatus?(status: string): void
 }
 
 /*
  * This view model drives the content and interactions with the
- * update view.
+ * update page view.
  */
-export class UpdatePageViewModel {
+export class UpdatePageViewModel implements ImageServiceDelegate {
 
     // Properties
 
     public delegate?: UpdatePageViewModelDelegate
+    readonly url: string
+    readonly blogs: Record<string, string>
     private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
-    private selectedBlogIDWrappedValue: string
+    private blogID: string
     private frontmatterService: FrontmatterServiceInterface
-    readonly url: string
-    readonly blogs: Record<string, string>
+    private imageService: ImageServiceInterface
+    private totalImagesToProcess = 0
+    private processedImagesCount = 0
 
     // Life cycle
 
@@ -49,23 +56,24 @@ export class UpdatePageViewModel {
         title: string,
         content: string,
         blogs: Record<string, string>,
-        selectedBlogID: string,
+        blogID: string,
         networkClient: NetworkClientInterface,
         frontmatterService: FrontmatterServiceInterface,
-        networkRequestFactory: NetworkRequestFactoryInterface
+        networkRequestFactory: NetworkRequestFactoryInterface,
+        imageService: ImageServiceInterface
     ) {
         this.url = url
         this.titleWrappedValue = title
         this.content = content
         this.blogs = blogs
-        this.selectedBlogIDWrappedValue = selectedBlogID
+        this.blogID = blogID
+        this.isSubmitting = false
         this.networkClient = networkClient
         this.frontmatterService = frontmatterService
         this.networkRequestFactory = networkRequestFactory
-        this.isSubmitting = false
+        this.imageService = imageService
+        this.imageService.delegate = this
     }
-
-    // Public
 
     public async updateNote() {
         if (!this.hasValidTitle) {
@@ -78,35 +86,84 @@ export class UpdatePageViewModel {
         this.delegate?.updateRequestDidStart()
 
         try {
-            const request = this.networkRequestFactory.makeUpdateRequest(
-                this.url,
-                this.selectedBlogID,
-                this.title,
-                this.content
+            const processedContent = await this.imageService.processContent(
+                this.content,
+                this.selectedBlogID
             )
 
-            await this.networkClient.run<EmptyResponse>(
-                request
-            )
+            if (this.isSubmitting) {
+                this.delegate?.updateDidUpdateImageProcessingStatus?.("Sending page to Micro.blog...")
 
-            this.frontmatterService.save(this.title, 'title')
+                const request = this.networkRequestFactory.makeUpdateRequest(
+                    this.url,
+                    this.selectedBlogID,
+                    this.title,
+                    processedContent
+                )
 
-            this.delegate?.updateDidSucceed()
+                await this.networkClient.run<EmptyResponse>(
+                    request
+                )
+
+                this.frontmatterService.save(this.title, 'title')
+
+                this.delegate?.updateDidSucceed()
+            }
         } catch (error) {
             this.delegate?.updateDidFail(error)
         }
     }
+
+    // ImageServiceDelegate
+
+    public imageProcessingDidBegin(
+        totalImages: number
+    ): void {
+        this.totalImagesToProcess = totalImages
+        this.processedImagesCount = 0
+        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+            `Processing images (0/${totalImages})...`
+        )
+    }
+
+    public imageDidProcess(
+        path: string,
+        success: boolean,
+        remoteURL?: string
+    ): void {
+        this.processedImagesCount++
+        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+            `Processing images (${this.processedImagesCount}/${this.totalImagesToProcess})...`
+        )
+    }
+
+    public imageProcessingDidComplete(): void {
+        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+            `All ${this.totalImagesToProcess} images processed`
+        )
+    }
+
+    public imageProcessingDidFail(
+        error: Error,
+    ): void {
+        this.isSubmitting = false
+        this.delegate?.updateDidFail(
+            new Error(`Image processing failed: ${error.message}`)
+        )
+    }
+
+    // Public
 
     public get hasMultipleBlogs(): boolean {
         return Object.keys(this.blogs).length > 2
     }
 
     public get selectedBlogID(): string {
-        return this.selectedBlogIDWrappedValue
+        return this.blogID
     }
 
     public set selectedBlogID(value: string) {
-        this.selectedBlogIDWrappedValue = value
+        this.blogID = value
     }
 
     public get title(): string {

@@ -3,6 +3,7 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { PublishResponse } from '@networking/PublishResponse'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { ImageServiceInterface, ImageServiceDelegate } from '@services/ImageService'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
@@ -32,17 +33,21 @@ export interface PublishPostViewModelDelegate {
     // is valid or not. It returns `true` for no date or for
     // valid date, and false for invalid dates.
     publishDidValidateDate(): void
+
+    // Triggered when image processing status is updated
+    publishDidUpdateImageProcessingStatus?(status: string): void
 }
 
 /*
  * This view model drives the content and interactions with the
  * publish post view.
  */
-export class PublishPostViewModel implements TagSuggestionDelegate {
+export class PublishPostViewModel implements TagSuggestionDelegate, ImageServiceDelegate {
 
     // Properties
 
     public delegate?: PublishPostViewModelDelegate
+    readonly blogs: Record<string, string>
     private isValidDate: boolean
     private isSubmitting: boolean
     private titleWrappedValue: string
@@ -55,7 +60,9 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
     private frontmatterService: FrontmatterServiceInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
     private viewModelFactory: ViewModelFactoryInterface
-    readonly blogs: Record<string, string>
+    private imageService: ImageServiceInterface
+    private totalImagesToProcess = 0
+    private processedImagesCount = 0
 
     // Life cycle
 
@@ -69,6 +76,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
         networkClient: NetworkClientInterface,
         frontmatterService: FrontmatterServiceInterface,
         networkRequestFactory: NetworkRequestFactoryInterface,
+        imageService: ImageServiceInterface,
         viewModelFactory: ViewModelFactoryInterface
     ) {
         this.titleWrappedValue = title
@@ -84,6 +92,8 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
         this.frontmatterService = frontmatterService
         this.networkRequestFactory = networkRequestFactory
         this.viewModelFactory = viewModelFactory
+        this.imageService = imageService
+        this.imageService.delegate = this
     }
 
     // Public
@@ -155,24 +165,35 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
         try {
             const tags = this.tags.validValues()
 
-            const response = this.networkRequestFactory.makePublishPostRequest(
-                this.title,
+            const processedContent = await this.imageService.processContent(
                 this.content,
-                tags,
-                this.visibility,
-                this.selectedBlogID,
-                this.formattedScheduledDate()
+                this.selectedBlogID
             )
 
-            const result = await this.networkClient.run<PublishResponse>(
-                response
-            )
+            if (this.isSubmitting) {
+                this.delegate?.publishDidUpdateImageProcessingStatus?.(
+                    'Sending post to Micro.blog...'
+                )
 
-            this.frontmatterService.save(this.title, 'title')
-            this.frontmatterService.save(result.url, 'url')
-            this.frontmatterService.save(tags, 'tags')
+                const response = this.networkRequestFactory.makePublishPostRequest(
+                    this.title,
+                    processedContent,
+                    tags,
+                    this.visibility,
+                    this.selectedBlogID,
+                    this.formattedScheduledDate()
+                )
 
-            this.delegate?.publishDidSucceed(result)
+                const result = await this.networkClient.run<PublishResponse>(
+                    response
+                )
+
+                this.frontmatterService.save(this.title, 'title')
+                this.frontmatterService.save(result.url, 'url')
+                this.frontmatterService.save(tags, 'tags')
+
+                this.delegate?.publishDidSucceed(result)
+            }
         } catch (error) {
             this.delegate?.publishDidFail(error)
         }
@@ -199,6 +220,60 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
         this.delegate?.publishDidClearDate()
     }
 
+    // TagSuggestionDelegate
+
+    public tagSuggestionDidSelectTag(
+        category: string
+    ) {
+        const tags = this.tags.validValues()
+        tags.push(category)
+
+        const formattedTags = tags
+            .filter((tag, index) => index === tags.indexOf(tag))
+            .join()
+
+        this.tags = formattedTags
+        this.delegate?.publishDidSelectTag()
+    }
+
+    // ImageServiceDelegate
+
+    public imageProcessingDidBegin(
+        totalImages: number
+    ): void {
+        this.totalImagesToProcess = totalImages
+        this.processedImagesCount = 0
+        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+            `Processing images (0/${totalImages})...`
+        )
+    }
+
+    public imageDidProcess(
+        path: string,
+        success: boolean,
+        remoteURL?: string
+    ): void {
+        this.processedImagesCount++
+        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+            `Processing images (${this.processedImagesCount}/${this.totalImagesToProcess})...`
+        )
+    }
+
+    public imageProcessingDidComplete(): void {
+        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+            `All ${this.totalImagesToProcess} images processed`
+        )
+    }
+
+    public imageProcessingDidFail(
+        error: Error,
+    ): void {
+        this.isSubmitting = false
+        this.delegate?.publishDidFail(
+            new Error(`Image processing failed: ${error.message}`)
+        )
+    }
+
     // Private
 
     private isValidScheduledDate(): boolean {
@@ -221,21 +296,5 @@ export class PublishPostViewModel implements TagSuggestionDelegate {
         }
 
         return scheduledDate.toISOString()
-    }
-
-    // TagSuggestionDelegate
-
-    public tagSuggestionDidSelectTag(
-        category: string
-    ) {
-        const tags = this.tags.validValues()
-        tags.push(category)
-
-        const formattedTags = tags
-            .filter((tag, index) => index === tags.indexOf(tag))
-            .join()
-
-        this.tags = formattedTags
-        this.delegate?.publishDidSelectTag()
     }
 }

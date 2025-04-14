@@ -15,6 +15,7 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
     // Properties
 
     private viewModel: UpdatePageViewModel
+    private statusElement: HTMLElement | null = null
 
     // Life cycle
 
@@ -70,6 +71,12 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
                 )
         }
 
+        this.statusElement = contentEl.createEl('div', { cls: 'status-message' })
+        this.statusElement.style.textAlign = 'center'
+        this.statusElement.style.marginTop = '10px'
+        this.statusElement.style.marginBottom = '10px'
+        this.statusElement.style.display = 'none'
+
         new Setting(contentEl)
             .addButton(button => button
                 .setButtonText('Update')
@@ -124,6 +131,13 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
 
     public updateRequestDidStart() {
         this.onOpen()
+    }
+
+    public updateDidUpdateImageProcessingStatus(status: string) {
+        if (!this.statusElement) { return }
+
+        this.statusElement.style.display = 'block'
+        this.statusElement.textContent = status
     }
 
     // Private

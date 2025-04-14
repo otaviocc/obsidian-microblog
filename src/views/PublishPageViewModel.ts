@@ -2,6 +2,7 @@ import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import { PublishResponse } from '@networking/PublishResponse'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { ImageServiceInterface, ImageServiceDelegate } from '@services/ImageService'
 
 /*
  * `PublishPageViewModelDelegate` interface, implemented by
@@ -22,17 +23,21 @@ export interface PublishPageViewModelDelegate {
     // present or not. It returns `true` for valid date,
     // and false for invalid dates.
     publishDidValidateTitle(): void
+
+    // Triggered when image processing status is updated
+    publishDidUpdateImageProcessingStatus?(status: string): void
 }
 
 /*
  * This view model drives the content and interactions with the
  * publish page view.
  */
-export class PublishPageViewModel {
+export class PublishPageViewModel implements ImageServiceDelegate {
 
     // Properties
 
     public delegate?: PublishPageViewModelDelegate
+    readonly blogs: Record<string, string>
     private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string
@@ -41,7 +46,9 @@ export class PublishPageViewModel {
     private networkClient: NetworkClientInterface
     private frontmatterService: FrontmatterServiceInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
-    readonly blogs: Record<string, string>
+    private imageService: ImageServiceInterface
+    private totalImagesToProcess = 0
+    private processedImagesCount = 0
 
     // Life cycle
 
@@ -53,7 +60,8 @@ export class PublishPageViewModel {
         includeInNavigation: boolean,
         networkClient: NetworkClientInterface,
         frontmatterService: FrontmatterServiceInterface,
-        networkRequestFactory: NetworkRequestFactoryInterface
+        networkRequestFactory: NetworkRequestFactoryInterface,
+        imageService: ImageServiceInterface
     ) {
         this.titleWrappedValue = title
         this.content = content
@@ -64,6 +72,8 @@ export class PublishPageViewModel {
         this.networkClient = networkClient
         this.frontmatterService = frontmatterService
         this.networkRequestFactory = networkRequestFactory
+        this.imageService = imageService
+        this.imageService.delegate = this
     }
 
     // Public
@@ -120,24 +130,73 @@ export class PublishPageViewModel {
         this.delegate?.publishDidValidateTitle()
 
         try {
-            const response = this.networkRequestFactory.makePublishPageRequest(
-                this.title,
+            const processedContent = await this.imageService.processContent(
                 this.content,
-                this.selectedBlogID,
-                this.includeInNavigation
+                this.selectedBlogID
             )
 
-            const result = await this.networkClient.run<PublishResponse>(
-                response
-            )
+            if (this.isSubmitting) {
+                this.delegate?.publishDidUpdateImageProcessingStatus?.(
+                    'Sending page to Micro.blog...'
+                )
 
-            this.frontmatterService.save(this.title, 'title')
-            this.frontmatterService.save(result.url, 'url')
+                const response = this.networkRequestFactory.makePublishPageRequest(
+                    this.title,
+                    processedContent,
+                    this.selectedBlogID,
+                    this.includeInNavigation
+                )
 
-            this.delegate?.publishDidSucceed(result)
+                const result = await this.networkClient.run<PublishResponse>(
+                    response
+                )
+
+                this.frontmatterService.save(this.title, 'title')
+                this.frontmatterService.save(result.url, 'url')
+
+                this.delegate?.publishDidSucceed(result)
+            }
         } catch (error) {
             this.delegate?.publishDidFail(error)
         }
+    }
+
+    // ImageServiceDelegate
+
+    public imageProcessingDidBegin(
+        totalImages: number
+    ): void {
+        this.totalImagesToProcess = totalImages
+        this.processedImagesCount = 0
+        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+            `Processing images (0/${totalImages})...`
+        )
+    }
+
+    public imageDidProcess(
+        path: string,
+        success: boolean,
+        remoteURL?: string
+    ): void {
+        this.processedImagesCount++
+        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+            `Processing images (${this.processedImagesCount}/${this.totalImagesToProcess})...`
+        )
+    }
+
+    public imageProcessingDidComplete(): void {
+        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+            `All ${this.totalImagesToProcess} images processed`
+        )
+    }
+
+    public imageProcessingDidFail(
+        error: Error,
+    ): void {
+        this.isSubmitting = false
+        this.delegate?.publishDidFail(
+            new Error(`Image processing failed: ${error.message}`)
+        )
     }
 
     // Private

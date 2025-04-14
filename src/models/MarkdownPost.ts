@@ -1,5 +1,6 @@
 import '@extensions/String'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { ImageServiceInterface } from '@services/ImageService'
 import { MarkdownView } from 'obsidian'
 
 export interface MarkdownPostInterface {
@@ -21,6 +22,9 @@ export interface MarkdownPostInterface {
 
     // URL of the published post.
     url: string | null
+
+    // A mapping of local image paths to their remote URLs.
+    imageURLs: Record<string, string> | null
 }
 
 /*
@@ -31,15 +35,18 @@ export class MarkdownPost implements MarkdownPostInterface {
     // Properties
 
     private frontmatterService: FrontmatterServiceInterface
+    private imageService: ImageServiceInterface
     private markdownView: MarkdownView
 
     // Life cycle
 
     constructor(
         frontmatterService: FrontmatterServiceInterface,
+        imageService: ImageServiceInterface,
         markdownView: MarkdownView
     ) {
         this.frontmatterService = frontmatterService
+        this.imageService = imageService
         this.markdownView = markdownView
     }
 
@@ -74,5 +81,20 @@ export class MarkdownPost implements MarkdownPostInterface {
             .retrieveString('url')
 
         return url
+    }
+
+    public get imageURLs(): Record<string, string> | null {
+        const imageURLsString = this.frontmatterService
+            .retrieveString('image_urls')
+
+        if (!imageURLsString) {
+            return null
+        }
+
+        try {
+            return JSON.parse(imageURLsString)
+        } catch (e) {
+            return null
+        }
     }
 }

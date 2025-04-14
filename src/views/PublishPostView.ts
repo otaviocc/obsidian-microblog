@@ -17,6 +17,7 @@ export class PublishPostView extends Modal implements PublishPostViewModelDelega
     // Properties
 
     private viewModel: PublishPostViewModel
+    private statusElement: HTMLElement | null = null
 
     // Life cycle
 
@@ -122,6 +123,12 @@ export class PublishPostView extends Modal implements PublishPostViewModelDelega
                 })
             )
 
+        this.statusElement = contentEl.createEl('div', { cls: 'status-message' })
+        this.statusElement.style.textAlign = 'center'
+        this.statusElement.style.marginTop = '10px'
+        this.statusElement.style.marginBottom = '10px'
+        this.statusElement.style.display = 'none'
+
         new Setting(contentEl)
             .addButton(button => button
                 .setButtonText('Publish')
@@ -183,6 +190,13 @@ export class PublishPostView extends Modal implements PublishPostViewModelDelega
 
     public publishDidValidateDate() {
         this.onOpen()
+    }
+
+    public publishDidUpdateImageProcessingStatus(status: string) {
+        if (!this.statusElement) { return }
+
+        this.statusElement.style.display = 'block'
+        this.statusElement.textContent = status
     }
 
     // Private

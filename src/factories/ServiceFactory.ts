@@ -1,6 +1,7 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { FrontmatterService, FrontmatterServiceInterface } from '@services/FrontmatterService'
 import { TagSynchronizationService, TagSynchronizationServiceDelegate, TagSynchronizationServiceInterface } from '@services/TagSynchronizationService'
+import { ImageService, ImageServiceInterface } from '@services/ImageService'
 import { TFile } from 'obsidian'
 
 export interface ServiceFactoryInterface {
@@ -16,6 +17,11 @@ export interface ServiceFactoryInterface {
     makeTagSynchronizationService(
         delegate?: TagSynchronizationServiceDelegate
     ): TagSynchronizationServiceInterface
+
+    // Builds an image service for processing and uploading images
+    makeImageService(
+        file: TFile | null
+    ): ImageServiceInterface
 }
 
 /*
@@ -57,6 +63,20 @@ export class ServiceFactory implements ServiceFactoryInterface {
             this.container.networkClient,
             this.container.networkRequestFactory,
             delegate
+        )
+    }
+
+    public makeImageService(
+        file: TFile | null
+    ): ImageServiceInterface {
+        const frontmatterService = this.makeFrontmatterService(
+            file
+        )
+
+        return new ImageService(
+            this.container.plugin.app,
+            frontmatterService,
+            this.container.networkClient
         )
     }
 }

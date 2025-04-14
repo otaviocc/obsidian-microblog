@@ -42,7 +42,7 @@ export class MicropostView extends Modal implements MicropostViewModelDelegate {
             })
             .then(textArea => {
                 textArea.inputEl.style.width = '100%'
-                textArea.inputEl.rows = 10;
+                textArea.inputEl.rows = 10
             })
 
         this.counterHTMLElement = contentEl.createEl(

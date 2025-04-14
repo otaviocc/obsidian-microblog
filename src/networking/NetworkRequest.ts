@@ -1,11 +1,9 @@
 /*
- * Definition of a network request. It specifies
- * the endpoint, url parameters, method used and
- * body sent.
+ * Generic network request.
  */
 export type NetworkRequest = {
     path: string
-    parameters?: URLSearchParams
     method: string
-    body?: string
+    body?: string | FormData
+    parameters?: URLSearchParams
 }

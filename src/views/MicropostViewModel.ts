@@ -42,6 +42,7 @@ export class MicropostViewModel {
     // Properties
 
     public delegate?: MicropostViewModelDelegate
+    readonly blogs: Record<string, string>
     private isSubmitting: boolean
     private contentWrappedValue: string
     private plainTextContent: string
@@ -49,7 +50,6 @@ export class MicropostViewModel {
     private selectedBlogIDWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
-    readonly blogs: Record<string, string>
 
     // Life cycle
 
@@ -136,19 +136,19 @@ export class MicropostViewModel {
 
     private publishButtonStyle() {
         const isContentInvalid = this.plainTextContent.length <= TextLengthLimit.MinLength ||
-                                 this.plainTextContent.length > TextLengthLimit.MaxLength;
+                                 this.plainTextContent.length > TextLengthLimit.MaxLength
 
         if (isContentInvalid) {
-            this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Disabled);
-            return;
+            this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Disabled)
+            return
         }
 
         if (this.isSubmitting) {
-            this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Publishing);
-            return;
+            this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Publishing)
+            return
         }
 
-        this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Enabled);
+        this.delegate?.publishUpdateSubmitButton(SubmitButtonStyle.Enabled)
     }
 
     private markdownToPlainText(
@@ -167,6 +167,6 @@ export class MicropostViewModel {
             .map(line => line.trim())
             .join(' ')
             .replace(/\s{2,}/g, ' ')
-            .trim();
+            .trim()
     }
 }

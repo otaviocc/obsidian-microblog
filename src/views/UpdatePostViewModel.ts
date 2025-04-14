@@ -1,8 +1,9 @@
 import { ViewModelFactoryInterface } from '@factories/ViewModelFactory'
-import { EmptyResponse } from '@networking/EmptyResponse'
 import { NetworkClientInterface } from '@networking/NetworkClient'
 import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
+import { PublishResponse } from '@networking/PublishResponse'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
+import { ImageServiceInterface, ImageServiceDelegate } from '@services/ImageService'
 import { TagSuggestionDelegate, TagSuggestionViewModel } from '@views/TagSuggestionViewModel'
 
 /*
@@ -16,7 +17,7 @@ export interface UpdatePostViewModelDelegate {
     updateDidClearTitle(): void
 
     // Triggered when updating a post succeeds.
-    updateDidSucceed(): void
+    updateDidSucceed(result: PublishResponse): void
 
     // Triggered when updating a post fails.
     updateDidFail(error: Error): void
@@ -26,28 +27,34 @@ export interface UpdatePostViewModelDelegate {
 
     // Triggered when the network request starts.
     updateRequestDidStart(): void
+
+    // Triggered when image processing status is updated
+    updateDidUpdateImageProcessingStatus?(status: string): void
 }
 
 /*
  * This view model drives the content and interactions with the
  * update view.
  */
-export class UpdatePostViewModel implements TagSuggestionDelegate {
+export class UpdatePostViewModel implements TagSuggestionDelegate, ImageServiceDelegate {
 
     // Properties
 
     public delegate?: UpdatePostViewModelDelegate
+    readonly url: string
+    readonly blogs: Record<string, string>
     private isSubmitting: boolean
+    private blogID: string
     private titleWrappedValue: string
     private content: string
     private tagsWrappedValue: string
+    private frontmatterService: FrontmatterServiceInterface
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
-    private selectedBlogIDWrappedValue: string
-    private frontmatterService: FrontmatterServiceInterface
     private viewModelFactory: ViewModelFactoryInterface
-    readonly url: string
-    readonly blogs: Record<string, string>
+    private imageService: ImageServiceInterface
+    private totalImagesToProcess = 0
+    private processedImagesCount = 0
 
     // Life cycle
 
@@ -57,10 +64,11 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
         content: string,
         tags: string,
         blogs: Record<string, string>,
-        selectedBlogID: string,
-        networkClient: NetworkClientInterface,
+        blogID: string,
         frontmatterService: FrontmatterServiceInterface,
+        networkClient: NetworkClientInterface,
         networkRequestFactory: NetworkRequestFactoryInterface,
+        imageService: ImageServiceInterface,
         viewModelFactory: ViewModelFactoryInterface
     ) {
         this.url = url
@@ -68,12 +76,14 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
         this.content = content
         this.tagsWrappedValue = tags
         this.blogs = blogs
-        this.selectedBlogIDWrappedValue = selectedBlogID
-        this.networkClient = networkClient
+        this.blogID = blogID
+        this.isSubmitting = false
         this.frontmatterService = frontmatterService
+        this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
         this.viewModelFactory = viewModelFactory
-        this.isSubmitting = false
+        this.imageService = imageService
+        this.imageService.delegate = this
     }
 
     // Public
@@ -85,22 +95,34 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
         try {
             const tags = this.tags.validValues()
 
-            const request = this.networkRequestFactory.makeUpdateRequest(
-                this.url,
-                this.selectedBlogID,
-                this.title,
+            const processedContent = await this.imageService.processContent(
                 this.content,
-                tags
+                this.blogID
             )
 
-            await this.networkClient.run<EmptyResponse>(
-                request
-            )
+            if (this.isSubmitting) {
+                this.delegate?.updateDidUpdateImageProcessingStatus?.(
+                    'Sending post to Micro.blog...'
+                )
 
-            this.frontmatterService.save(this.title, 'title')
-            this.frontmatterService.save(tags, 'tags')
+                const request = this.networkRequestFactory.makeUpdateRequest(
+                    this.url,
+                    this.blogID,
+                    this.title,
+                    processedContent,
+                    tags
+                )
 
-            this.delegate?.updateDidSucceed()
+                const result = await this.networkClient.run<PublishResponse>(
+                    request
+                )
+
+                this.frontmatterService.save(this.title, 'title')
+                this.frontmatterService.save(result.url, 'url')
+                this.frontmatterService.save(tags, 'tags')
+
+                this.delegate?.updateDidSucceed(result)
+            }
         } catch (error) {
             this.delegate?.updateDidFail(error)
         }
@@ -111,11 +133,11 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
     }
 
     public get selectedBlogID(): string {
-        return this.selectedBlogIDWrappedValue
+        return this.blogID
     }
 
     public set selectedBlogID(value: string) {
-        this.selectedBlogIDWrappedValue = value
+        this.blogID = value
     }
 
     public get title(): string {
@@ -147,7 +169,7 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
         const excluding = this.tags.validValues()
 
         return this.viewModelFactory.makeTagSuggestionViewModel(
-            this.selectedBlogID,
+            this.blogID,
             excluding,
             this
         )
@@ -167,5 +189,43 @@ export class UpdatePostViewModel implements TagSuggestionDelegate {
 
         this.tags = formattedTags
         this.delegate?.updateDidSelectTag()
+    }
+
+    // ImageServiceDelegate
+
+    public imageProcessingDidBegin(
+        totalImages: number
+    ): void {
+        this.totalImagesToProcess = totalImages
+        this.processedImagesCount = 0
+        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+            `Processing images (0/${totalImages})...`
+        )
+    }
+
+    public imageDidProcess(
+        path: string,
+        success: boolean,
+        remoteURL?: string
+    ): void {
+        this.processedImagesCount++
+        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+            `Processing images (${this.processedImagesCount}/${this.totalImagesToProcess})...`
+        )
+    }
+
+    public imageProcessingDidComplete(): void {
+        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+            `All ${this.totalImagesToProcess} images processed`
+        )
+    }
+
+    public imageProcessingDidFail(
+        error: Error,
+    ): void {
+        this.isSubmitting = false
+        this.delegate?.updateDidFail(
+            new Error(`Image processing failed: ${error.message}`)
+        )
     }
 }
