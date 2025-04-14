@@ -14,10 +14,75 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+    "@typescript-eslint/no-unused-vars": ["error", { 
+      "args": "none", 
+      "varsIgnorePattern": "^_",
+      "argsIgnorePattern": "^_",
+      "caughtErrorsIgnorePattern": "^_"
+    }],
     "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/semi": ["error", "never"],
+    "@typescript-eslint/no-unused-expressions": "error",
+    "@typescript-eslint/no-useless-constructor": "warn",
+    "no-unused-vars": "off",
     "no-prototype-builtins": "off",
-    "@typescript-eslint/no-empty-function": "off"
+    "semi": ["error", "never"],
+    "no-trailing-spaces": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "eol-last": ["error", "always"],
+    "no-multi-spaces": "error",
+    "no-irregular-whitespace": "error",
+    "no-whitespace-before-property": "error",
+    "no-unreachable": "error",
+    "no-unreachable-loop": "error",
+    "no-console": "warn",
+    "space-in-parens": ["error", "never"],
+    "object-curly-spacing": ["error", "always"],
+    "@typescript-eslint/member-ordering": ["error", {
+      "default": {
+        "memberTypes": [
+          // Index signature
+          "signature",
+
+          // Fields
+          "public-static-field",
+          "protected-static-field",
+          "private-static-field",
+
+          "public-decorated-field",
+          "protected-decorated-field",
+          "private-decorated-field",
+
+          "public-instance-field",
+          "protected-instance-field",
+          "private-instance-field",
+
+          "public-abstract-field",
+          "protected-abstract-field",
+
+          // Constructors
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+
+          // Methods
+          "public-static-method",
+          "protected-static-method",
+          "private-static-method",
+
+          "public-decorated-method",
+          "protected-decorated-method",
+          "private-decorated-method",
+
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method",
+
+          "public-abstract-method",
+          "protected-abstract-method"
+        ]
+      }
+    }]
   }
 }

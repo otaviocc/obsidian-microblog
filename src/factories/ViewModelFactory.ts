@@ -1,6 +1,6 @@
 import { MicroPluginContainerInterface } from '@base/MicroPluginContainer'
 import { MicropostViewModel } from '@base/views/MicropostViewModel'
-import { ServiceFactory, ServiceFactoryInterface } from '@factories/ServiceFactory'
+import { ServiceFactoryInterface } from '@factories/ServiceFactory'
 import { MarkdownPage, MarkdownPageInterface } from '@models/MarkdownPage'
 import { MarkdownPost, MarkdownPostInterface } from '@models/MarkdownPost'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
@@ -63,10 +63,11 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
     // Life cycle
 
     constructor(
-        container: MicroPluginContainerInterface
+        container: MicroPluginContainerInterface,
+        serviceFactory: ServiceFactoryInterface
     ) {
         this.container = container
-        this.serviceFactory = new ServiceFactory(container)
+        this.serviceFactory = serviceFactory
     }
 
     // Public
@@ -77,8 +78,12 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         const frontmatterService = this.serviceFactory
             .makeFrontmatterService(markdownView.file)
 
+        const imageService = this.serviceFactory
+            .makeImageService(markdownView.file)
+
         const post = new MarkdownPost(
             frontmatterService,
+            imageService,
             markdownView
         )
 
@@ -184,6 +189,10 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         post: MarkdownPostInterface,
         frontmatterService: FrontmatterServiceInterface
     ): PublishPostViewModel {
+        const imageService = this.serviceFactory.makeImageService(
+            this.container.plugin.app.workspace.getActiveFile()
+        )
+
         return new PublishPostViewModel(
             post.title,
             post.content,
@@ -194,6 +203,7 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.container.networkClient,
             frontmatterService,
             this.container.networkRequestFactory,
+            imageService,
             this
         )
     }
@@ -205,6 +215,10 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         tags: string,
         frontmatterService: FrontmatterServiceInterface
     ): UpdatePostViewModel {
+        const imageService = this.serviceFactory.makeImageService(
+            this.container.plugin.app.workspace.getActiveFile()
+        )
+
         return new UpdatePostViewModel(
             url,
             title,
@@ -212,9 +226,10 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             tags,
             this.container.settings.blogs,
             this.container.settings.selectedBlogID,
-            this.container.networkClient,
             frontmatterService,
+            this.container.networkClient,
             this.container.networkRequestFactory,
+            imageService,
             this
         )
     }
@@ -223,6 +238,10 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         page: MarkdownPageInterface,
         frontmatterService: FrontmatterServiceInterface
     ): PublishPageViewModel {
+        const imageService = this.serviceFactory.makeImageService(
+            this.container.plugin.app.workspace.getActiveFile()
+        )
+
         return new PublishPageViewModel(
             page.title,
             page.content,
@@ -231,7 +250,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.container.settings.includePagesInNavigation,
             this.container.networkClient,
             frontmatterService,
-            this.container.networkRequestFactory
+            this.container.networkRequestFactory,
+            imageService
         )
     }
 
@@ -241,6 +261,10 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
         content: string,
         frontmatterService: FrontmatterServiceInterface
     ): UpdatePageViewModel {
+        const imageService = this.serviceFactory.makeImageService(
+            this.container.plugin.app.workspace.getActiveFile()
+        )
+
         return new UpdatePageViewModel(
             url,
             title,
@@ -249,7 +273,8 @@ export class ViewModelFactory implements ViewModelFactoryInterface {
             this.container.settings.selectedBlogID,
             this.container.networkClient,
             frontmatterService,
-            this.container.networkRequestFactory
+            this.container.networkRequestFactory,
+            imageService
         )
     }
 

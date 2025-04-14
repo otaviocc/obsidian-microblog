@@ -28,8 +28,8 @@ export default class MicroPlugin extends Plugin {
     public async onload() {
         await this.loadSettings()
         await this.loadDependencies()
-        await this.loadViewModelFactory()
         await this.loadServiceFactory()
+        await this.loadViewModelFactory()
         await this.registerSynchronizationService()
 
         if (this.settings.synchronizeCategoriesOnOpen) {
@@ -166,15 +166,16 @@ export default class MicroPlugin extends Plugin {
         )
     }
 
-    private async loadViewModelFactory() {
-        this.viewModelFactory = new ViewModelFactory(
+    private async loadServiceFactory() {
+        this.serviceFactory = new ServiceFactory(
             this.container
         )
     }
 
-    private async loadServiceFactory() {
-        this.serviceFactory = new ServiceFactory(
-            this.container
+    private async loadViewModelFactory() {
+        this.viewModelFactory = new ViewModelFactory(
+            this.container,
+            this.serviceFactory
         )
     }
 

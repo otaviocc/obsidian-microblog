@@ -3,6 +3,7 @@ declare global {
         removeFrontmatter(): string
         removeObsidianLinks(): string
         validValues(): string[]
+        toContentType(): string
     }
 }
 
@@ -24,7 +25,7 @@ interface Bounds {
 }
 
 String.prototype.removeObsidianLinks = function (this: string) {
-    const linkRegex = /\[\[([^\[\]]+)\]\]/g
+    const linkRegex = /(?<!!)\[\[([^[\]]+)\]\]/g
     const codeBlockRegex = /```[\s\S]*?```/g
     const inlineCodeRegex = /`[^`]+`/g
 
@@ -53,6 +54,22 @@ String.prototype.removeObsidianLinks = function (this: string) {
         isCode(index) ? match : content.includes("|") ? content.split("|")[1] : content
 
     return this.replace(linkRegex, cleanMarkdown)
+}
+
+String.prototype.toContentType = function(this: string) {
+    const fileExtension = this.toLowerCase()
+
+    if (fileExtension === 'jpg' || fileExtension === 'jpeg') {
+        return 'image/jpeg'
+    } else if (fileExtension === 'png') {
+        return 'image/png'
+    } else if (fileExtension === 'gif') {
+        return 'image/gif'
+    } else if (fileExtension === 'webp') {
+        return 'image/webp'
+    }
+
+    return 'application/octet-stream'
 }
 
 export { }

@@ -35,10 +35,10 @@ export class MicroPluginSettingsViewModel {
     // Properties
 
     public delegate?: MicroPluginSettingsDelegate
+    readonly plugin: MicroPlugin
     private settings: StoredSettings
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
-    readonly plugin: MicroPlugin
 
     // Life cycle
 
@@ -52,6 +52,22 @@ export class MicroPluginSettingsViewModel {
         this.settings = settings
         this.networkClient = networkClient
         this.networkRequestFactory = networkRequestFactory
+    }
+
+    // Private
+
+    private static makeBlogSettings(
+        response: ConfigResponse
+    ): { [uid: string]: string } {
+        const blogs: { [uid: string]: string } = {}
+
+        blogs['default'] = 'Default'
+
+        response.destination?.forEach(blog => {
+            blogs[blog.uid] = blog.name
+        })
+
+        return blogs
     }
 
     // Public
@@ -135,8 +151,6 @@ export class MicroPluginSettingsViewModel {
     }
 
     public async validate() {
-        console.log('Logging in')
-
         try {
             const response = await this.networkClient.run<ConfigResponse>(
                 this.networkRequestFactory.makeConfigRequest()
@@ -145,11 +159,9 @@ export class MicroPluginSettingsViewModel {
             this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(response)
             this.selectedBlogID = 'default'
             this.delegate?.loginDidSucceed(response)
-            console.log('Login successful')
         } catch (error) {
             this.logout()
             this.delegate?.loginDidFail(error)
-            console.log('Login error: ' + error)
         }
     }
 
@@ -164,12 +176,9 @@ export class MicroPluginSettingsViewModel {
         this.synchronizeCategoriesOnOpen = true
 
         this.delegate?.logoutDidSucceed()
-        console.log('Logout successful')
     }
 
     public async refreshBlogs() {
-        console.log('Refreshing blogs')
-
         try {
             const response = await this.networkClient.run<ConfigResponse>(
                 this.networkRequestFactory.makeConfigRequest()
@@ -177,26 +186,8 @@ export class MicroPluginSettingsViewModel {
 
             this.blogs = MicroPluginSettingsViewModel.makeBlogSettings(response)
             this.delegate?.refreshDidSucceed(response)
-            console.log('Refresh successful')
         } catch (error) {
             this.delegate?.refreshDidFail(error)
-            console.log('Refresh failed: ' + error)
         }
-    }
-
-    // Private
-
-    private static makeBlogSettings(
-        response: ConfigResponse
-    ): { [uid: string]: string } {
-        const blogs: { [uid: string]: string } = {}
-
-        blogs['default'] = 'Default'
-
-        response.destination?.forEach(blog => {
-            blogs[blog.uid] = blog.name
-        })
-
-        return blogs
     }
 }

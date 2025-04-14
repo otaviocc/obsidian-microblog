@@ -77,10 +77,8 @@ export class TagSynchronizationService implements TagSynchronizationServiceInter
             }
 
             this.delegate?.tagSynchronizationDidSucceed(categoriesCount, blogIDs.length)
-            console.log('Categories synchronized')
         } catch (error) {
             this.delegate?.tagSynchronizationDidFail(error)
-            console.log('Categories synchronization error: ' + error)
         }
     }
 }
