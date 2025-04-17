@@ -118,7 +118,7 @@ export class UpdatePostViewModel implements TagSuggestionDelegate, ImageServiceD
                 )
 
                 this.frontmatterService.save(this.title, 'title')
-                this.frontmatterService.save(result.url, 'url')
+                this.frontmatterService.save(this.url, 'url')
                 this.frontmatterService.save(tags, 'tags')
 
                 this.delegate?.updateDidSucceed(result)
