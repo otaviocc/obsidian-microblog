@@ -3,6 +3,7 @@ import { NetworkRequest } from '@networking/NetworkRequest'
 import { MediaRequest, makeMediaRequestBody } from '@networking/MediaRequest'
 import { MediaResponse, extractMediaURL } from '@networking/MediaResponse'
 import { requestUrl } from 'obsidian'
+import '@extensions/RequestUrlResponse'
 
 export interface NetworkClientInterface {
 
@@ -85,19 +86,19 @@ export class NetworkClient implements NetworkClientInterface {
             throw: false
         })
 
-        if (response.status >= 200 && response.status < 300) {
-            try {
-                const jsonResponse = JSON.parse(response.text) as MediaResponse
-                return extractMediaURL(jsonResponse, response.headers['location'])
-            } catch (jsonError) {
-                const location = response.headers['location']
-                if (location) {
-                    return location
-                }
-                throw new Error('Unable to extract media URL from response')
-            }
-        } else {
+        if (!response.isOk()) {
             throw new Error(`Media upload failed (${response.status}): ${response.text}`)
+        }
+
+        try {
+            const jsonResponse = JSON.parse(response.text) as MediaResponse
+            return extractMediaURL(jsonResponse, response.headers['location'])
+        } catch (jsonError) {
+            const location = response.headers['location']
+            if (location) {
+                return location
+            }
+            throw new Error('Unable to extract media URL from response')
         }
     }
 }
