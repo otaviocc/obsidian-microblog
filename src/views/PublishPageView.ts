@@ -1,6 +1,7 @@
 import { PublishResponse } from '@networking/PublishResponse'
 import { PublishPageViewModel, PublishPageViewModelDelegate } from '@views/PublishPageViewModel'
 import { App, Modal, Setting } from 'obsidian'
+import { Status } from '@components/Status'
 
 /*
  * `PublishPageView` subclasses `Modal` and is presented via Obsidian's
@@ -16,7 +17,7 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
     // Properties
 
     private viewModel: PublishPageViewModel
-    private statusElement: HTMLElement | null = null
+    private statusComponent: Status
 
     // Life cycle
 
@@ -81,11 +82,7 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
                 })
             )
 
-        this.statusElement = contentEl.createEl('div', { cls: 'status-message' })
-        this.statusElement.style.textAlign = 'center'
-        this.statusElement.style.marginTop = '10px'
-        this.statusElement.style.marginBottom = '10px'
-        this.statusElement.style.display = 'none'
+        this.statusComponent = new Status(contentEl)
 
         new Setting(contentEl)
             .addButton(button => button
@@ -132,10 +129,7 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
     }
 
     public publishDidUpdateImageProcessingStatus(status: string) {
-        if (!this.statusElement) { return }
-
-        this.statusElement.style.display = 'block'
-        this.statusElement.textContent = status
+        this.statusComponent.setMessage(status)
     }
 
     // Private
