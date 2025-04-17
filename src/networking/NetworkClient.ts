@@ -1,4 +1,4 @@
-import { ErrorFactory } from '@networking/ErrorFactory'
+import { ErrorFactory } from '@factories/ErrorFactory'
 import { NetworkRequest } from '@networking/NetworkRequest'
 import { MediaRequest, makeMediaRequestBody } from '@networking/MediaRequest'
 import { MediaResponse, extractMediaURL } from '@networking/MediaResponse'
