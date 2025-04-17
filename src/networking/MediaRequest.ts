@@ -15,7 +15,7 @@ export function makeMediaRequestBody(request: MediaRequest): {
     body: ArrayBuffer
     boundary: string
 } {
-    const boundary = `----WebKitFormBoundary${Math.random().toString(16).substr(2)}`
+    const boundary = `----WebKitFormBoundary${Math.random().toString(16).substring(2)}`
 
     let formDataContent = ''
     formDataContent += `--${boundary}\r\n`
