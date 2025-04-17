@@ -31,6 +31,7 @@ export class NetworkClient implements NetworkClientInterface {
     // Properties
 
     private appToken: () => string
+    private readonly microBlogBaseURL = 'https://micro.blog'
 
     // Life cycle
 
@@ -43,7 +44,7 @@ export class NetworkClient implements NetworkClientInterface {
     // Public
 
     public async run<T>(request: NetworkRequest): Promise<T> {
-        const url = 'https://micro.blog' + request.path + (request.parameters ? '?' + request.parameters : '')
+        const url = this.microBlogBaseURL + request.path + (request.parameters ? '?' + request.parameters : '')
 
         const response = await fetch(url, {
             method: request.method,
@@ -76,7 +77,7 @@ export class NetworkClient implements NetworkClientInterface {
         const contentTypeHeader = `multipart/form-data; boundary=${boundary}`
 
         const response = await requestUrl({
-            url: 'https://micro.blog/micropub/media',
+            url: `${this.microBlogBaseURL}/micropub/media`,
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + this.appToken(),
