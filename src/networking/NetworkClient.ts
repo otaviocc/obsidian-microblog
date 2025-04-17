@@ -86,7 +86,7 @@ export class NetworkClient implements NetworkClientInterface {
             throw: false
         })
 
-        if (!response.isOk()) {
+        if (!response.ok) {
             throw new Error(`Media upload failed (${response.status}): ${response.text}`)
         }
 
