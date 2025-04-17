@@ -270,7 +270,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
     ): void {
         this.isSubmitting = false
         this.delegate?.publishDidFail(
-            new Error(`Image processing failed: ${error.message}`)
+            new Error(`Image processing issue: ${error.message}`)
         )
     }
 

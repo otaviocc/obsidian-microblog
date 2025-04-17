@@ -214,7 +214,7 @@ export class ImageService implements ImageServiceInterface {
             } catch {
                 this.delegate?.imageDidProcess(image.path, false)
                 this.delegate?.imageProcessingDidFail(
-                    new Error(`Error processing image: ${image.path}`)
+                    new Error(`Failed to process image: ${image.path}`)
                 )
             }
         }
@@ -264,14 +264,14 @@ export class ImageService implements ImageServiceInterface {
                 return imageURL
             } catch {
                 this.delegate?.imageProcessingDidFail(
-                    new Error(`Error uploading image: ${imageFile.name}`)
+                    new Error(`Failed to upload image: ${imageFile.name}`)
                 )
 
                 return null
             }
         } catch {
             this.delegate?.imageProcessingDidFail(
-                new Error(`Error reading image: ${imageFile.name}`)
+                new Error(`Failed to read image: ${imageFile.name}`)
             )
 
             return null
@@ -288,7 +288,7 @@ export class ImageService implements ImageServiceInterface {
             return JSON.parse(imageURLs)
         } catch {
             this.delegate?.imageProcessingDidFail(
-                new Error('Error parsing image URLs from Obsidian roperties'),
+                new Error('Failed to parse image URLs from Obsidian properties'),
             )
             return {}
         }
@@ -308,7 +308,7 @@ export class ImageService implements ImageServiceInterface {
             )
         } catch {
             this.delegate?.imageProcessingDidFail(
-                new Error('Error saving image URL to Obsidian properties')
+                new Error('Failed to save image URL to Obsidian properties')
             )
         }
     }
