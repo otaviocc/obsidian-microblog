@@ -1,5 +1,5 @@
 /**
- * Represents a request for uploading media to Micro.blog
+ * Represents a request for uploading media to Micro.blog.
  */
 export interface MediaRequest {
     mediaBuffer: ArrayBuffer
@@ -9,7 +9,7 @@ export interface MediaRequest {
 }
 
 /**
- * Creates a multipart form data request body from a MediaRequest
+ * Creates a multipart form data request body from a MediaRequest.
  */
 export function makeMediaRequestBody(request: MediaRequest): {
     body: ArrayBuffer

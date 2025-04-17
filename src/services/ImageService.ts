@@ -5,28 +5,28 @@ import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactor
 import '@extensions/String'
 
 /**
- * Delegate interface for ImageService to communicate with the UI layer
+ * Delegate interface for ImageService to communicate with the UI layer.
  */
 export interface ImageServiceDelegate {
 
-    // Called when an image is processed (uploaded or found in cache)
+    // Called when an image is processed (uploaded or found in cache).
     imageDidProcess(
         path: string,
         success: boolean,
         remoteURL?: string
     ): void
 
-    // Called when an error occurs during image processing
+    // Called when an error occurs during image processing.
     imageProcessingDidFail(
         error: Error,
     ): void
 
-    // Called when image processing begins with total count of images
+    // Called when image processing begins with total count of images.
     imageProcessingDidBegin(
         totalImages: number
     ): void
 
-    // Called when all image processing is complete
+    // Called when all image processing is complete.
     imageProcessingDidComplete(): void
 }
 
@@ -38,18 +38,18 @@ export interface ImageServiceInterface {
         blogID: string
     ): Promise<string>
 
-    // Process content with image references before publishing
+    // Process content with image references before publishing.
     processContent(
         content: string,
         blogID: string
     ): Promise<string>
 
-    // Delegate for communication with UI layer
+    // Delegate for communication with UI layer.
     delegate?: ImageServiceDelegate
 }
 
 /**
- * Interface for an image reference extracted from markdown
+ * Interface for an image reference extracted from markdown.
  */
 interface ImageReference {
     fullMatch: string;

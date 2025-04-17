@@ -11,8 +11,8 @@ export interface NetworkClientInterface {
     // by the network client to decode the network payload.
     run<T>(request: NetworkRequest): Promise<T>
 
-    // Uploads a media file to Micro.blog media endpoint
-    // Returns a Promise with the URL of the uploaded media
+    // Uploads a media file to Micro.blog media endpoint.
+    // Returns a Promise with the URL of the uploaded media.
     uploadMedia(
         mediaRequest: MediaRequest
     ): Promise<string>
