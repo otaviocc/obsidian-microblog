@@ -108,6 +108,7 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
                 )
 
                 this.frontmatterService.save(this.title, 'title')
+                this.frontmatterService.save(this.url, 'url')
 
                 this.delegate?.updateDidSucceed()
             }
