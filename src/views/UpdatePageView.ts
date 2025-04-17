@@ -1,5 +1,6 @@
 import { UpdatePageViewModel, UpdatePageViewModelDelegate } from '@views/UpdatePageViewModel'
 import { App, Modal, Setting } from 'obsidian'
+import { Status } from '@components/Status'
 
 /*
  * `UpdatePageView` subclasses `Model` and is presented view Obsidian's Command
@@ -15,7 +16,7 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
     // Properties
 
     private viewModel: UpdatePageViewModel
-    private statusElement: HTMLElement | null = null
+    private statusComponent: Status
 
     // Life cycle
 
@@ -71,11 +72,7 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
                 )
         }
 
-        this.statusElement = contentEl.createEl('div', { cls: 'status-message' })
-        this.statusElement.style.textAlign = 'center'
-        this.statusElement.style.marginTop = '10px'
-        this.statusElement.style.marginBottom = '10px'
-        this.statusElement.style.display = 'none'
+        this.statusComponent = new Status(contentEl)
 
         new Setting(contentEl)
             .addButton(button => button
@@ -134,10 +131,7 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
     }
 
     public updateDidUpdateImageProcessingStatus(status: string) {
-        if (!this.statusElement) { return }
-
-        this.statusElement.style.display = 'block'
-        this.statusElement.textContent = status
+        this.statusComponent.setMessage(status)
     }
 
     // Private

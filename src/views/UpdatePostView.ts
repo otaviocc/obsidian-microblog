@@ -1,6 +1,7 @@
 import { TagSuggestionView } from '@views/TagSuggestionView'
 import { UpdatePostViewModel, UpdatePostViewModelDelegate } from '@views/UpdatePostViewModel'
 import { App, Modal, Setting } from 'obsidian'
+import { Status } from '@components/Status'
 
 /*
  * `UpdatePostView` subclasses `Model` and is presented view Obsidian's Command
@@ -16,7 +17,7 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
     // Properties
 
     private viewModel: UpdatePostViewModel
-    private statusElement: HTMLElement | null = null
+    private statusComponent: Status
 
     // Life cycle
 
@@ -93,11 +94,7 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
                 })
             )
 
-        this.statusElement = contentEl.createEl('div', { cls: 'status-message' })
-        this.statusElement.style.textAlign = 'center'
-        this.statusElement.style.marginTop = '10px'
-        this.statusElement.style.marginBottom = '10px'
-        this.statusElement.style.display = 'none'
+        this.statusComponent = new Status(contentEl)
 
         new Setting(contentEl)
             .addButton(button => button
@@ -159,10 +156,7 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
     }
 
     public updateDidUpdateImageProcessingStatus(status: string) {
-        if (!this.statusElement) { return }
-
-        this.statusElement.style.display = 'block'
-        this.statusElement.textContent = status
+        this.statusComponent.setMessage(status)
     }
 
     // Private

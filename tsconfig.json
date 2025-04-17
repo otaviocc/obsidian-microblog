@@ -18,14 +18,33 @@
       "ES7"
     ],
     "paths": {
-      "@base/*": ["./*"],
-      "@networking/*": ["networking/*"],
-      "@views/*": ["views/*"],
-      "@factories/*": ["factories/*"],
-      "@stores/*": ["stores/*"],
-      "@services/*": ["services/*"],
-      "@models/*": ["models/*"],
-      "@extensions/*": ["extensions/*"]
+      "@base/*": [
+        "./*"
+      ],
+      "@networking/*": [
+        "networking/*"
+      ],
+      "@views/*": [
+        "views/*"
+      ],
+      "@factories/*": [
+        "factories/*"
+      ],
+      "@stores/*": [
+        "stores/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@extensions/*": [
+        "extensions/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ]
     }
   },
   "include": [
