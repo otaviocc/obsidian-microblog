@@ -279,19 +279,11 @@ export class ImageService implements ImageServiceInterface {
     }
 
     private async getImageURLMap(): Promise<Record<string, string>> {
-        const imageURLs = this.frontmatterService.retrieveString('image_urls')
-        if (!imageURLs) {
-            return {}
-        }
-
-        try {
-            return JSON.parse(imageURLs)
-        } catch {
-            this.delegate?.imageProcessingDidFail(
-                new Error('Failed to parse image URLs from Obsidian properties'),
+        return this.frontmatterService
+            .retrieveJSON<Record<string, string>>(
+                'image_urls',
+                {}
             )
-            return {}
-        }
     }
 
     private async saveImageURL(
@@ -302,8 +294,8 @@ export class ImageService implements ImageServiceInterface {
         imageURLMap[localPath] = remoteURL
 
         try {
-            this.frontmatterService.save(
-                JSON.stringify(imageURLMap),
+            this.frontmatterService.saveJSON(
+                imageURLMap,
                 'image_urls'
             )
         } catch {

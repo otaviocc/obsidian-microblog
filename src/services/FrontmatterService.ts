@@ -18,6 +18,18 @@ export interface FrontmatterServiceInterface {
     retrieveStrings(
         key: string
     ): string[] | null
+
+    // Serializes and saves JSON data to the frontmatter.
+    saveJSON<T>(
+        value: T,
+        key: string
+    ): void
+
+    // Retrieves and parses JSON data from the frontmatter.
+    retrieveJSON<T>(
+        key: string,
+        defaultValue: T
+    ): T
 }
 
 /*
@@ -82,6 +94,34 @@ export class FrontmatterService implements FrontmatterServiceInterface {
     ): string[] | null {
         const frontmatter = this.parseFrontmatterFromFile()
         return parseFrontMatterStringArray(frontmatter, key)
+    }
+
+    public saveJSON<T>(
+        value: T,
+        key: string
+    ): void {
+        try {
+            const jsonString = JSON.stringify(value)
+            this.save(jsonString, key)
+        } catch {
+            // Do nothing
+        }
+    }
+
+    public retrieveJSON<T>(
+        key: string,
+        defaultValue: T
+    ): T {
+        const jsonString = this.retrieveString(key)
+        if (!jsonString) {
+            return defaultValue
+        }
+
+        try {
+            return JSON.parse(jsonString) as T
+        } catch {
+            return defaultValue
+        }
     }
 
     // Private
