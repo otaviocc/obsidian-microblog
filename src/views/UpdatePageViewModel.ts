@@ -24,7 +24,7 @@ export interface UpdatePageViewModelDelegate {
     updateRequestDidStart(): void
 
     // Triggered when image processing status is updated
-    updateDidUpdateImageProcessingStatus?(status: string): void
+    updateDidUpdateImageProcessingStatus(status: string): void
 }
 
 /*
@@ -92,7 +92,9 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
             )
 
             if (this.isSubmitting) {
-                this.delegate?.updateDidUpdateImageProcessingStatus?.("Sending page to Micro.blog...")
+                this.delegate?.updateDidUpdateImageProcessingStatus(
+                    'Sending page to Micro.blog...'
+                )
 
                 const request = this.networkRequestFactory.makeUpdateRequest(
                     this.url,
@@ -121,7 +123,7 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
     ): void {
         this.totalImagesToProcess = totalImages
         this.processedImagesCount = 0
-        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+        this.delegate?.updateDidUpdateImageProcessingStatus(
             `Processing images (0/${totalImages})...`
         )
     }
@@ -132,13 +134,13 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
         remoteURL?: string
     ): void {
         this.processedImagesCount++
-        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+        this.delegate?.updateDidUpdateImageProcessingStatus(
             `Processing images (${this.processedImagesCount}/${this.totalImagesToProcess})...`
         )
     }
 
     public imageProcessingDidComplete(): void {
-        this.delegate?.updateDidUpdateImageProcessingStatus?.(
+        this.delegate?.updateDidUpdateImageProcessingStatus(
             `All ${this.totalImagesToProcess} images processed`
         )
     }
