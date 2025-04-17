@@ -2,16 +2,19 @@ import { RequestUrlResponse } from 'obsidian'
 
 declare global {
     interface Object {
-        isOk(): boolean
+        readonly ok: boolean
     }
 }
 
-Object.prototype.isOk = function (this: RequestUrlResponse) {
-    if (this.status === undefined) {
-        return false
-    }
-
-    return this.status >= 200 && this.status < 300
-}
+Object.defineProperty(Object.prototype, 'ok', {
+    get: function (this: RequestUrlResponse) {
+        if (this.status === undefined) {
+            return false
+        }
+        return this.status >= 200 && this.status < 300
+    },
+    configurable: true,
+    enumerable: false
+})
 
 export { }
