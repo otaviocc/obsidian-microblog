@@ -35,7 +35,7 @@ export interface PublishPostViewModelDelegate {
     publishDidValidateDate(): void
 
     // Triggered when image processing status is updated
-    publishDidUpdateImageProcessingStatus?(status: string): void
+    publishDidUpdateImageProcessingStatus(status: string): void
 }
 
 /*
@@ -171,7 +171,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
             )
 
             if (this.isSubmitting) {
-                this.delegate?.publishDidUpdateImageProcessingStatus?.(
+                this.delegate?.publishDidUpdateImageProcessingStatus(
                     'Sending post to Micro.blog...'
                 )
 
@@ -243,7 +243,7 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
     ): void {
         this.totalImagesToProcess = totalImages
         this.processedImagesCount = 0
-        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+        this.delegate?.publishDidUpdateImageProcessingStatus(
             `Processing images (0/${totalImages})...`
         )
     }
@@ -254,13 +254,13 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
         remoteURL?: string
     ): void {
         this.processedImagesCount++
-        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+        this.delegate?.publishDidUpdateImageProcessingStatus(
             `Processing images (${this.processedImagesCount}/${this.totalImagesToProcess})...`
         )
     }
 
     public imageProcessingDidComplete(): void {
-        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+        this.delegate?.publishDidUpdateImageProcessingStatus(
             `All ${this.totalImagesToProcess} images processed`
         )
     }

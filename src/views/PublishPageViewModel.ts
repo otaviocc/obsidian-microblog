@@ -25,7 +25,7 @@ export interface PublishPageViewModelDelegate {
     publishDidValidateTitle(): void
 
     // Triggered when image processing status is updated
-    publishDidUpdateImageProcessingStatus?(status: string): void
+    publishDidUpdateImageProcessingStatus(status: string): void
 }
 
 /*
@@ -136,7 +136,7 @@ export class PublishPageViewModel implements ImageServiceDelegate {
             )
 
             if (this.isSubmitting) {
-                this.delegate?.publishDidUpdateImageProcessingStatus?.(
+                this.delegate?.publishDidUpdateImageProcessingStatus(
                     'Sending page to Micro.blog...'
                 )
 
@@ -168,7 +168,7 @@ export class PublishPageViewModel implements ImageServiceDelegate {
     ): void {
         this.totalImagesToProcess = totalImages
         this.processedImagesCount = 0
-        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+        this.delegate?.publishDidUpdateImageProcessingStatus(
             `Processing images (0/${totalImages})...`
         )
     }
@@ -179,13 +179,13 @@ export class PublishPageViewModel implements ImageServiceDelegate {
         remoteURL?: string
     ): void {
         this.processedImagesCount++
-        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+        this.delegate?.publishDidUpdateImageProcessingStatus(
             `Processing images (${this.processedImagesCount}/${this.totalImagesToProcess})...`
         )
     }
 
     public imageProcessingDidComplete(): void {
-        this.delegate?.publishDidUpdateImageProcessingStatus?.(
+        this.delegate?.publishDidUpdateImageProcessingStatus(
             `All ${this.totalImagesToProcess} images processed`
         )
     }
