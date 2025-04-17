@@ -1,8 +1,9 @@
 /**
- * Response from Micro.blog media upload endpoint
+ * Response from Micro.blog media upload endpoint.
  * This can have several formats depending on the endpoint behavior
  */
 export interface MediaResponse {
+
     // URL field that might be present in the response
     url?: string
 
@@ -15,7 +16,7 @@ export interface MediaResponse {
 
 /**
  * Extract the media URL from a media response
- * Handles the various formats Micro.blog might return
+ * Handles the various formats Micro.blog might return.
  */
 export function extractMediaURL(
     response: MediaResponse,

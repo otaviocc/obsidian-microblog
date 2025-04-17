@@ -46,7 +46,7 @@ export interface NetworkRequestFactoryInterface {
         tags?: string[]
     ): NetworkRequest
 
-    // Builds a media upload request for uploading files to Micro.blog
+    // Builds a media upload request for uploading files to Micro.blog.
     makeMediaUploadRequest(
         mediaBuffer: ArrayBuffer,
         filename: string,
