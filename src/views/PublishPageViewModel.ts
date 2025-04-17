@@ -195,7 +195,7 @@ export class PublishPageViewModel implements ImageServiceDelegate {
     ): void {
         this.isSubmitting = false
         this.delegate?.publishDidFail(
-            new Error(`Image processing failed: ${error.message}`)
+            new Error(`Image processing issue: ${error.message}`)
         )
     }
 

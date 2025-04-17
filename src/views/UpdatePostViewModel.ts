@@ -225,7 +225,7 @@ export class UpdatePostViewModel implements TagSuggestionDelegate, ImageServiceD
     ): void {
         this.isSubmitting = false
         this.delegate?.updateDidFail(
-            new Error(`Image processing failed: ${error.message}`)
+            new Error(`Image processing issue: ${error.message}`)
         )
     }
 }

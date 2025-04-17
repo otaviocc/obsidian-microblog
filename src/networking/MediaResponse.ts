@@ -43,5 +43,5 @@ export function extractMediaURL(
         return locationHeader
     }
 
-    throw new Error('Could not determine media URL from successful response')
+    throw new Error('Unable to extract media URL from response data')
 }

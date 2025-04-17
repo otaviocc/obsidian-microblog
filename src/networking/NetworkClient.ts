@@ -94,10 +94,10 @@ export class NetworkClient implements NetworkClientInterface {
                 if (location) {
                     return location
                 }
-                throw new Error('Could not determine media URL from response')
+                throw new Error('Unable to extract media URL from response')
             }
         } else {
-            throw new Error(`Upload failed with status ${response.status}: ${response.text}`)
+            throw new Error(`Media upload failed (${response.status}): ${response.text}`)
         }
     }
 }
