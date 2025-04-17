@@ -1,6 +1,7 @@
 import { App, TFile } from 'obsidian'
 import { FrontmatterServiceInterface } from '@services/FrontmatterService'
 import { NetworkClientInterface } from '@networking/NetworkClient'
+import { NetworkRequestFactoryInterface } from '@networking/NetworkRequestFactory'
 import '@extensions/String'
 
 /**
@@ -64,17 +65,20 @@ export class ImageService implements ImageServiceInterface {
     private app: App
     private frontmatterService: FrontmatterServiceInterface
     private networkClient: NetworkClientInterface
+    private networkRequestFactory: NetworkRequestFactoryInterface
 
     // Life cycle
 
     constructor(
         app: App,
         frontmatterService: FrontmatterServiceInterface,
-        networkClient: NetworkClientInterface
+        networkClient: NetworkClientInterface,
+        networkRequestFactory: NetworkRequestFactoryInterface
     ) {
         this.app = app
         this.frontmatterService = frontmatterService
         this.networkClient = networkClient
+        this.networkRequestFactory = networkRequestFactory
     }
 
     // Public
@@ -248,15 +252,16 @@ export class ImageService implements ImageServiceInterface {
             const fileExtension = imageFile.extension.toLowerCase()
             const contentType = fileExtension.toContentType()
 
-            try {
-                const imageUrl = await this.networkClient.uploadMedia(
-                    imageBuffer,
-                    imageFile.name,
-                    contentType,
-                    blogID
-                )
+            const mediaRequest = this.networkRequestFactory.makeMediaUploadRequest(
+                imageBuffer,
+                imageFile.name,
+                contentType,
+                blogID
+            )
 
-                return imageUrl
+            try {
+                const imageURL = await this.networkClient.uploadMedia(mediaRequest)
+                return imageURL
             } catch {
                 this.delegate?.imageProcessingDidFail(
                     new Error(`Error uploading image: ${imageFile.name}`)
