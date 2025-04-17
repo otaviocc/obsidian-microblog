@@ -76,7 +76,8 @@ export class ServiceFactory implements ServiceFactoryInterface {
         return new ImageService(
             this.container.plugin.app,
             frontmatterService,
-            this.container.networkClient
+            this.container.networkClient,
+            this.container.networkRequestFactory
         )
     }
 }

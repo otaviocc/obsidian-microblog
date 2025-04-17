@@ -1,4 +1,5 @@
 import { NetworkRequest } from '@networking/NetworkRequest'
+import { MediaRequest } from '@networking/MediaRequest'
 import { makeNewPageRequest } from '@networking/NewPageRequest'
 import { makeNewPostRequest } from '@networking/NewPostRequest'
 import { makeUpdatePostRequest } from '@networking/UpdatePostRequest'
@@ -44,6 +45,14 @@ export interface NetworkRequestFactoryInterface {
         content: string,
         tags?: string[]
     ): NetworkRequest
+
+    // Builds a media upload request for uploading files to Micro.blog
+    makeMediaUploadRequest(
+        mediaBuffer: ArrayBuffer,
+        filename: string,
+        contentType: string,
+        blogID?: string
+    ): MediaRequest
 }
 
 /*
@@ -147,6 +156,20 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
             path: '/micropub',
             method: 'POST',
             body: body
+        }
+    }
+
+    public makeMediaUploadRequest(
+        mediaBuffer: ArrayBuffer,
+        filename: string,
+        contentType: string,
+        blogID?: string
+    ): MediaRequest {
+        return {
+            mediaBuffer,
+            filename,
+            contentType,
+            blogID
         }
     }
 }
