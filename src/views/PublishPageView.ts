@@ -128,8 +128,12 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
         this.onOpen()
     }
 
-    public publishDidUpdateImageProcessingStatus(status: string) {
-        this.statusComponent.setMessage(status)
+    public publishDidUpdateImageProcessingStatus(
+        status: string
+    ) {
+        this.statusComponent.setMessage(
+            status
+        )
     }
 
     // Private
