@@ -155,8 +155,12 @@ export class UpdatePostView extends Modal implements UpdatePostViewModelDelegate
         this.onOpen()
     }
 
-    public updateDidUpdateImageProcessingStatus(status: string) {
-        this.statusComponent.setMessage(status)
+    public updateDidUpdateImageProcessingStatus(
+        status: string
+    ) {
+        this.statusComponent.setMessage(
+            status
+        )
     }
 
     // Private

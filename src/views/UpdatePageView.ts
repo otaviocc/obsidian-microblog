@@ -130,8 +130,12 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
         this.onOpen()
     }
 
-    public updateDidUpdateImageProcessingStatus(status: string) {
-        this.statusComponent.setMessage(status)
+    public updateDidUpdateImageProcessingStatus(
+        status: string
+    ) {
+        this.statusComponent.setMessage(
+            status
+        )
     }
 
     // Private
