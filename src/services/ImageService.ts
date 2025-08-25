@@ -143,7 +143,7 @@ export class ImageService implements ImageServiceInterface {
         while ((match = imageRegex.exec(content)) !== null) {
             const [fullMatch, altText, path] = match
 
-            if (path.startsWith('http')) {
+            if (path.startsWith('http') || path.startsWith('data:') || path.startsWith('file:')) {
                 continue
             }
 
