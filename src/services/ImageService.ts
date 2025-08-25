@@ -137,7 +137,7 @@ export class ImageService implements ImageServiceInterface {
 
     private extractStandardImageReferences(content: string): ImageReference[] {
         const images: ImageReference[] = []
-        const imageRegex = /!\[(.*?)\]\((.*?)\)/g
+        const imageRegex = /!\[(.*?)\]\((\S+?)(?:\s+\".*?\")?\)/g
         let match
 
         while ((match = imageRegex.exec(content)) !== null) {

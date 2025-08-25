@@ -24,10 +24,14 @@ export function makeMediaRequestBody(request: MediaRequest): {
 
     let postFileContent = ''
 
-    if (request.blogID) {
+    if (request.blogID && request.blogID !== 'default') {
         postFileContent += `\r\n--${boundary}\r\n`
         postFileContent += `Content-Disposition: form-data; name="mp-destination"\r\n\r\n`
         postFileContent += `${request.blogID}\r\n`
+    }
+
+    if (!(request.blogID && request.blogID !== 'default')) {
+        postFileContent += `\r\n`
     }
 
     postFileContent += `--${boundary}--\r\n`
