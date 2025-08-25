@@ -1,7 +1,7 @@
 {
     "id": "microblog-publish-plugin",
     "name": "Micro.publish",
-    "version": "2.7.0",
+    "version": "3.0.0",
     "minAppVersion": "0.15.0",
     "description": "Publish notes to Micro.blog",
     "author": "Otavio Cordeiro",
