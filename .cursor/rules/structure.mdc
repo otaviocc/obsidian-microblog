@@ -1,0 +1,37 @@
+---
+alwaysApply: true
+---
+## Project structure and entry points
+
+- Main entry: `src/MicroPlugin.ts` (bundled to `main.js`).
+- Obsidian plugin manifest: `manifest.json` (`id`, `name`, `version`, `minAppVersion`).
+- Path aliases (from `tsconfig.json`, `baseUrl: src`):
+  - `@base/*` -> `src/*`
+  - `@networking/*` -> `src/networking/*`
+  - `@views/*` -> `src/views/*`
+  - `@factories/*` -> `src/factories/*`
+  - `@stores/*` -> `src/stores/*`
+  - `@services/*` -> `src/services/*`
+  - `@models/*` -> `src/models/*`
+  - `@extensions/*` -> `src/extensions/*`
+  - `@components/*` -> `src/components/*`
+
+### Key modules
+- `src/MicroPlugin.ts`: registers commands, settings tab, and (desktop) a ribbon icon.
+- `src/MicroPluginContainer.ts`: DI/container for services and view models.
+- `src/views/*`: UI views + view models (posts/pages publishing, micropost, settings, tag suggestions, error views).
+- `src/services/*`: frontmatter, image processing/upload, tag synchronization.
+- `src/networking/*`: Micropub requests, media upload, generic client.
+- `src/factories/*`: constructs services and view models.
+- `src/stores/*`: persisted settings and defaults.
+- `src/extensions/*`: helpers for request responses, strings, and type guards.
+
+### Commands (declared in `MicroPlugin`)
+- `Publish Post to Micro.blog`
+- `Publish Page to Micro.blog`
+- `Synchronize Categories`
+- `Compose Micropost` (desktop-only)
+
+### Outputs
+- Built bundle: `main.js` at repository root.
+- Inline source maps in dev; disabled in production.

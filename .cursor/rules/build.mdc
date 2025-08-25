@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+description: Build and development workflow for the Obsidian plugin
+---
+## Build & dev workflow
+
+- Commands
+  - Dev: `npm run dev` (esbuild watch, inline sourcemaps).
+  - Build: `npm run build` (type-check then production bundle).
+- Bundling
+  - Entry: `src/MicroPlugin.ts` → output `main.js` (CJS) at repo root.
+  - Target: `es2018` (runtime), TS target `ES6` for type-check.
+  - Externals: `obsidian`, `electron`, CodeMirror, Lezer, Node builtins.
+  - Sourcemaps: inline in dev; disabled in production.
+- TypeScript
+  - `baseUrl: src` with path aliases (see structure rule).
+  - `noImplicitAny`, `strictNullChecks` enabled; `allowJs` true.
+- Manifest
+  - Keep `manifest.json` in sync with release versions.
+- Output artifacts
+  - Do not commit build intermediates; only `main.js` is produced by bundling.

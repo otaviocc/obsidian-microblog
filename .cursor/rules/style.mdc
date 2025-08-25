@@ -1,0 +1,28 @@
+---
+globs: *.ts,*.tsx
+description: TypeScript conventions for this repository
+---
+## TypeScript conventions
+
+- Imports
+  - Prefer path aliases (`@services/...`, `@views/...`) over long relative paths.
+  - Keep external Obsidian/Electron/CodeMirror as externals (see build rule).
+- Naming
+  - Use descriptive names. Functions as verbs; variables as nouns.
+  - Avoid 1–2 character identifiers.
+- Types
+  - Explicitly type exported/public APIs; let locals be inferred where clear.
+  - Avoid `any` and unsafe casts.
+- Control flow
+  - Use early returns and handle edge cases first.
+  - Do not swallow errors silently; propagate or surface via delegates/Notices.
+- Comments
+  - Comment “why” for complex logic; avoid trivial comments.
+  - No inline commentary inside code blocks; place comments above.
+- Formatting
+  - Match existing style; wrap long lines; avoid unrelated reformatting.
+- Frontmatter & models
+  - Use `FrontmatterService` to read/write note properties (`title`, `tags`, `url`, `image_urls`).
+- UI patterns
+  - Views are thin; delegate side effects to view models/services.
+  - Use delegates for UI updates (`publishDid...`, `imageProcessingDid...`).
