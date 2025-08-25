@@ -1,0 +1,32 @@
+---
+alwaysApply: true
+description: Micropub networking, requests, and image processing behavior
+---
+## Micropub networking
+
+- Client
+  - Base URL: `https://micro.blog`.
+  - JSON requests to `/micropub` with `Authorization: Bearer <appToken>`.
+  - `run<T>` parses JSON unless body is empty (returns `{}` cast to `T`).
+- Requests (factory)
+  - New post: `type: ["h-entry"]`, properties include `content`, optional `name`, `published`, `category`, and `post-status`.
+  - New page: `type: "h-entry"`, `mp-channel: "pages"`, `mp-navigation: "true|false"`.
+  - Update post/page: `action: "update"`, `url`, `mp-destination`, `replace: { content, name, category? }`.
+  - Queries: config (`q=config`), categories (`q=category&mp-destination=<blogID>`).
+  - `mp-destination` omitted for default; included when blogID is not `default`.
+- Media upload
+  - POST `https://micro.blog/micropub/media` with multipart/form-data.
+  - Response URL extracted from JSON or `location` header.
+
+## Image processing
+
+- Detects local images in notes:
+  - Standard: `![alt](path/to/image.png)`
+  - Wiki: `![[path/to/image.png]]`
+- Skips remote URLs; resolves relative paths against the active note’s folder.
+- Upload flow
+  - Reads file from vault → uploads to media endpoint → saves mapping.
+  - Frontmatter key `image_urls` stores `{ localPath: remoteURL }` JSON.
+  - Replaces local references with hosted URLs in content before publishing.
+- Delegates
+  - Notifies UI on begin, per-image progress, completion, and failure.
