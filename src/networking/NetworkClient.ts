@@ -46,28 +46,30 @@ export class NetworkClient implements NetworkClientInterface {
     public async run<T>(request: NetworkRequest): Promise<T> {
         const url = this.microBlogBaseURL + request.path + (request.parameters ? '?' + request.parameters : '')
 
-        const response = await fetch(url, {
+        const response = await requestUrl({
+            url,
             method: request.method,
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + this.appToken()
             },
-            body: request.body
+            body: typeof request.body === 'string' ? request.body : undefined,
+            throw: false
         })
 
         if (!response.ok) {
-            throw await ErrorFactory.makeErrorFromResponse(response)
+            throw ErrorFactory.makeErrorFromRequestUrlResponse(response)
         }
 
         const isSuccess = response.status >= 200 && response.status < 300
-        const isEmptyBody = response.headers.get('content-length') === '0'
+        const isEmptyBody = response.headers['content-length'] === '0'
 
         if (isSuccess && isEmptyBody) {
             return {} as T
         }
 
-        return await response.json() as T
+        return JSON.parse(response.text) as T
     }
 
     public async uploadMedia(
