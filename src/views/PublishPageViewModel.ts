@@ -65,8 +65,10 @@ export class PublishPageViewModel implements ImageServiceDelegate {
     private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string
+    private summaryWrappedValue: string
     private selectedBlogIDWrappedValue: string
     private includeInNavigationWrappedValue: boolean
+    private summaryPropertyName: string
     private networkClient: NetworkClientInterface
     private frontmatterService: FrontmatterServiceInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
@@ -82,6 +84,8 @@ export class PublishPageViewModel implements ImageServiceDelegate {
         blogs: Record<string, string>,
         selectedBlogID: string,
         includeInNavigation: boolean,
+        summary: string,
+        summaryPropertyName: string,
         networkClient: NetworkClientInterface,
         frontmatterService: FrontmatterServiceInterface,
         networkRequestFactory: NetworkRequestFactoryInterface,
@@ -92,6 +96,8 @@ export class PublishPageViewModel implements ImageServiceDelegate {
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.includeInNavigationWrappedValue = includeInNavigation
+        this.summaryWrappedValue = summary
+        this.summaryPropertyName = summaryPropertyName
         this.isSubmitting = false
         this.networkClient = networkClient
         this.frontmatterService = frontmatterService
@@ -112,6 +118,14 @@ export class PublishPageViewModel implements ImageServiceDelegate {
 
     public get hasMultipleBlogs(): boolean {
         return Object.keys(this.blogs).length > 2
+    }
+
+    public get summary(): string {
+        return this.summaryWrappedValue
+    }
+
+    public set summary(value: string) {
+        this.summaryWrappedValue = value
     }
 
     public get selectedBlogID(): string {
@@ -168,7 +182,8 @@ export class PublishPageViewModel implements ImageServiceDelegate {
                     this.title,
                     processedContent,
                     this.selectedBlogID,
-                    this.includeInNavigation
+                    this.includeInNavigation,
+                    this.summary
                 )
 
                 const result = await this.networkClient.run<PublishResponse>(
@@ -177,6 +192,7 @@ export class PublishPageViewModel implements ImageServiceDelegate {
 
                 this.frontmatterService.save(this.title, 'title')
                 this.frontmatterService.save(result.url, 'url')
+                this.frontmatterService.save(this.summary.length > 0 ? this.summary : null, this.summaryPropertyName)
 
                 this.delegate?.publishDidSucceed(result)
             }

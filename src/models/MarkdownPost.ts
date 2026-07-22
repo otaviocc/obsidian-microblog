@@ -61,17 +61,20 @@ export class MarkdownPost implements MarkdownPostInterface {
     private frontmatterService: FrontmatterServiceInterface
     private imageService: ImageServiceInterface
     private markdownView: MarkdownView
+    private categoriesPropertyName: string
 
     // Life cycle
 
     constructor(
         frontmatterService: FrontmatterServiceInterface,
         imageService: ImageServiceInterface,
-        markdownView: MarkdownView
+        markdownView: MarkdownView,
+        categoriesPropertyName: string
     ) {
         this.frontmatterService = frontmatterService
         this.imageService = imageService
         this.markdownView = markdownView
+        this.categoriesPropertyName = categoriesPropertyName
     }
 
     // Public
@@ -94,10 +97,10 @@ export class MarkdownPost implements MarkdownPostInterface {
     }
 
     public get tags(): string | null | undefined {
-        const frontmatterTags = this.frontmatterService
-            .retrieveStrings('tags')
+        const frontmatterCategories = this.frontmatterService
+            .retrieveStrings(this.categoriesPropertyName)
 
-        return frontmatterTags?.join(',')
+        return frontmatterCategories?.join(',')
     }
 
     public get url(): string | null {

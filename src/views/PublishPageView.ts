@@ -97,6 +97,21 @@ export class PublishPageView extends Modal implements PublishPageViewModelDelega
         }
 
         new Setting(contentEl)
+            .setName('Summary')
+            .setDesc('Optional summary to send with this page.')
+            .addTextArea(textArea => {
+                textArea
+                    .setPlaceholder('Optional summary')
+                    .setValue(this.viewModel.summary)
+                    .onChange(value => {
+                        this.viewModel.summary = value
+                    })
+
+                textArea.inputEl.style.minHeight = '90px'
+                textArea.inputEl.style.width = '100%'
+            })
+
+        new Setting(contentEl)
             .setName('Navigation')
             .setDesc('Override the default setting. Toggle on to automatically include this page in the blog\'s navigation.')
             .addToggle(toggle => toggle

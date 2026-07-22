@@ -65,9 +65,11 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
     private isSubmitting: boolean
     private titleWrappedValue: string
     private content: string
+    private summaryWrappedValue: string
     private networkClient: NetworkClientInterface
     private networkRequestFactory: NetworkRequestFactoryInterface
     private blogID: string
+    private summaryPropertyName: string
     private frontmatterService: FrontmatterServiceInterface
     private imageService: ImageServiceInterface
     private totalImagesToProcess = 0
@@ -81,6 +83,8 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
         content: string,
         blogs: Record<string, string>,
         blogID: string,
+        summary: string,
+        summaryPropertyName: string,
         networkClient: NetworkClientInterface,
         frontmatterService: FrontmatterServiceInterface,
         networkRequestFactory: NetworkRequestFactoryInterface,
@@ -91,6 +95,8 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
         this.content = content
         this.blogs = blogs
         this.blogID = blogID
+        this.summaryWrappedValue = summary
+        this.summaryPropertyName = summaryPropertyName
         this.isSubmitting = false
         this.networkClient = networkClient
         this.frontmatterService = frontmatterService
@@ -124,7 +130,9 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
                     this.url,
                     this.selectedBlogID,
                     this.title,
-                    processedContent
+                    processedContent,
+                    undefined,
+                    this.summary
                 )
 
                 await this.networkClient.run<EmptyResponse>(
@@ -133,6 +141,7 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
 
                 this.frontmatterService.save(this.title, 'title')
                 this.frontmatterService.save(this.url, 'url')
+                this.frontmatterService.save(this.summary.length > 0 ? this.summary : null, this.summaryPropertyName)
 
                 this.delegate?.updateDidSucceed()
             }
@@ -199,6 +208,14 @@ export class UpdatePageViewModel implements ImageServiceDelegate {
 
     public set title(value: string) {
         this.titleWrappedValue = value
+    }
+
+    public get summary(): string {
+        return this.summaryWrappedValue
+    }
+
+    public set summary(value: string) {
+        this.summaryWrappedValue = value
     }
 
     public clearTitle() {

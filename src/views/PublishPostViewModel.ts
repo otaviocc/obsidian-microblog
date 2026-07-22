@@ -78,6 +78,9 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
     private content: string
     private visibilityWrappedValue: string
     private tagsWrappedValue: string
+    private summaryWrappedValue: string
+    private categoriesPropertyName: string
+    private summaryPropertyName: string
     private selectedBlogIDWrappedValue: string
     private scheduledDateWrappedValue: string
     private networkClient: NetworkClientInterface
@@ -95,6 +98,9 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
         content: string,
         tags: string,
         visibility: string,
+        summary: string,
+        categoriesPropertyName: string,
+        summaryPropertyName: string,
         blogs: Record<string, string>,
         selectedBlogID: string,
         networkClient: NetworkClientInterface,
@@ -107,6 +113,9 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
         this.content = content
         this.tagsWrappedValue = tags
         this.visibilityWrappedValue = visibility
+        this.summaryWrappedValue = summary
+        this.categoriesPropertyName = categoriesPropertyName
+        this.summaryPropertyName = summaryPropertyName
         this.blogs = blogs
         this.selectedBlogIDWrappedValue = selectedBlogID
         this.scheduledDateWrappedValue = ''
@@ -136,6 +145,14 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
 
     public set tags(value: string) {
         this.tagsWrappedValue = value
+    }
+
+    public get summary(): string {
+        return this.summaryWrappedValue
+    }
+
+    public set summary(value: string) {
+        this.summaryWrappedValue = value
     }
 
     public get visibility(): string {
@@ -205,7 +222,8 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
                     tags,
                     this.visibility,
                     this.selectedBlogID,
-                    this.formattedScheduledDate()
+                    this.formattedScheduledDate(),
+                    this.summary
                 )
 
                 const result = await this.networkClient.run<PublishResponse>(
@@ -214,7 +232,8 @@ export class PublishPostViewModel implements TagSuggestionDelegate, ImageService
 
                 this.frontmatterService.save(this.title, 'title')
                 this.frontmatterService.save(result.url, 'url')
-                this.frontmatterService.save(tags, 'tags')
+                this.frontmatterService.save(tags, this.categoriesPropertyName)
+                this.frontmatterService.save(this.summary.length > 0 ? this.summary : null, this.summaryPropertyName)
 
                 this.delegate?.publishDidSucceed(result)
             }

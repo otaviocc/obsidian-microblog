@@ -38,7 +38,8 @@ export interface NetworkRequestFactoryInterface {
         tags: string[],
         visibility: string,
         blogID: string,
-        scheduledDate: string
+        scheduledDate: string,
+        summary?: string
     ): NetworkRequest
 
     // Builds the publish page request, `NetworkRequest` used to publish a new
@@ -47,7 +48,8 @@ export interface NetworkRequestFactoryInterface {
         title: string,
         content: string,
         blogID: string,
-        navigation: boolean
+        navigation: boolean,
+        summary?: string
     ): NetworkRequest
 
     // Builds the configuration request, `NetworkRequest` used to log in
@@ -67,7 +69,8 @@ export interface NetworkRequestFactoryInterface {
         blogID: string,
         title: string,
         content: string,
-        tags?: string[]
+        tags?: string[],
+        summary?: string
     ): NetworkRequest
 
     // Builds a media upload request for uploading files to Micro.blog.
@@ -94,7 +97,8 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         tags: string[],
         visibility: string,
         blogID: string,
-        scheduledDate: string
+        scheduledDate: string,
+        summary: string = ''
     ): NetworkRequest {
         const body = JSON.stringify(
             makeNewPostRequest(
@@ -103,7 +107,8 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
                 content,
                 tags,
                 scheduledDate,
-                visibility
+                visibility,
+                summary
             )
         )
 
@@ -118,14 +123,16 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         title: string,
         content: string,
         blogID: string,
-        navigation: boolean
+        navigation: boolean,
+        summary: string = ''
     ): NetworkRequest {
         const body = JSON.stringify(
             makeNewPageRequest(
                 title,
                 content,
                 blogID,
-                navigation
+                navigation,
+                summary
             )
         )
 
@@ -164,7 +171,8 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
         blogID: string,
         title: string,
         content: string,
-        tags?: string[]
+        tags?: string[],
+        summary: string = ''
     ): NetworkRequest {
         const body = JSON.stringify(
             makeUpdatePostRequest(
@@ -172,7 +180,8 @@ export class NetworkRequestFactory implements NetworkRequestFactoryInterface {
                 blogID,
                 title,
                 content,
-                tags
+                tags,
+                summary
             )
         )
 

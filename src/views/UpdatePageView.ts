@@ -96,6 +96,21 @@ export class UpdatePageView extends Modal implements UpdatePageViewModelDelegate
                 )
         }
 
+        new Setting(contentEl)
+            .setName('Summary')
+            .setDesc('Confirm the summary assigned to this page.')
+            .addTextArea(textArea => {
+                textArea
+                    .setPlaceholder('Optional summary')
+                    .setValue(this.viewModel.summary)
+                    .onChange(value => {
+                        this.viewModel.summary = value
+                    })
+
+                textArea.inputEl.style.minHeight = '90px'
+                textArea.inputEl.style.width = '100%'
+            })
+
         this.statusComponent = new Status(contentEl)
 
         new Setting(contentEl)

@@ -33,6 +33,7 @@ export type NewPageRequest = {
     'properties': {
         'name': string[]
         'content': string[],
+        'summary'?: string[]
     }
 }
 
@@ -41,7 +42,8 @@ export function makeNewPageRequest(
     title: string,
     content: string,
     blogID: string,
-    navigation: boolean
+    navigation: boolean,
+    summary: string = ''
 ): NewPageRequest {
     return {
         'type': "h-entry",
@@ -50,7 +52,8 @@ export function makeNewPageRequest(
         'mp-navigation': navigation.toString(),
         'properties': {
             'name': [title],
-            'content': [content]
+            'content': [content],
+            ...summary.length > 0 && { 'summary': [summary] }
         }
     }
 }

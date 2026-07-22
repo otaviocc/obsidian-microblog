@@ -33,7 +33,8 @@ export type NewPostRequest = {
         'content': string[],
         'category': string[],
         'published'?: string[],
-        'post-status': string[]
+        'post-status': string[],
+        'summary'?: string[]
     }
 }
 
@@ -44,7 +45,8 @@ export function makeNewPostRequest(
     content: string,
     categories: string[],
     published: string,
-    postStatus: string
+    postStatus: string,
+    summary: string = ''
 ): NewPostRequest {
     return {
         'type': ["h-entry"],
@@ -54,7 +56,8 @@ export function makeNewPostRequest(
             'content': [content],
             'category': categories,
             ...published.length > 0 && { 'published': [published] },
-            'post-status': [postStatus]
+            'post-status': [postStatus],
+            ...summary.length > 0 && { 'summary': [summary] }
         }
     }
 }

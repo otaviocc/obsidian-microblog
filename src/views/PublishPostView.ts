@@ -119,6 +119,21 @@ export class PublishPostView extends Modal implements PublishPostViewModelDelega
             )
 
         new Setting(contentEl)
+            .setName('Summary')
+            .setDesc('Optional summary to send with this post.')
+            .addTextArea(textArea => {
+                textArea
+                    .setPlaceholder('Optional summary')
+                    .setValue(this.viewModel.summary)
+                    .onChange(value => {
+                        this.viewModel.summary = value
+                    })
+
+                textArea.inputEl.style.minHeight = '90px'
+                textArea.inputEl.style.width = '100%'
+            })
+
+        new Setting(contentEl)
             .setName('Visibility')
             .setDesc('Override the default post visibility setting for this specific post.')
             .addDropdown(dropDown => dropDown

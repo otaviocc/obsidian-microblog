@@ -32,7 +32,8 @@ export type UpdatePostRequest = {
     'replace': {
         'content': string[],
         'category'?: string[],
-        'name': string[]
+        'name': string[],
+        'summary'?: string[]
     }
 }
 
@@ -42,7 +43,8 @@ export function makeUpdatePostRequest(
     blogID: string,
     title: string,
     content: string,
-    categories?: string[]
+    categories?: string[],
+    summary: string = ''
 ): UpdatePostRequest {
     return {
         'action': 'update',
@@ -51,7 +53,8 @@ export function makeUpdatePostRequest(
         'replace': {
             'content': [content],
             ...categories !== undefined && { 'category': categories },
-            'name': [title]
+            'name': [title],
+            ...summary.length > 0 && { 'summary': [summary] }
         }
     }
 }

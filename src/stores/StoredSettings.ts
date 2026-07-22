@@ -30,7 +30,13 @@ export interface StoredSettings {
     // Application token used to access Micro.blog.
     appToken: string
 
-    // Default tags (set in Settings) that applies
+    // Property name, in the frontmatter, used to store the categories of a post.
+    categoriesPropertyName: string
+
+    // Property name, in the frontmatter, used to store the summary of a post or page.
+    summaryPropertyName: string
+
+    // Default Categories (set in Settings) that applies
     // to all new posts.
     defaultTags: string
 
@@ -60,6 +66,8 @@ export interface StoredSettings {
 // Default values for the plugin.
 export const defaultSettings: StoredSettings = {
     appToken: '',
+    categoriesPropertyName: 'tags',
+    summaryPropertyName: 'summary',
     defaultTags: '',
     postVisibility: 'draft',
     blogs: {},

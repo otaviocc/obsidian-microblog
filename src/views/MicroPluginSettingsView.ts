@@ -179,8 +179,30 @@ export class MicroPluginSettingsView extends PluginSettingTab implements MicroPl
         containerEl.createEl('h2', { text: 'Posts' })
 
         new Setting(containerEl)
-            .setName('Categories')
-            .setDesc('Default list of categories for new posts.')
+            .setName('Categories Property Name')
+            .setDesc('Property name, in the frontmatter, used to store the categories of a post.')
+            .addText(text => text
+                .setPlaceholder('categories')
+                .setValue(this.viewModel.categoriesPropertyName)
+                .onChange(value => {
+                    this.viewModel.categoriesPropertyName = value
+                })
+            )
+
+        new Setting(containerEl)
+            .setName('Summary Property Name')
+            .setDesc('Property name, in the frontmatter, used to store the summary of a post or page.')
+            .addText(text => text
+                .setPlaceholder('summary')
+                .setValue(this.viewModel.summaryPropertyName)
+                .onChange(value => {
+                    this.viewModel.summaryPropertyName = value
+                })
+            )
+
+        new Setting(containerEl)
+            .setName('Default Categories')
+            .setDesc('List of categories assigned for new posts.')
             .addText(text => text
                 .setPlaceholder('category1, category2, category3')
                 .setValue(this.viewModel.tags)
